@@ -1,0 +1,46 @@
+<ion-view title="Log In" id="login">
+    <ion-content padding="true" class="has-header">
+        <form name="loginForm" class="list">
+            <ion-list>
+                <label class="item item-input ">
+                    <span class="input-label"
+                      ng-class="{'assertive': loginForm.username.$error.required}"
+                    >Username</span>
+                    <input type="text"
+                      ng-model="user.username"
+                      placeholder=""
+                      ng-required="true"
+                      name="username"
+                      id="username">
+                </label>
+                <label class="item item-input">
+                    <span
+                      class="input-label assertive"
+                      ng-class="{'assertive': loginForm.password.$error.required}"
+                    >Password</span>
+                    <input type="password"
+                      ng-model="user.password"
+                      ng-required="true"
+                    placeholder="" ng-required="true" name="password" id="true">
+                </label>
+            </ion-list>
+            <div class="spacer" style="height: 40px;"></div>
+            <button
+              id="login-button2"
+              class="button button-block"
+              ng-click="goNext('/tab/entries')"
+              ng-disabled="loginForm.username.$error.required || loginForm.password.$error.required"
+              ng-class="{
+                'button-balanced': !loginForm.username.$error.required && !loginForm.password.$error.required,
+                'button-stable': loginForm.username.$error.required || loginForm.password.$error.required
+              }"
+              >Log in</button>
+            <a href="#" onclick=""
+              id="login-button3" class="button button-positive button-block button-clear">
+              Or request access to your manager
+            </a>
+
+        </form>
+
+    </ion-content>
+</ion-view>

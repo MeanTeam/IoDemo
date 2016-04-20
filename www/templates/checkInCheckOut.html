@@ -1,0 +1,97 @@
+<ion-view view-title="Check In / Check Out" id="entries">
+  <ion-nav-buttons side="right">
+    <a class="button icon ion-person" href="#/tab/userInfo"></a>
+    <a class="button icon ion-ios-list-outline" href="#/tab/log"></a>
+  </ion-nav-buttons>
+
+  <ion-content padding="true" class="">
+
+    <div class="card">
+      <div class="item item-divider">
+        <b>{{userInfo.pin}}</b> -
+        <b>{{userInfo.name}}</b>
+        &nbsp;&nbsp;
+        <i class="icon" ng-class="{'ion-android-close assertive':record.status === 'Non-Signed', 'ion-android-done energized':record.status === 'Signed-In', 'ion-android-done-all positive':record.status === 'Signed-Out'}"></i>
+
+
+      </div>
+      <div class="item item-divider">
+        Locations
+      </div>
+      <div class="item loc-buttons">
+        <div class="row loc-buttons" ng-if="record.status === 'Non-Signed'">
+          <div class="col" ng-repeat="colLocation in chunkedLocations">
+            <button class="button loc-btn button-block icon-left "
+                    ng-repeat="loc in colLocation"
+                    ng-class="{'button-outline button-positive': loc.checked || loc.id === record.locationId, 'ion-location': loc.checked || loc.id === record.locationId, 'button-stable': !loc.checked}"
+                    ng-click="selectLocation(loc)"
+                    ng-model="record.location">
+              {{loc.name}}
+            </button>
+          </div>
+        </div>
+        <button class="button icon-left ion-location loc-padd button-outline button-positive"
+                ng-show="record.status === 'Signed-In' || record.status === 'Signed-Out'">
+          {{locationSelectedName}}
+        </button>
+      </div>
+      <div class="item item-divider">
+        Check In Time
+      </div>
+      <div class="item loc-buttons">
+        <div class="row loc-buttons" ng-if="record.status === 'Non-Signed'">
+          <div class="col" ng-repeat="colTime in chunkedTimes">
+            <button class="button loc-btn button-block icon-left"
+                    ng-repeat="cTime in colTime"
+                    ng-class="{'button-outline button-positive': cTime.checked || cTime.hour === record.signInTime, 'ion-ios-time': cTime.checked || cTime.hour === record.signInTime, 'button-stable': !cTime.checked}"
+                    ng-click="singInTime(cTime)"
+                    ng-model="record.signInTime">
+              {{cTime.hour}}
+            </button>
+          </div>
+        </div>
+
+        <button class="button loc-padd icon-left button-outline button-positive ion-ios-time"
+                ng-show="record.status === 'Signed-In' || record.status === 'Signed-Out'">
+          {{record.signInTime}}
+        </button>
+      </div>
+
+      <div
+        class="item item-divider"
+        ng-show="record.status === 'Signed-In' || record.status === 'Signed-Out'">
+        Check Out Time
+      </div>
+      <div
+        class="item loc-buttons">
+
+        <div class="row loc-buttons" ng-if="record.status === 'Signed-In'">
+          <div class="col" ng-repeat="colTime in chunkedTimes">
+            <button class="button loc-btn button-block icon-left"
+                    ng-repeat="cTime in colTime"
+                    ng-class="{'button-outline button-positive': cTime.checked || cTime.hour === record.signOutTime, 'ion-ios-time': cTime.checked || cTime.hour === record.signOutTime, 'button-stable': !cTime.checked}"
+                    ng-click="singOutTime(cTime);"
+                    ng-model="record.signOutTime">
+              {{cTime.hour}}
+            </button>
+          </div>
+        </div>
+
+        <button class="button loc-padd icon-left button-outline button-positive ion-ios-time"
+                ng-show="record.status === 'Signed-Out'">
+          {{record.signOutTime}}
+        </button>
+      </div>
+
+
+    </div>
+
+    <button class="button button-full {{submitColor}}"
+            ng-click="signIn()"
+            ng-disabled="!enableSubmit()">
+      {{submitButtonLabel()}}
+    </button>
+
+
+  </ion-content>
+</ion-view>

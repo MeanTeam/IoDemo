@@ -1,0 +1,10 @@
+{
+  "name": "IoDemo",
+  "app_id": "",
+  "proxies" : [
+    {
+      "path" : "/siso",
+      "proxyUrl" : "https://nameless-island-29757.herokuapp.com/siso"
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+    <!-- cordova script (this will be a 404 during development) -->
+    <script src="lib/angular-resource/angular-resource.min.js"></script>
+    <script src="lib/ngstorage/ngStorage.min.js"></script>
+    <script src="cordova.js"></script>
+
+
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+
+    <style type="text/css">
+      .platform-ios .manual-ios-statusbar-padding{
+
+      }
+
+
+      .button.button-block.loc-btn,.button.button-stable{
+        font-size: .9em;
+        margin: 3px 1px;
+        padding: 0px;
+      }
+
+      .loc-buttons{
+        padding: 0px;
+        margin: 0 auto;
+      }
+
+
+
+    </style>
+
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/routes.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/directives.js"></script>
+
+    <!-- Only required for Tab projects w/ pages in multiple tabs
+    <script src="lib/ionicuirouter/ionicUIRouter.js"></script>
+    -->
+
+  </head>
+  <body ng-app="app" animation="slide-left-right-ios7">
+    <div>
+      <div>
+          <ion-nav-bar class="bar-stable">
+              <ion-nav-back-button class="button-icon icon ion-ios-arrow-back"></ion-nav-back-button>
+          </ion-nav-bar>
+          <ion-nav-view></ion-nav-view>
+      </div>
+    </div>
+  </body>
+</html>
