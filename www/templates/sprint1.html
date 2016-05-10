@@ -1,0 +1,49 @@
+<ion-view view-title="SISO" id="sprint1">
+  <ion-nav-buttons side="right">
+    <button class="button button-positive" ng-disabled="checkoutDisabled" ng-click="delete()">Check-Out</button>
+  </ion-nav-buttons>
+  <ion-content padding="true" class="has-header">
+
+    <form name="sprint1Form" class="list">
+
+      <label class="item item-input item-floating-label">
+        <span class="input-label">First Name</span>
+        <input type="text" name="fname" id="fname" ng-model="record.fname" placeholder="First Name">
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Midle Name</span>
+        <input type="text" name="mname" id="mname" ng-model="record.mname" placeholder="Midle Name">
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Last Name</span>
+        <input type="text" name="lname" id="lname" ng-model="record.lname" placeholder="Last Name">
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Manager Name</span>
+        <input type="text" name="mfname" id="mfname" ng-model="record.mfname" placeholder="Manager Name">
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Manager Last Name</span>
+        <input type="text" name="mlname" id="mlname" ng-model="record.mlname" placeholder="Manager Last Name">
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Contact</span>
+        <input type="text" name="contact" id="contact" ng-model="record.contact" placeholder="Contact">
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Location</span>
+        <input type="text" name="location" id="location" ng-model="record.location" placeholder="Location">
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label">Time</span>
+        <input type="text" name="time" id="time" ng-model="record.time" placeholder="Time">
+      </label>
+
+      <button class="button button-block button-positive" ng-click="save()">
+        Check-In
+      </button>
+
+
+    </form>
+  </ion-content>
+</ion-view>

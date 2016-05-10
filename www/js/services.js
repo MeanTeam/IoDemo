@@ -1,7 +1,8 @@
 angular.module('app.services', ['ngResource', 'ngStorage']).
 
 constant('ApiEndpoint', {
-  url : "https://nameless-island-29757.herokuapp.com"   //"http://localhost:8100"
+  // url : '/api/sisoweb' for web testing, and real url for mobile testing
+  url : 'https://lit-basin-60588.herokuapp.com/api/sisoweb' //"http://localhost:8100" //mine "https://nameless-island-29757.herokuapp.com"   //app https://lit-basin-60588.herokuapp.com/api/sisoweb
 })
 
 .factory('SISOFactory', ['$localStorage', function($localStorage){
@@ -41,5 +42,13 @@ constant('ApiEndpoint', {
       },
       responseType: 'json'},
     saveUser : {method: 'POST', url: ApiEndpoint.url + '/siso/user', cache: false, responseType: 'json'}
+  });
+}])
+
+.service('SISOSprints', ['$resource', 'ApiEndpoint', function($resource, ApiEndpoint){
+  return $resource('', {},{
+    get : {method: 'GET', url: ApiEndpoint.url, cache: false, responseType: 'json'},
+    post : {method: 'POST', url: ApiEndpoint.url, cache: false, responseType: 'json'},
+    delete: {method: 'DELETE', url: ApiEndpoint.url + '/:id', params: {id:'@_id'} ,cache: false, responseType: 'json'}
   });
 }]);

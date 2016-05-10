@@ -54,7 +54,14 @@ angular.module('app.routes', [])
     }
   })
 
-$urlRouterProvider.otherwise('/login')
+  .state('sprint1', {
+    cache: false,
+    url: '/sprint1',
+    templateUrl: 'templates/sprint1.html',
+    controller: 'sprint1Ctrl'
+  })
+
+$urlRouterProvider.otherwise('/sprint1')
 
 
 

@@ -17,7 +17,6 @@ angular.module('app.controllers', [])
             }
           });
 
-
       };
 
 
@@ -32,15 +31,15 @@ angular.module('app.controllers', [])
       $scope.locationSelectedName = '';
 
       $scope.locations = [
-        {id: 1, "name": 'Operations', "checked": false},
-        {id: 2, "name": 'Altmeyer', "checked": false},
-        {id: 3, "name": 'Annex', "checked": false},
-        {id: 4, "name": 'WOC', "checked": false},
-        {id: 5, "name": 'NCC', "checked": false},
-        {id: 6, "name": 'East Low Rise', "checked": false},
-        {id: 7, "name": 'East High Rise', "checked": false},
-        {id: 8, "name": 'West Low Rise', "checked": false},
-        {id: 9, "name": 'West High Rise', "checked": false}
+        {id: 1, "name": 'Place 1', "checked": false},
+        {id: 2, "name": 'Place 2', "checked": false},
+        {id: 3, "name": 'Place 3', "checked": false},
+        {id: 4, "name": 'Place 4', "checked": false},
+        {id: 5, "name": 'Place 5', "checked": false},
+        {id: 6, "name": 'Place 6', "checked": false},
+        {id: 7, "name": 'Place 7', "checked": false},
+        {id: 8, "name": 'Place 8', "checked": false},
+        {id: 9, "name": 'Place 9', "checked": false}
       ];
       $scope.myTimes = [];
 
@@ -54,7 +53,7 @@ angular.module('app.controllers', [])
 
       $scope.submitButtonLabel = function(){
         if($scope.record.status === 'Non-Signed'){
-          return 'Sing In';
+          return 'Sign In';
         }else if($scope.record.status === 'Signed-In'){
           return 'Signed Out'
         }else{
@@ -275,5 +274,60 @@ angular.module('app.controllers', [])
         return el.id === id;
       });
     };
+
+  }])
+
+  .controller('sprint1Ctrl', ['$scope', 'SISOSprints', '$ionicLoading', function($scope, SISOSprints, $ionicLoading){
+
+      $scope.record = {
+          "fname": "",
+          "mname": "",
+          "lname": "",
+          "mfname": "",
+          "mlname": "",
+          "contact": "",
+          "location": "",
+          "time": ""
+      };
+
+      $scope.checkoutDisabled = true;
+
+
+
+      $scope.save = function(){
+
+        SISOSprints.post($scope.record, function (result) {
+
+          if (typeof result !== undefined && typeof result._id !== undefined) {
+            $scope.record._id = result._id;
+            $scope.checkoutDisabled = false;
+            $ionicLoading.show({template: 'Check-In Saved!', noBackdrop: true, duration: 2200});
+          }
+
+        });
+      };
+
+      $scope.delete = function(){
+          if(typeof $scope.record._id !== undefined){
+            SISOSprints.delete({id: $scope.record._id}, function (result) {
+              $scope.checkoutDisabled = true;
+              $ionicLoading.show({template: 'Check-Out!', noBackdrop: true, duration: 2200});
+
+              $scope.record = {
+                  "fname": "",
+                  "mname": "",
+                  "lname": "",
+                  "mfname": "",
+                  "mlname": "",
+                  "contact": "",
+                  "location": "",
+                  "time": ""
+              };
+              
+            });
+          }
+      };
+
+
 
   }]);

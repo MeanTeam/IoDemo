@@ -3,7 +3,15 @@
   "app_id": "",
   "proxies" : [
     {
+      "path" : "/api/sisoweb",
+      "proxyUrl" : "https://lit-basin-60588.herokuapp.com/api/sisoweb"
+    },
+    {
       "path" : "/siso",
+      "proxyUrl" : "https://lit-basin-60588.herokuapp.com/api/sisoweb"
+    },
+    {
+      "path" : "/sisomine",
       "proxyUrl" : "https://nameless-island-29757.herokuapp.com/siso"
     }
   ]
