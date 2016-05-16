@@ -11,7 +11,7 @@ angular.module('app.routes', [])
   .state('tab',{
     url: '/tab',
     abstract: true,
-    templateUrl: 'templates/tabs.html'
+    templateUrl: 'templates/menu.html'
   })
 
   .state('login', {
@@ -54,14 +54,20 @@ angular.module('app.routes', [])
     }
   })
 
-  .state('sprint1', {
-    cache: false,
+  .state('tab.sprint1', {
     url: '/sprint1',
-    templateUrl: 'templates/sprint1.html',
-    controller: 'sprint1Ctrl'
-  })
+    cache: false,
+    views:{
+      'menuContent':{
+        templateUrl: 'templates/sprint1.html',
+        controller: 'sprint1Ctrl'
+      }
+    }
+  });
 
-$urlRouterProvider.otherwise('/sprint1')
+
+
+  $urlRouterProvider.otherwise('/tab/sprint1')
 
 
 

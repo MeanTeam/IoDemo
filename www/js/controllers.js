@@ -277,7 +277,9 @@ angular.module('app.controllers', [])
 
   }])
 
-  .controller('sprint1Ctrl', ['$scope', 'SISOSprints', '$ionicLoading', function($scope, SISOSprints, $ionicLoading){
+  .controller('sprint1Ctrl', ['$scope', 'SISOSprints', '$ionicLoading', '$ionicModal', '$ionicPopup', function($scope, SISOSprints, $ionicLoading, $ionicModal, $ionicPopup){
+
+      $scope.user = {fname: '', lname: ''};
 
       $scope.record = {
           "fname": "",
@@ -290,27 +292,29 @@ angular.module('app.controllers', [])
           "time": ""
       };
 
-      $scope.checkoutDisabled = true;
-
-
+      $scope.showCheckoutBtn = function(){
+        return ($scope.record._id !== undefined) && ($scope.record._id !== '');
+      };
 
       $scope.save = function(){
-
         SISOSprints.post($scope.record, function (result) {
-
           if (typeof result !== undefined && typeof result._id !== undefined) {
             $scope.record._id = result._id;
-            $scope.checkoutDisabled = false;
             $ionicLoading.show({template: 'Check-In Saved!', noBackdrop: true, duration: 2200});
           }
-
         });
       };
 
       $scope.delete = function(){
-          if(typeof $scope.record._id !== undefined){
+
+        var confirmPopup = $ionicPopup.confirm({
+          title: '<b>Confirm Check-Out</b>',
+          template: 'Check-Out will delete the record'
+        });
+
+        confirmPopup.then(function (res) {
+          if(res && typeof $scope.record._id !== undefined && $scope.record._id !== ""){
             SISOSprints.delete({id: $scope.record._id}, function (result) {
-              $scope.checkoutDisabled = true;
               $ionicLoading.show({template: 'Check-Out!', noBackdrop: true, duration: 2200});
 
               $scope.record = {
@@ -321,13 +325,45 @@ angular.module('app.controllers', [])
                   "mlname": "",
                   "contact": "",
                   "location": "",
-                  "time": ""
+                  "time": "",
+                  "_id": ""
               };
-              
+
             });
           }
+        });
+
       };
 
+      $ionicModal.fromTemplateUrl('templates/userDialog.html', {
+        scope: $scope,
+        animation: 'slide-in-up',
+        focusFirstInput: true
+      }).then(function(modal){
+        $scope.userDialog = modal;
+      });
 
+      $scope.$on('modal.hidden', function(){
+        $scope.user = {fname: '', lname: ''};
+      });
+      $scope.$on('modal.open', function(){
+        console.log('OPEN DIAL');
+      });
+
+      $scope.searchUser = function(u) {
+        if(u.fname !== '' && u.lname !== ''){
+          SISOSprints.get(u, function (recs) {
+            if (typeof recs !== undefined && recs.length > 0) {
+              $scope.record = recs[0];
+              $ionicLoading.show({template: 'User Found!', noBackdrop: true, duration: 2200});
+              $scope.userDialog.hide();
+            }else{
+              $ionicLoading.show({template: 'User Not Found!', noBackdrop: true, duration: 2200});
+            }
+          });
+        }else{
+          $ionicLoading.show({template: 'User name must not be empty!', noBackdrop: true, duration: 2200});
+        }
+      };
 
   }]);
