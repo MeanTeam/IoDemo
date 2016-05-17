@@ -3,10 +3,6 @@
     <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
   </ion-nav-buttons>
   <ion-nav-buttons side="right">
-    <button class="button button-positive padding-right"
-      ng-click="delete()"
-      ng-show="showCheckoutBtn()">Check-Out</button>
-      &nbsp;
       <button class="button button-positive"
         ng-disabled=""
         ng-click="userDialog.show()">Search User</button>
@@ -17,7 +13,7 @@
 
       <label class="item item-input item-floating-label">
         <span class="input-label">First Name</span>
-        <input type="text" name="fname" id="fname" ng-model="record.fname" placeholder="First Name">
+        <input type="text" name="fname" id="fname" ng-model="record.fname" placeholder="First Name" required>
       </label>
       <label class="item item-input item-floating-label">
         <span class="input-label">Midle Name</span>
@@ -48,10 +44,12 @@
         <input type="text" name="time" id="time" ng-model="record.time" placeholder="Time">
       </label>
 
-      <button class="button button-block button-positive" ng-click="save()">
+      <button class="button button-block button-positive" ng-disabled="!sprint1Form.$valid" ng-show="!showCheckoutBtn()" ng-click="save()">
         Check-In
       </button>
-
+      <button class="button button-block button-positive" ng-show="showCheckoutBtn()" ng-click="delete()">
+        Check-Out
+      </button>
 
     </form>
   </ion-content>

@@ -63,6 +63,17 @@ angular.module('app.routes', [])
         controller: 'sprint1Ctrl'
       }
     }
+  })
+
+  .state('tab.listByManager', {
+    url: '/listByManager',
+    cache: false,
+    views:{
+      'menuContent':{
+        templateUrl: 'templates/listByManager.html',
+        controller: 'listByManagerCtrl'
+      }
+    }
   });
 
 

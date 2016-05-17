@@ -1,0 +1,32 @@
+<ion-view view-title="List by Manager" id="managerList">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+    <button class="button button-positive"
+        ng-click="userDialog.show()">Search</button>
+  </ion-nav-buttons>
+  <ion-content padding="true" class="has-header">
+    <div class="list">
+
+      <div class="item item-divider" ng-show="records.length > 0">
+        <strong>{{user.lname}}, {{user.fname}}</strong>
+      </div>
+
+      <a class="item " href="#" ng-repeat="rec in records">
+        <!--i class="icon"
+           ng-class="{'ion-android-done energized':rec.status === 'Signed-In', 'ion-android-done-all positive':rec.status === 'Signed-Out'}"></i -->
+
+        <h2>
+          {{rec.lname}}, {{rec.fname}}
+        </h2>
+        <p>
+          {{ rec.time }},
+          {{rec.location }}
+        </p>
+
+      </a>
+
+    </div>
+  <ion-content>
+</in-view>
