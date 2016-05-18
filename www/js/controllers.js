@@ -280,6 +280,7 @@ angular.module('app.controllers', [])
   .controller('sprint1Ctrl', ['$scope', 'SISOSprints', '$ionicLoading', '$ionicModal', '$ionicPopup', function($scope, SISOSprints, $ionicLoading, $ionicModal, $ionicPopup){
 
       $scope.user = {fname: '', lname: ''};
+      $scope.dialog = {title: 'Search User', buttonLabel:'Find User'}
 
       $scope.record = {
           "fname": "",
@@ -372,6 +373,7 @@ angular.module('app.controllers', [])
     function($scope, SISOSprints, $ionicLoading, $ionicModal, $ionicPopup){
 
       $scope.user = {fname: '', lname: ''};
+      $scope.dialog = {title: 'Search Manager', buttonLabel:'Find Manager'}
       $scope.records = [];
 
       $ionicModal.fromTemplateUrl('templates/userDialog.html', {

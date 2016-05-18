@@ -1,6 +1,6 @@
 <ion-modal-view>
   <ion-header-bar class="bar bar-header bar-positive">
-    <h1 class="title">Search User</h1>
+    <h1 class="title">{{dialog.title}}</h1>
     <button class="button button-clear button-primary" ng-click="userDialog.hide()">Cancel</button>
   </ion-header-bar>
   <ion-content class="padding">
@@ -15,7 +15,7 @@
       </label>
       <button
         class="button button-full button-positive"
-        ng-click="searchUser(user)">Find User</button>
+        ng-click="searchUser(user)">{{dialog.buttonLabel}}</button>
     </div>
   </ion-content>
 </ion-modal-view>

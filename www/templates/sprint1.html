@@ -1,4 +1,4 @@
-<ion-view view-title="SISO" id="sprint1">
+<ion-view view-title="Sign-In/Sign-Out" id="sprint1">
   <ion-nav-buttons side="left">
     <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
   </ion-nav-buttons>
@@ -16,7 +16,7 @@
         <input type="text" name="fname" id="fname" ng-model="record.fname" placeholder="First Name" required>
       </label>
       <label class="item item-input item-floating-label">
-        <span class="input-label">Midle Name</span>
+        <span class="input-label">MI</span>
         <input type="text" name="mname" id="mname" ng-model="record.mname" placeholder="Midle Name">
       </label>
       <label class="item item-input item-floating-label">
@@ -24,24 +24,24 @@
         <input type="text" name="lname" id="lname" ng-model="record.lname" placeholder="Last Name">
       </label>
       <label class="item item-input item-floating-label">
-        <span class="input-label">Manager Name</span>
-        <input type="text" name="mfname" id="mfname" ng-model="record.mfname" placeholder="Manager Name">
+        <span class="input-label">Task Manager Name</span>
+        <input type="text" name="mfname" id="mfname" ng-model="record.mfname" placeholder="Task Manager Name">
       </label>
       <label class="item item-input item-floating-label">
-        <span class="input-label">Manager Last Name</span>
-        <input type="text" name="mlname" id="mlname" ng-model="record.mlname" placeholder="Manager Last Name">
+        <span class="input-label">Task Manager Last Name</span>
+        <input type="text" name="mlname" id="mlname" ng-model="record.mlname" placeholder="Task Manager Last Name">
       </label>
       <label class="item item-input item-floating-label">
-        <span class="input-label">Contact</span>
-        <input type="text" name="contact" id="contact" ng-model="record.contact" placeholder="Contact">
+        <span class="input-label">Emergency Contact</span>
+        <input type="text" name="contact" id="contact" ng-model="record.contact" placeholder="Emergency Contact">
       </label>
       <label class="item item-input item-floating-label">
-        <span class="input-label">Location</span>
-        <input type="text" name="location" id="location" ng-model="record.location" placeholder="Location">
+        <span class="input-label">Component</span>
+        <input type="text" name="location" id="location" ng-model="record.location" placeholder="Component">
       </label>
       <label class="item item-input item-floating-label">
-        <span class="input-label">Time</span>
-        <input type="text" name="time" id="time" ng-model="record.time" placeholder="Time">
+        <span class="input-label">Time In</span>
+        <input type="text" name="time" id="time" ng-model="record.time" placeholder="Time In">
       </label>
 
       <button class="button button-block button-positive" ng-disabled="!sprint1Form.$valid" ng-show="!showCheckoutBtn()" ng-click="save()">
