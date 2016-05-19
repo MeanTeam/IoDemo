@@ -277,10 +277,7 @@ angular.module('app.controllers', [])
 
   }])
 
-  .controller('sprint1Ctrl', ['$scope', 'SISOSprints', '$ionicLoading', '$ionicModal', '$ionicPopup', function($scope, SISOSprints, $ionicLoading, $ionicModal, $ionicPopup){
-
-      $scope.user = {fname: '', lname: ''};
-      $scope.dialog = {title: 'Search User', buttonLabel:'Find User'}
+    .controller('sprint1Ctrl', ['$scope', 'SISOSprints', '$ionicLoading', function($scope, SISOSprints, $ionicLoading){
 
       $scope.record = {
           "fname": "",
@@ -293,18 +290,28 @@ angular.module('app.controllers', [])
           "time": ""
       };
 
-      $scope.showCheckoutBtn = function(){
-        return ($scope.record._id !== undefined) && ($scope.record._id !== '');
-      };
+      $scope.checkoutDisabled = true;
+
+	$scope.ph_numbr = /^(\+?(\d{1}|\d{2}|\d{3})[- ]?)?\d{3}[- ]?\d{3}[- ]?\d{4}$/;
+	$scope.timePattern = /^(0?[1-9]|1[012])(:[0-5]\d) [APap][mM]$/;
+
 
       $scope.save = function(){
-        SISOSprints.post($scope.record, function (result) {
-          if (typeof result !== undefined && typeof result._id !== undefined) {
-            $scope.record._id = result._id;
-            $ionicLoading.show({template: 'Check-In Saved!', noBackdrop: true, duration: 2200});
-          }
-        });
-      };
+		  
+            // check to make sure the form is completely valid
+
+				SISOSprints.post($scope.record, function (result) {
+
+				  if (typeof result !== undefined && typeof result._id !== undefined) {
+					$scope.record._id = result._id;
+					$scope.checkoutDisabled = false;
+					$ionicLoading.show({template: 'Check-In Saved!', noBackdrop: true, duration: 2200});
+				  }
+
+				});
+
+           };
+
 
       $scope.delete = function(){
 
