@@ -1,55 +1,83 @@
-<ion-view view-title="Sign-In/Sign-Out" id="sprint1">
-  <ion-nav-buttons side="left">
-    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
-  </ion-nav-buttons>
+<ion-view view-title="SISO" id="sprint1">
   <ion-nav-buttons side="right">
-      <button class="button button-positive"
-        ng-disabled=""
-        ng-click="userDialog.show()">Search User</button>
+    <button class="button button-positive" ng-disabled="checkoutDisabled" ng-click="delete()">Check-Out</button>
   </ion-nav-buttons>
   <ion-content padding="true" class="has-header">
 
-    <form name="sprint1Form" class="list">
+    <form name="sprint1Form" class="list" ng-submit="save()" novalidate>
+	  
+	  <div class="form-group" ng-class="{ 'has-error' : sprint1Form.fname.$invalid && !sprint1Form.fname.$pristine }">
+		  <label class="item item-input item-floating-label">
+			<span class="input-label">First Name</span>
+			<input type="text" name="fname" id="fname" ng-model="record.fname" placeholder="* First Name"
+					required  ng-pattern="/^[a-zA-Z ]*$/">
+			<p ng-show="sprint1Form.fname.$error.required && !sprint1Form.fname.$pristine" class="help-block">First Name is required.</p>
+			<p ng-show="sprint1Form.fname.$error.pattern && !sprint1Form.fname.$pristine"  class="help-block">Enter a valid First Name.</p>			
+		  </label>
+      </div>
+	  
+	  <div class="form-group" ng-class="{ 'has-error' : sprint1Form.mname.$invalid && !sprint1Form.mname.$pristine }">
+		  <label class="item item-input item-floating-label">
+			<span class="input-label">Midle Name</span>
+			<input type="text" name="mname" id="mname" ng-model="record.mname" placeholder="Midle Name" ng-pattern="/^[a-zA-Z ]*$/">
+			<p ng-show="sprint1Form.mname.$invalid && !sprint1Form.mname.$pristine" class="help-block">Enter a valid Middle Name</p>			
+		  </label>
+      </div>
+	  
+	  <div class="form-group" ng-class="{ 'has-error' : sprint1Form.lname.$invalid && !sprint1Form.lname.$pristine }">
+		  <label class="item item-input item-floating-label">
+			<span class="input-label">Last Name</span>
+			<input type="text" name="lname" id="lname" ng-model="record.lname" placeholder="* Last Name" required  ng-pattern="/^[a-zA-Z ]*$/">
+			<p ng-show="sprint1Form.lname.$invalid && !sprint1Form.lname.$pristine" class="help-block">Enter a valid Last Name</p>			
+		  </label>
+      </div>
+	
+	  <div class="form-group" ng-class="{ 'has-error' : sprint1Form.mfname.$invalid && !sprint1Form.mfname.$pristine }">
+		  <label class="item item-input item-floating-label">
+			<span class="input-label">Manager Name</span>
+			<input type="text" name="mfname" id="mfname" ng-model="record.mfname" placeholder="* Manager Name" required  ng-pattern="/^[a-zA-Z ]*$/">
+			<p ng-show="sprint1Form.mfname.$invalid && !sprint1Form.mfname.$pristine" class="help-block">Enter a valid Manager First Name.</p>			
+		  </label>
+      </div>
 
-      <label class="item item-input item-floating-label">
-        <span class="input-label">First Name</span>
-        <input type="text" name="fname" id="fname" ng-model="record.fname" placeholder="First Name" required>
-      </label>
-      <label class="item item-input item-floating-label">
-        <span class="input-label">MI</span>
-        <input type="text" name="mname" id="mname" ng-model="record.mname" placeholder="Midle Name">
-      </label>
-      <label class="item item-input item-floating-label">
-        <span class="input-label">Last Name</span>
-        <input type="text" name="lname" id="lname" ng-model="record.lname" placeholder="Last Name">
-      </label>
-      <label class="item item-input item-floating-label">
-        <span class="input-label">Task Manager Name</span>
-        <input type="text" name="mfname" id="mfname" ng-model="record.mfname" placeholder="Task Manager Name">
-      </label>
-      <label class="item item-input item-floating-label">
-        <span class="input-label">Task Manager Last Name</span>
-        <input type="text" name="mlname" id="mlname" ng-model="record.mlname" placeholder="Task Manager Last Name">
-      </label>
-      <label class="item item-input item-floating-label">
-        <span class="input-label">Emergency Contact</span>
-        <input type="text" name="contact" id="contact" ng-model="record.contact" placeholder="Emergency Contact">
-      </label>
-      <label class="item item-input item-floating-label">
-        <span class="input-label">Component</span>
-        <input type="text" name="location" id="location" ng-model="record.location" placeholder="Component">
-      </label>
-      <label class="item item-input item-floating-label">
-        <span class="input-label">Time In</span>
-        <input type="text" name="time" id="time" ng-model="record.time" placeholder="Time In">
-      </label>
+	  <div class="form-group" ng-class="{ 'has-error' : sprint1Form.mlname.$invalid && !sprint1Form.mlname.$pristine }">		  
+		  <label class="item item-input item-floating-label">
+			<span class="input-label">Manager Last Name</span>
+			<input type="text" name="mlname" id="mlname" ng-model="record.mlname" placeholder="* Manager Last Name" required  ng-pattern="/^[a-zA-Z ]*$/">
+			<p ng-show="sprint1Form.mlname.$invalid && !sprint1Form.mlname.$pristine" class="help-block">Enter a valid Manager Last Name.</p>			
+		  </label>
+      </div>
+		  
+	  <div class="form-group" ng-class="{ 'has-error' : (sprint1Form.contact.$invalid && ! sprint1Form.contact.$pristine) }">
+		  <label class="item item-input item-floating-label">
+			<span class="input-label">Contact</span>
+			<input type="text" name="contact" id="contact" ng-model="record.contact" placeholder="* Contact" required ng-pattern="ph_numbr" ui-mask="(999) 999-9999">
+			<p ng-show="sprint1Form.contact.$error.required && !sprint1Form.contact.$pristine" class="help-block">Phone number is required.</p>
+			<p ng-show="sprint1Form.contact.$error.pattern && !sprint1Form.contact.$pristine" class="help-block">Phone number is invalid.</p>		
+		  </label>
+      </div>
+	  
+	 <div class="form-group" ng-class="{ 'has-error' : sprint1Form.location.$invalid && !sprint1Form.location.$pristine }">
+		  <label class="item item-input item-floating-label">
+			<span class="input-label">Location</span>
+			<input type="text" name="location" id="location" ng-model="record.location" placeholder="* Location">
+			<p ng-show="sprint1Form.location.$invalid && !sprint1Form.location.$pristine" class="help-block">Location is required.</p>			
+		  </label>
+      </div>
+		  
+	  <div class="form-group" ng-class="{ 'has-error' : sprint1Form.time.$invalid && !sprint1Form.time.$pristine }">
+		  <label class="item item-input item-floating-label">
+			<span class="input-label">Time</span>
+			<input type="text" name="time" id="time" ng-model="record.time" placeholder="* Time" required ng-pattern="timePattern">
+			<p ng-show="sprint1Form.time.$error.required && !sprint1Form.time.$pristine" class="help-block">Check-In Time is required.</p>
+			<p ng-show="sprint1Form.time.$error.pattern && !sprint1Form.time.$pristine" class="help-block">Enter a valid 12 hour Time. Ex: 01:00 PM.</p>			
+		  </label>
+      </div>
 
-      <button class="button button-block button-positive" ng-disabled="!sprint1Form.$valid" ng-show="!showCheckoutBtn()" ng-click="save()">
+      <button class="button button-block button-positive" ng-click="save()" ng-disabled="sprint1Form.$invalid">
         Check-In
       </button>
-      <button class="button button-block button-positive" ng-show="showCheckoutBtn()" ng-click="delete()">
-        Check-Out
-      </button>
+
 
     </form>
   </ion-content>
