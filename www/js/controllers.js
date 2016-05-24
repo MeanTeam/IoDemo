@@ -277,48 +277,49 @@ angular.module('app.controllers', [])
 
   }])
 
-    .controller('sprint1Ctrl', ['$scope', 'SISOSprints', '$ionicLoading', function($scope, SISOSprints, $ionicLoading){
+    .controller('sprint1Ctrl', ['$scope', 'SISOSprints', '$ionicLoading', '$ionicModal', '$ionicPopup', function($scope, SISOSprints, $ionicLoading, $ionicModal, $ionicPopup){
+        $scope.record = {
+            "fname": "",
+            "mname": "",
+            "lname": "",
+            "mfname": "",
+            "mlname": "",
+            "contact": "",
+            "location": "",
+            "time": ""
+        };
+        $scope.user = {fname: '', lname: ''};
+        $scope.dialog = {title: 'Search User', buttonLabel:'Find User'}
 
-      $scope.record = {
-          "fname": "",
-          "mname": "",
-          "lname": "",
-          "mfname": "",
-          "mlname": "",
-          "contact": "",
-          "location": "",
-          "time": ""
-      };
+        $scope.checkoutDisabled = true;
 
-      $scope.checkoutDisabled = true;
-
-	$scope.ph_numbr = /^(\+?(\d{1}|\d{2}|\d{3})[- ]?)?\d{3}[- ]?\d{3}[- ]?\d{4}$/;
-	$scope.timePattern = /^(0?[1-9]|1[012])(:[0-5]\d) [APap][mM]$/;
-
-
-      $scope.save = function(){
-		  
-            // check to make sure the form is completely valid
-
-				SISOSprints.post($scope.record, function (result) {
-
-				  if (typeof result !== undefined && typeof result._id !== undefined) {
-					$scope.record._id = result._id;
-					$scope.checkoutDisabled = false;
-					$ionicLoading.show({template: 'Check-In Saved!', noBackdrop: true, duration: 2200});
-				  }
-
-				});
-
-           };
+        $scope.ph_numbr = /^(\+?(\d{1}|\d{2}|\d{3})[- ]?)?\d{3}[- ]?\d{3}[- ]?\d{4}$/;
+	      $scope.timePattern = /^(0?[1-9]|1[012])(:[0-5]\d) [APap][mM]$/;
 
 
-      $scope.delete = function(){
+        $scope.save = function(){
 
-        var confirmPopup = $ionicPopup.confirm({
-          title: '<b>Confirm Check-Out</b>',
-          template: 'Check-Out will delete the record'
-        });
+              // check to make sure the form is completely valid
+
+  				SISOSprints.post($scope.record, function (result) {
+
+  				  if (typeof result !== undefined && typeof result._id !== undefined) {
+  					$scope.record._id = result._id;
+  					$scope.checkoutDisabled = false;
+  					$ionicLoading.show({template: 'Check-In Saved!', noBackdrop: true, duration: 2200});
+  				  }
+
+  				});
+
+        };
+
+
+        $scope.delete = function(){
+
+          var confirmPopup = $ionicPopup.confirm({
+            title: '<b>Confirm Check-Out</b>',
+            template: 'Check-Out will delete the record'
+          });
 
         confirmPopup.then(function (res) {
           if(res && typeof $scope.record._id !== undefined && $scope.record._id !== ""){
