@@ -292,6 +292,7 @@ angular.module('app.controllers', [])
             "location": "",
             "time": ""
       };
+
       $scope.showCheckoutBtn = function(){
         return ($scope.record._id !== undefined) && ($scope.record._id !== '');
       };
@@ -303,7 +304,7 @@ angular.module('app.controllers', [])
         SISOSprints.post($scope.record, function (result) {
           if (typeof result !== undefined && typeof result._id !== undefined) {
             $scope.record._id = result._id;
-            $ionicLoading.show({template: 'Check-In Saved!', noBackdrop: true, duration: 2200});
+            $ionicLoading.show({template: 'Sign In Saved!', noBackdrop: true, duration: 2200});
           }
         });
       };
@@ -311,14 +312,14 @@ angular.module('app.controllers', [])
       $scope.delete = function(){
 
         var confirmPopup = $ionicPopup.confirm({
-          title: '<b>Confirm Check-Out</b>',
+          title: '<b>Confirm Sign Out</b>',
           template: 'Check-Out will delete the record'
         });
 
       confirmPopup.then(function (res) {
         if(res && typeof $scope.record._id !== undefined && $scope.record._id !== ""){
           SISOSprints.delete({id: $scope.record._id}, function (result) {
-            $ionicLoading.show({template: 'Check-Out!', noBackdrop: true, duration: 2200});
+            $ionicLoading.show({template: 'Sign Out!', noBackdrop: true, duration: 2200});
 
             $scope.record = {
                 "fname": "",
