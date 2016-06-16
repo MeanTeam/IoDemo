@@ -24,6 +24,32 @@ constant('ApiEndpoint', {
   };
 }])
 
+.factory('ProfileFactory', ['$localStorage', function($localStorage){
+
+  $localStorage = $localStorage.$default({
+    profileData : {}
+  });
+
+  var saveProfile = function (user) {
+    $localStorage.profileData = user;
+  };
+
+  var getProfile = function () {
+    return $localStorage.profileData;
+  };
+
+  var isEmptyObj = function(){
+    return Object.keys($localStorage.profileData).length === 0 && $localStorage.profileData.constructor === Object;
+  };
+
+  return {
+    set : saveProfile,
+    get : getProfile,
+    isEmpty: isEmptyObj
+  };
+
+}])
+
 .service('SISOService', ['$resource', 'ApiEndpoint', function($resource, ApiEndpoint){
   console.log('EndPoint:', ApiEndpoint.url);
 

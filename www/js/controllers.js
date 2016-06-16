@@ -277,7 +277,8 @@ angular.module('app.controllers', [])
 
   }])
 
-  .controller('sprint1Ctrl', ['$scope', 'SISOSprints', '$ionicLoading', '$ionicModal', '$ionicPopup', function($scope, SISOSprints, $ionicLoading, $ionicModal, $ionicPopup){
+  .controller('sprint1Ctrl', ['$scope', 'SISOSprints', 'ProfileFactory', '$ionicLoading', '$ionicModal', '$ionicPopup',
+    function($scope, SISOSprints, ProfileFactory, $ionicLoading, $ionicModal, $ionicPopup){
 
       $scope.user = {fname: '', lname: ''};
       $scope.dialog = {title: 'Search User', buttonLabel:'Find User'}
@@ -293,6 +294,16 @@ angular.module('app.controllers', [])
           "time": ""
       };
 
+      $scope.$on('$ionicView.beforeEnter', function () {
+        console.log(ProfileFactory.get());
+        if(!ProfileFactory.isEmpty()){
+          //var profileData = ProfileFactory.get();
+          /*Object.keys(profileData).forEach(function(key) {
+            $scope.record[key] = profileData[key];
+          });*/
+        }
+      });
+
       $scope.showCheckoutBtn = function(){
         return ($scope.record._id !== undefined) && ($scope.record._id !== '');
       };
@@ -302,6 +313,10 @@ angular.module('app.controllers', [])
           if (typeof result !== undefined && typeof result._id !== undefined) {
             $scope.record._id = result._id;
             $ionicLoading.show({template: 'Check-In Saved!', noBackdrop: true, duration: 2200});
+            //var profileData = ProfileStorage.get();
+            /*Object.keys($scope.record).forEach(function(key) {
+              profileData[key] = $scope.record[key];
+            });*/
           }
         });
       };
