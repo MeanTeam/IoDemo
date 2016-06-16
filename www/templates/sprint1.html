@@ -63,11 +63,22 @@
       </div>
 
   	 <div class="form-group" ng-class="{ 'has-error' : sprint1Form.location.$invalid && !sprint1Form.location.$pristine }">
-  		  <label class="item item-input item-floating-label">
+  		  <label class="item item-input item-select">
   			<span class="input-label">Location</span>
-  			<input type="text" name="location" id="location" ng-model="record.location" placeholder="* Location">
+  			<!-- input type="text" name="location" id="location" ng-model="record.location" placeholder="* Location" -->
+        <select name="location" id="location" ng-model="record.location">
+          <option>Location 1</option>
+          <option>Location 2</option>
+          <option>Location 3</option>
+          <option>Location 4</option>
+          <option>Location 5</option>
+          <option>Location 6</option>
+          <option>Location 7</option>
+          <option>Location 8</option>
+        </select>
   			<p ng-show="sprint1Form.location.$invalid && !sprint1Form.location.$pristine" class="help-block">Location is required.</p>
   		  </label>
+
         </div>
 
   	  <div class="form-group" ng-class="{ 'has-error' : sprint1Form.time.$invalid && !sprint1Form.time.$pristine }">

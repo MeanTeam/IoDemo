@@ -295,12 +295,13 @@ angular.module('app.controllers', [])
       };
 
       $scope.$on('$ionicView.beforeEnter', function () {
-        console.log(ProfileFactory.get());
+
         if(!ProfileFactory.isEmpty()){
-          //var profileData = ProfileFactory.get();
-          /*Object.keys(profileData).forEach(function(key) {
+
+          var profileData = ProfileFactory.get();
+          Object.keys(profileData).forEach(function(key) {
             $scope.record[key] = profileData[key];
-          });*/
+          });
         }
       });
 
@@ -317,11 +318,13 @@ angular.module('app.controllers', [])
             $scope.record._id = result._id;
 
             $ionicLoading.show({template: 'Check-In Saved!', noBackdrop: true, duration: 2200});
-            //var profileData = ProfileStorage.get();
-            /*Object.keys($scope.record).forEach(function(key) {
-              profileData[key] = $scope.record[key];
-            });*/
-
+            var profileData = {};
+            Object.keys(result).forEach(function(key) {
+              if(key !== '_id' && key !== 'time' && key !== '__v'){
+                profileData[key] = result[key];
+              }
+            });
+            ProfileFactory.set(profileData);
           }
         });
       };
@@ -349,6 +352,15 @@ angular.module('app.controllers', [])
                 "time": "",
                 "_id": ""
             };
+
+            // TODO must be a function to reuse preload
+            if(!ProfileFactory.isEmpty()){
+
+              var profileData = ProfileFactory.get();
+              Object.keys(profileData).forEach(function(key) {
+                $scope.record[key] = profileData[key];
+              });
+            }
 
           });
         }
