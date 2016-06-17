@@ -14,6 +14,7 @@ angular.module('app.controllers', ['ionic-modal-select'])
               $location.path(path);
             }else{
               //console.log(userRec);
+              //
             }
           });
 
@@ -384,6 +385,7 @@ angular.module('app.controllers', ['ionic-modal-select'])
     });
     $scope.$on('modal.show', function(){
       //console.log('OPEN DIAL');
+      //
     });
 
     $scope.searchUser = function(u) {
