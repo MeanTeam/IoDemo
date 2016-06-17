@@ -18,7 +18,8 @@
            ng-class="{'ion-android-done energized':rec.status === 'Signed-In', 'ion-android-done-all positive':rec.status === 'Signed-Out'}"></i -->
 
         <h2>
-          {{rec.lname}}, {{rec.fname}}
+          {{rec.lname}}, {{rec.fname}} {{rec.contact}}
+
         </h2>
         <p>
           {{ rec.time }},

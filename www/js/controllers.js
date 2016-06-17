@@ -1,4 +1,4 @@
-angular.module('app.controllers', [])
+angular.module('app.controllers', ['ionic-modal-select'])
 
   .controller('loginCtrl', ['$scope', '$location', 'SISOService', 'SISOFactory',
     function ($scope, $location, SISOService, SISOFactory) {
@@ -8,12 +8,12 @@ angular.module('app.controllers', [])
 
         SISOService.getUserByUsername({username: $scope.user.username, password: $scope.user.password},
           function (userRec) {
-            console.log(userRec);
+            //console.log(userRec);
             if (userRec.success) {
               SISOFactory.set(userRec.record);
               $location.path(path);
             }else{
-              console.log(userRec);
+              //console.log(userRec);
             }
           });
 
@@ -277,11 +277,14 @@ angular.module('app.controllers', [])
 
   }])
 
-  .controller('sprint1Ctrl', ['$scope', 'SISOSprints', 'ProfileFactory', '$ionicLoading', '$ionicModal', '$ionicPopup',
-    function($scope, SISOSprints, ProfileFactory, $ionicLoading, $ionicModal, $ionicPopup){
+  .controller('sprint1Ctrl', ['$scope', '$interval', 'SISOSprints', 'ProfileFactory', '$ionicLoading', '$ionicModal', '$ionicPopup',
+    function($scope, $interval, SISOSprints, ProfileFactory, $ionicLoading, $ionicModal, $ionicPopup){
 
       $scope.user = {fname: '', lname: ''};
-      $scope.dialog = {title: 'Search User', buttonLabel:'Find User'}
+      $scope.dialog = {title: 'Search User', buttonLabel:'Find User'};
+      $scope.someModel = null;
+      $scope.locations = ['Location 1', 'Location 1', 'Location 2', 'Location 3', 'Location 4', 'Location 5'];
+      $scope.myTimes = [];
 
       $scope.record = {
             "fname": "",
@@ -380,7 +383,7 @@ angular.module('app.controllers', [])
         $scope.user = {fname: '', lname: ''};
     });
     $scope.$on('modal.show', function(){
-      console.log('OPEN DIAL');
+      //console.log('OPEN DIAL');
     });
 
     $scope.searchUser = function(u) {
@@ -398,6 +401,45 @@ angular.module('app.controllers', [])
           $ionicLoading.show({template: 'User name must not be empty!', noBackdrop: true, duration: 2200});
         }
       };
+
+    $scope.myDynamicTimes = function () {
+
+      var currentTime = new Date();
+      currentTime.setMinutes(-15);
+      var curMinute = currentTime.getMinutes();
+      var rawQuarter = precision(curMinute / 15);
+      var quarter = Math.ceil(rawQuarter);
+      if (quarter === 0) quarter = 1;
+
+      if (rawQuarter <= 3) {
+        currentTime.setMinutes(quarter * 15, 0, 0);
+      } else {
+        currentTime.setHours(currentTime.getHours() + 1, 0, 0, 0);
+      }
+
+      // creates times for every lapse of times (15 minutes --> [1000 * 60 * 15])
+      if ($scope.myTimes.length === 0 || getLapseOfTime(currentTime) !== $scope.myTimes[0]['hour']) {
+        for (var i = 0; i < 5; i++) {
+          $scope.myTimes[i] = {"hour": getLapseOfTime(currentTime), "checked": false};
+          currentTime = new Date(currentTime.getTime() + (1000 * 60 * 15));
+        }
+      }
+
+      function precision(n) {
+        return (n * 100) / 100;
+      }
+
+      function getLapseOfTime(date) {
+        return date.toLocaleTimeString().replace(/:\d+ /, ' ');
+      }
+
+    };
+    // calculate for first-time
+    $scope.myDynamicTimes();
+
+    // recalculate every 5 min ---> [1000 * 60 * 5]
+    $interval($scope.myDynamicTimes, 1000 * 60 * 5);
+
 
   }])
 
