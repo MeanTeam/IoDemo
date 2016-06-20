@@ -37,7 +37,7 @@ constant('ApiEndpoint', {
   var getProfile = function () {
     return $localStorage.profileData;
   };
-  
+
   var isEmptyObj = function(){
     return Object.keys($localStorage.profileData).length === 0 && $localStorage.profileData.constructor === Object;
   };
