@@ -1,5 +1,21 @@
 angular.module('app.controllers', ['ionic-modal-select'])
 
+.controller('tabCtrl', ['$scope',
+function ($scope) {
+$scope.displayManager = false;
+$scope.displayPassword = true;
+$scope.managerId = "";
+$scope.validate = function(mId) {
+  console.log(mId);
+  if(mId === 'manager') {
+    $scope.displayManager = true;
+    $scope.displayPassword = false;
+  } else {
+    $scope.displayManager = false;
+  }
+};
+}])
+
   .controller('loginCtrl', ['$scope', '$location', 'SISOService', 'SISOFactory',
     function ($scope, $location, SISOService, SISOFactory) {
       $scope.user = {username: "", password: ""};

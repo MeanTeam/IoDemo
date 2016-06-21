@@ -16,11 +16,14 @@
         <ion-item nav-clear menu-close href="#/tab/sprint1">
           Employee
         </ion-item>
-        <ion-item nav-clear menu-close href="#/tab/listByManager">
+        <ion-item nav-clear menu-close href="#/tab/listByManager"  ng-show="displayManager">
           Manager
         </ion-item>
-        <ion-item nav-clear menu-close href="#/tab/sprint1">
-          Administrator
+        <ion-item ng-show="displayPassword">
+          <div ng-class="{ 'has-error' : sprint1Form.isManager.$invalid && !sprint1Form.mlname.$pristine }">
+            <span class="input-label">Manager Password</span>
+            <input type="text" name="managerId" id="managerId" ng-model="managerId" ng-change="validate(managerId)">
+          </div>
         </ion-item>
       </ion-list>
     </ion-content>
