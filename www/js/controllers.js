@@ -6,7 +6,6 @@ $scope.displayManager = false;
 $scope.displayPassword = true;
 $scope.managerId = "";
 $scope.validate = function(mId) {
-  console.log(mId);
   if(mId === 'manager') {
     $scope.displayManager = true;
     $scope.displayPassword = false;
