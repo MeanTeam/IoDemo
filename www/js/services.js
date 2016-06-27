@@ -5,6 +5,20 @@ constant('ApiEndpoint', {
   url : '/api/sisoweb' //"http://localhost:8100" //mine "https://nameless-island-29757.herokuapp.com"   //app https://lit-basin-60588.herokuapp.com/api/sisoweb
 })
 
+.factory('LocationFactory', [function(){
+//  $localStorage = $localStorage.$default({
+  //  userData : {pin: "", name: "", manager: "", contact: ""}
+//  });
+
+  var getLocations = function () {
+    return ['Location 1', 'Location 2', 'Location 3', 'Location 4', 'Location 5', 'Location 6'];
+  };
+
+  return {
+    get : getLocations
+  };
+}])
+
 .factory('SISOFactory', ['$localStorage', function($localStorage){
   $localStorage = $localStorage.$default({
     userData : {pin: "", name: "", manager: "", contact: ""}

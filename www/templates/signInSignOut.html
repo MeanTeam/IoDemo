@@ -1,0 +1,95 @@
+<ion-view view-title="Sign In/Sign Out" id="siso">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-content padding="true" class="has-header">
+
+    <form name="sisoForm" class="list" novalidate>
+
+  	  <div class="form-group" ng-class="{ 'has-error' : sisoForm.fname.$invalid && !sisoForm.fname.$pristine }">
+  		  <label class="item item-input item-floating-label">
+  			<span class="input-label">First Name</span>
+  			<input type="text" name="fname" id="fname" ng-model="record.fname" placeholder="* First Name"
+            ng-disabled = "true"
+  					required  ng-pattern="/^[a-zA-Z ]*$/">
+  			<p ng-show="sisoForm.fname.$error.required && !sisoForm.fname.$pristine" class="help-block">First Name is required.</p>
+  			<p ng-show="sisoForm.fname.$error.pattern && !sisoForm.fname.$pristine"  class="help-block">Enter a valid First Name.</p>
+  		  </label>
+        </div>
+
+  	  <div class="form-group" ng-class="{ 'has-error' : sisoForm.mname.$invalid && !sisoForm.mname.$pristine }">
+  		  <label class="item item-input item-floating-label">
+  			<span class="input-label">Midle Name</span>
+  			<input type="text" ng-disabled = "true" name="mname" id="mname" ng-model="record.mname" placeholder="Midle Name" ng-pattern="/^[a-zA-Z ]*$/">
+  			<p ng-show="sisoForm.mname.$invalid && !sisoForm.mname.$pristine" class="help-block">Enter a valid Middle Name </p>
+  		  </label>
+        </div>
+
+  	  <div class="form-group" ng-class="{ 'has-error' : sisoForm.lname.$invalid && !sisoForm.lname.$pristine }">
+  		  <label class="item item-input item-floating-label">
+  			<span class="input-label">Last Name</span>
+  			<input type="text" ng-disabled = "true" name="lname" id="lname" ng-model="record.lname" placeholder="* Last Name" required  ng-pattern="/^[a-zA-Z ]*$/">
+  			<p ng-show="sisoForm.lname.$invalid && !sisoForm.lname.$pristine" class="help-block">Enter a valid Last Name</p>
+  		  </label>
+        </div>
+
+  	  <div class="form-group" ng-class="{ 'has-error' : sisoForm.mfname.$invalid && !sisoForm.mfname.$pristine }">
+  		  <label class="item item-input item-floating-label">
+  			<span class="input-label">Task Manager First Name</span>
+  			<input type="text" ng-disabled = "true" name="mfname" id="mfname" ng-model="record.mfname" placeholder="* Task Manager First Name" required  ng-pattern="/^[a-zA-Z ]*$/">
+  			<p ng-show="sisoForm.mfname.$invalid && !sisoForm.mfname.$pristine" class="help-block">Enter a valid Task Manager First Name.</p>
+  		  </label>
+        </div>
+
+  	  <div class="form-group" ng-class="{ 'has-error' : sisoForm.mlname.$invalid && !sisoForm.mlname.$pristine }">
+  		  <label class="item item-input item-floating-label">
+  			<span class="input-label">Task Manager Last Name</span>
+  			<input type="text" ng-disabled = "true" name="mlname" id="mlname" ng-model="record.mlname" placeholder="* Task Manager Last Name" required  ng-pattern="/^[a-zA-Z ]*$/">
+  			<p ng-show="sisoForm.mlname.$invalid && !sisoForm.mlname.$pristine" class="help-block">Enter a valid Task Manager Last Name.</p>
+  		  </label>
+        </div>
+
+  	  <div class="form-group" ng-class="{ 'has-error' : (sisoForm.contact.$invalid && ! sisoForm.contact.$pristine) }">
+  		  <label class="item item-input item-floating-label">
+  			<span class="input-label">Contact</span>
+  			<input type="text" ng-disabled = "true" name="contact" id="contact" ng-model="record.contact" placeholder="* Contact" required ng-pattern="ph_numbr" ui-mask="(999) 999-9999">
+  			<p ng-show="sisoForm.contact.$error.required && !sisoForm.contact.$pristine" class="help-block">Phone number is required.</p>
+  			<p ng-show="sisoForm.contact.$error.pattern && !sisoForm.contact.$pristine" class="help-block">Phone number is invalid.</p>
+  		  </label>
+      </div>
+
+      <div class="item item-button-right">
+        <span class="input-label" ng-if="record.location !== ''">Location</span>
+        <span ng-if="record.location !== ''">{{record.location}}</span>
+        <input type="text" ng-if="record.location === ''" name="location" id="location" ng-model="record.location" placeholder="* Location" required disabled="true">
+        <button class="button icon-left ion-location" modal-select="" ng-model="record.location" options="locations" modal-title="Select Location">
+          <div class="option">
+            {{option}}
+          </div>
+        </button>
+     </div>
+
+     <div class="item item-button-right" ng-class="{ 'has-error' : sisoForm.time.$invalid && !sisoForm.time.$pristine }">
+
+    			<span class="input-label" ng-if="record.time !== ''">Time</span>
+    			<input type="text" name="time" id="time" ng-model="record.time" placeholder="* Time" required ng-pattern="timePattern">
+          <button class="button icon-left ion-ios-time" modal-select ng-model="record.time" options="myTimes" modal-title="Select Time" option-property="hour">
+            <div class="option">
+              {{option.hour}}
+            </div>
+          </button>
+    			<p ng-show="sisoForm.time.$error.required && !sisoForm.time.$pristine" class="help-block">Sign In Time is required.</p>
+    			<p ng-show="sisoForm.time.$error.pattern && !sisoForm.time.$pristine" class="help-block">Enter a valid 12 hour Time. Ex: 01:00 PM.</p>
+
+    </div>
+
+    <button class="button button-block button-positive" ng-disabled="!sisoForm.$valid" ng-show="!showCheckoutBtn()" ng-click="save()">
+        Sign In
+    </button>
+    <button class="button button-block button-positive" ng-show="showCheckoutBtn()" ng-click="delete()">
+        Sign Out
+    </button>
+
+    </form>
+  </ion-content>
+</ion-view>

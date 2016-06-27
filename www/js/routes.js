@@ -12,75 +12,77 @@ angular.module('app.routes', [])
     url: '/tab',
     abstract: true,
     templateUrl: 'templates/menu.html',
-    controller: 'tabCtrl'
+    controller: 'menuCtrl'
   })
 
-  .state('login', {
-    cache: false,
-    url: '/login',
-    templateUrl: 'templates/login.html',
-    controller: 'loginCtrl'
-  })
-
-  .state('tab.checkInCheckOut', {
-    url: '/entries',
-    views:{
-      'tab-checkInCheckOut':
-      {
-        templateUrl: 'templates/checkInCheckOut.html',
-        controller: 'checkInCheckOutCtrl'
-      }
-    }
-  })
-
-  .state('tab.userInfo', {
-    url: '/userInfo',
-      views:{
-        'tab-checkInCheckOut':
-        {
-          templateUrl: 'templates/userInfo.html',
-          controller: 'userInfoCtrl'
-        }
-    }
-  })
-
-  .state('tab.log', {
-    url: '/log',
-    views:{
-      'tab-checkInCheckOut':
-      {
-        templateUrl: 'templates/log.html',
-        controller: 'logCtrl'
-      }
-    }
-  })
-
-  .state('tab.sprint1', {
-    url: '/sprint1',
+  .state('tab.register', {
+    url: '/register',
     cache: false,
     views:{
       'menuContent':{
-        templateUrl: 'templates/sprint1.html',
-        controller: 'sprint1Ctrl'
+        templateUrl: 'templates/register.html',
+        controller: 'registerCtrl'
       }
     }
   })
 
-  .state('tab.listByManager', {
-    url: '/listByManager',
+  .state('tab.signInSignOut', {
+    url: '/signInSignOut',
     cache: false,
     views:{
       'menuContent':{
-        templateUrl: 'templates/listByManager.html',
-        controller: 'listByManagerCtrl'
+        templateUrl: 'templates/signInSignOut.html',
+        controller: 'signInSignOutCtrl'
+      }
+    }
+  })
+
+  .state('tab.listSignins', {
+    url: '/listSignins',
+    cache: false,
+    views:{
+      'menuContent':{
+        templateUrl: 'templates/listSignins.html',
+        controller: 'listSigninsCtrl'
       }
     }
   });
 
+  /*
+    .state('tab.checkInCheckOut', {
+      url: '/entries',
+      views:{
+        'tab-checkInCheckOut':
+        {
+          templateUrl: 'templates/checkInCheckOut.html',
+          controller: 'checkInCheckOutCtrl'
+        }
+      }
+    })
 
+    .state('tab.userInfo', {
+      url: '/userInfo',
+        views:{
+          'tab-checkInCheckOut':
+          {
+            templateUrl: 'templates/userInfo.html',
+            controller: 'userInfoCtrl'
+          }
+      }
+    })
 
-  $urlRouterProvider.otherwise('/tab/sprint1')
+    .state('tab.log', {
+      url: '/log',
+      views:{
+        'tab-checkInCheckOut':
+        {
+          templateUrl: 'templates/log.html',
+          controller: 'logCtrl'
+        }
+      }
+    })
+  */
 
-
+  $urlRouterProvider.otherwise('/tab/register')
 
 });
