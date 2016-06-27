@@ -5,7 +5,7 @@ constant('ApiEndpoint', {
   url : '/api/sisoweb' //"http://localhost:8100" //mine "https://nameless-island-29757.herokuapp.com"   //app https://lit-basin-60588.herokuapp.com/api/sisoweb
 })
 
-.factory('LocationFactory', [function(){
+.factory('Locations', [function(){
 //  $localStorage = $localStorage.$default({
   //  userData : {pin: "", name: "", manager: "", contact: ""}
 //  });

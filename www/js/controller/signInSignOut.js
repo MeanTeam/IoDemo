@@ -1,12 +1,12 @@
 angular.module('app.signInSignOut', ['ionic-modal-select'])
 
-  .controller('signInSignOutCtrl', ['$scope', '$interval', 'SISOSprints', 'LocationFactory', 'ProfileFactory', '$ionicLoading', '$ionicModal', '$ionicPopup',
-    function($scope, $interval, SISOSprints, LocationFactory, ProfileFactory, $ionicLoading, $ionicModal, $ionicPopup){
+  .controller('signInSignOutCtrl', ['$scope', '$interval', 'SISOSprints', 'Locations', 'ProfileFactory', '$ionicLoading', '$ionicModal', '$ionicPopup',
+    function($scope, $interval, SISOSprints, Locations, ProfileFactory, $ionicLoading, $ionicModal, $ionicPopup){
 
       $scope.user = {fname: '', lname: ''};
       $scope.dialog = {title: 'Search User', buttonLabel:'Find User'};
       $scope.someModel = null;
-      $scope.locations = LocationFactory.get();//['Location 1', 'Location 2', 'Location 3', 'Location 4', 'Location 5'];
+      $scope.locations = Locations.get();//['Location 1', 'Location 2', 'Location 3', 'Location 4', 'Location 5'];
       $scope.myTimes = [];
 
       $scope.record = {
