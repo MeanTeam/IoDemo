@@ -32,10 +32,11 @@ $scope.validate = function(mId) {
               //
             }
           });
-
       };
 
-
+      $scope.goToRegisterPage = function(){
+          $location.path('/tab/register');
+      }
     }])
 
   .controller('checkInCheckOutCtrl', ['$scope', '$interval', '$ionicPopup', '$ionicLoading', 'SISOService', 'SISOFactory',

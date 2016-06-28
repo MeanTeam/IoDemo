@@ -46,9 +46,12 @@ constant('ApiEndpoint', {
 
   var saveProfile = function (user) {
     $localStorage.profileData = user;
+    console.log("--Service.save--"+$localStorage.profileData+"--");
+
   };
 
   var getProfile = function () {
+    console.log("--Service.get--"+$localStorage.profileData+"--");
     return $localStorage.profileData;
   };
 
@@ -56,9 +59,17 @@ constant('ApiEndpoint', {
     return Object.keys($localStorage.profileData).length === 0 && $localStorage.profileData.constructor === Object;
   };
 
+  var resetObj = function(){
+    console.log("--inside resetObj--");
+    var userData = {};
+    saveProfile(userData)
+  //  });
+  };
+
   return {
     set : saveProfile,
     get : getProfile,
+    reset: resetObj,
     isEmpty: isEmptyObj
   };
 

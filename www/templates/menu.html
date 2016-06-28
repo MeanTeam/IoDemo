@@ -13,11 +13,20 @@
     </header>
     <ion-content class="has-header">
       <ion-list>
+        <ion-item nav-clear menu-close href="#/login">
+          Login
+        </ion-item>
         <ion-item nav-clear menu-close href="#/tab/signInSignOut">
           Sign In/Sign Out
         </ion-item>
         <ion-item nav-clear menu-close href="#/tab/listSignins"  ng-show="displayListSignins">
           List Sign-In(s)
+        </ion-item>
+        <ion-item nav-clear menu-close ng-click="reset()">
+          Reset
+        </ion-item>
+        <ion-item nav-clear menu-close>
+          Log Out
         </ion-item>
       </ion-list>
     </ion-content>

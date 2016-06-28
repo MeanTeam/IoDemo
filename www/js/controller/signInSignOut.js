@@ -1,7 +1,7 @@
 angular.module('app.signInSignOut', ['ionic-modal-select'])
 
-  .controller('signInSignOutCtrl', ['$scope', '$interval', 'SISOSprints', 'Locations', 'ProfileFactory', '$ionicLoading', '$ionicModal', '$ionicPopup',
-    function($scope, $interval, SISOSprints, Locations, ProfileFactory, $ionicLoading, $ionicModal, $ionicPopup){
+  .controller('signInSignOutCtrl', ['$scope', '$location', '$interval', 'SISOSprints', 'Locations', 'ProfileFactory', '$ionicLoading', '$ionicModal', '$ionicPopup',
+    function($scope, $location, $interval, SISOSprints, Locations, ProfileFactory, $ionicLoading, $ionicModal, $ionicPopup){
 
       $scope.user = {fname: '', lname: ''};
       $scope.dialog = {title: 'Search User', buttonLabel:'Find User'};
@@ -21,14 +21,11 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
       };
 
       $scope.$on('$ionicView.beforeEnter', function () {
-
-        if(!ProfileFactory.isEmpty()){
-
           var profileData = ProfileFactory.get();
           Object.keys(profileData).forEach(function(key) {
             $scope.record[key] = profileData[key];
           });
-        }
+          //$location.path('/tab/signInSignOut');
       });
 
       $scope.showCheckoutBtn = function(){
@@ -44,13 +41,6 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
             $scope.record._id = result._id;
 
             $ionicLoading.show({template: 'Check-In Saved!', noBackdrop: true, duration: 2200});
-            var profileData = {};
-            Object.keys(result).forEach(function(key) {
-              if(key !== '_id' && key !== 'time' && key !== '__v'){
-                profileData[key] = result[key];
-              }
-            });
-            ProfileFactory.set(profileData);
           }
         });
       };
@@ -75,13 +65,12 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
                 "mlname": "",
                 "contact": "",
                 "location": "",
-                "time": "",
+                "time": new Date().toLocaleTimeString().replace(/:\d+ /, ' '),
                 "_id": ""
             };
 
             // TODO must be a function to reuse preload
             if(!ProfileFactory.isEmpty()){
-
               var profileData = ProfileFactory.get();
               Object.keys(profileData).forEach(function(key) {
                 $scope.record[key] = profileData[key];

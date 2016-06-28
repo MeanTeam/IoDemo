@@ -1,10 +1,10 @@
 angular.module('app.register', ['ionic-modal-select'])
 
-  .controller('registerCtrl', ['$scope', '$interval', 'SISOSprints', 'Locations', 'ProfileFactory', '$ionicLoading', '$ionicModal', '$ionicPopup',
-    function($scope, $interval, SISOSprints, Locations, ProfileFactory, $ionicLoading, $ionicModal, $ionicPopup){
+  .controller('registerCtrl', ['$scope', '$interval', '$location', 'SISOSprints', 'Locations', 'ProfileFactory', '$ionicLoading', '$ionicModal', '$ionicPopup',
+    function($scope, $interval, $location, SISOSprints, Locations, ProfileFactory, $ionicLoading, $ionicModal, $ionicPopup){
 
       $scope.user = {fname: '', lname: ''};
-      $scope.dialog = {title: 'Search User', buttonLabel:'Find User'};
+      $scope.dialog = {title: 'Login Page', buttonLabel:'Login'};
       $scope.someModel = null;
       $scope.locations = Locations.get();//['Location 1', 'Location 1', 'Location 2', 'Location 3', 'Location 4', 'Location 5'];
       $scope.myTimes = [];
@@ -22,8 +22,11 @@ angular.module('app.register', ['ionic-modal-select'])
 
       $scope.$on('$ionicView.beforeEnter', function () {
 
-        if(!ProfileFactory.isEmpty()){
+console.log("--ProfileFactory.isEmpty()--"+ProfileFactory.isEmpty()+"--");
 
+        if(!ProfileFactory.isEmpty()){
+          $location.path('/tab/signInSignOut');
+        }else{
           var profileData = ProfileFactory.get();
           Object.keys(profileData).forEach(function(key) {
             $scope.record[key] = profileData[key];
@@ -43,7 +46,7 @@ angular.module('app.register', ['ionic-modal-select'])
           if (typeof result !== undefined && typeof result._id !== undefined) {
             $scope.record._id = result._id;
 
-            $ionicLoading.show({template: 'Check-In Saved!', noBackdrop: true, duration: 2200});
+            $ionicLoading.show({template: 'Registered!', noBackdrop: true, duration: 2200});
             var profileData = {};
             Object.keys(result).forEach(function(key) {
               if(key !== '_id' && key !== 'time' && key !== '__v'){
@@ -51,6 +54,7 @@ angular.module('app.register', ['ionic-modal-select'])
               }
             });
             ProfileFactory.set(profileData);
+            $location.path('/tab/signInSignOut');
           }
         });
       };
@@ -158,6 +162,11 @@ angular.module('app.register', ['ionic-modal-select'])
       }
 
     };
+
+    $scope.goToLoginPage = function(){
+        $location.path('/login');
+    }
+
     // calculate for first-time
     $scope.myDynamicTimes();
 

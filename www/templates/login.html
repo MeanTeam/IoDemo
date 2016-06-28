@@ -1,4 +1,9 @@
-<ion-view title="Log In" id="login">
+
+<ion-view title="Log In - SISO" id="login">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+
     <ion-content padding="true" class="has-header">
         <form name="loginForm" class="list">
             <ion-list>
@@ -8,10 +13,7 @@
                     >Username</span>
                     <input type="text"
                       ng-model="user.username"
-                      placeholder=""
-                      ng-required="true"
-                      name="username"
-                      id="username">
+                      placeholder="" ng-required="true" name="username" id="username">
                 </label>
                 <label class="item item-input">
                     <span
@@ -20,11 +22,18 @@
                     >Password</span>
                     <input type="password"
                       ng-model="user.password"
-                      ng-required="true"
-                    placeholder="" ng-required="true" name="password" id="true">
+                      placeholder="" ng-required="true" name="password" id="true">
                 </label>
             </ion-list>
-            <div class="spacer" style="height: 40px;"></div>
+
+            <br>
+            <centered>
+              <B>
+                <input type="checkbox" ng-model="rememberMe"> Remember Me.<br>
+              </B>
+            </centered>
+
+            <div class="spacer" style="height: 20px;"></div>
             <button
               id="login-button2"
               class="button button-block"
@@ -35,10 +44,17 @@
                 'button-stable': loginForm.username.$error.required || loginForm.password.$error.required
               }"
               >Log in</button>
+
             <a href="#" onclick=""
               id="login-button3" class="button button-positive button-block button-clear">
               Or request access to your manager
             </a>
+
+            <button
+              class="button button-full button-positive"
+              ng-click="goToRegisterPage()">
+              Not registered yet? Click here to register.
+            </button>
 
         </form>
 

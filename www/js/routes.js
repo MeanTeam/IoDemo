@@ -15,6 +15,17 @@ angular.module('app.routes', [])
     controller: 'menuCtrl'
   })
 
+  .state('login', {
+    url: '/login',
+    cache: false,
+    views:{
+      'menuContent':{
+        templateUrl: 'templates/login.html',
+        controller: 'loginCtrl'
+      }
+    }
+  })
+
   .state('tab.register', {
     url: '/register',
     cache: false,
@@ -83,6 +94,8 @@ angular.module('app.routes', [])
     })
   */
 
+  //$urlRouterProvider.otherwise('/login')
   $urlRouterProvider.otherwise('/tab/register')
+  //$urlRouterProvider.otherwise('/tab/signInSignOut')
 
 });
