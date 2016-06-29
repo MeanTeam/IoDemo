@@ -56,7 +56,7 @@
   	  <div class="form-group" ng-class="{ 'has-error' : (sprint1Form.contact.$invalid && ! sprint1Form.contact.$pristine) }">
   		  <label class="item item-input item-floating-label">
   			<span class="input-label">Contact</span>
-  			<input type="text" name="contact" id="contact" ng-model="record.contact" placeholder="* Contact" required ng-pattern="ph_numbr" ui-mask="(999) 999-9999">
+			<input type="text" name="contact" id="contact" ng-model="record.contact" ui-mask="(999) 999-9999"  ui-mask-placeholder ui-mask-placeholder-char="_" placeholder="* Contact" required />
   			<p ng-show="sprint1Form.contact.$error.required && !sprint1Form.contact.$pristine" class="help-block">Phone number is required.</p>
   			<p ng-show="sprint1Form.contact.$error.pattern && !sprint1Form.contact.$pristine" class="help-block">Phone number is invalid.</p>
   		  </label>
