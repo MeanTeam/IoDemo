@@ -36,6 +36,9 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
       $scope.timePattern = /^(0?[1-9]|1[012])(:[0-5]\d) [APap][mM]$/;
 
       $scope.save = function(){
+//        $scope.record.time = "02:15:00 PM";
+        console.log("** "+$scope.record.time);
+        console.log("** "+$scope.record.contact);
         SISOSprints.post($scope.record, function (result) {
           if (typeof result !== undefined && typeof result._id !== undefined) {
             $scope.record._id = result._id;
@@ -142,7 +145,13 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
       }
 
       function getLapseOfTime(date) {
-        return date.toLocaleTimeString().replace(/:\d+ /, ' ');
+        var _time = date.toLocaleTimeString().trim();
+        var i = _time.split(':');
+        var index = i[2].indexOf('M');
+        var v = i[0]+':'+i[1]+' '+i[2].substring(index-1,index+1);
+        v = i[0]+':'+i[1]+' '+i[2].substring(index-1,index+1);
+        return v;
+//        return date.toLocaleTimeString().replace(/:\d+ /, ' ');
       }
 
     };
