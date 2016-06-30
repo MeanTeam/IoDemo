@@ -8,7 +8,7 @@ angular.module('app.register', ['ionic-modal-select'])
       $scope.someModel = null;
       $scope.locations = Locations.get();//['Location 1', 'Location 1', 'Location 2', 'Location 3', 'Location 4', 'Location 5'];
       $scope.myTimes = [];
-
+    
       $scope.record = {
             "fname": "",
             "mname": "",
@@ -17,13 +17,12 @@ angular.module('app.register', ['ionic-modal-select'])
             "mlname": "",
             "contact": "",
             "location": "",
-            "time": new Date().toLocaleTimeString().replace(/:\d+ /, ' ')
+            "time": new Date().toLocaleTimeString().replace(/:\d+ /, ' '),
+            "manager": ""
       };
 
       $scope.$on('$ionicView.beforeEnter', function () {
-
-console.log("--ProfileFactory.isEmpty()--"+ProfileFactory.isEmpty()+"--");
-
+ 
         if(!ProfileFactory.isEmpty()){
           $location.path('/tab/signInSignOut');
         }else{
@@ -42,22 +41,16 @@ console.log("--ProfileFactory.isEmpty()--"+ProfileFactory.isEmpty()+"--");
       $scope.timePattern = /^(0?[1-9]|1[012])(:[0-5]\d) [APap][mM]$/;
 
       $scope.save = function(){
-        SISOSprints.post($scope.record, function (result) {
-          if (typeof result !== undefined && typeof result._id !== undefined) {
-            $scope.record._id = result._id;
-
-            $ionicLoading.show({template: 'Registered!', noBackdrop: true, duration: 2200});
-            var profileData = {};
-            Object.keys(result).forEach(function(key) {
-              if(key !== '_id' && key !== 'time' && key !== '__v'){
-                profileData[key] = result[key];
-              }
-            });
-            ProfileFactory.set(profileData);
-            $location.path('/tab/signInSignOut');
-          }
-        });
+        var profileData = {};
+         Object.keys($scope.record).forEach(function(key) {
+           profileData[key] =  $scope.record[key];
+         });
+         ProfileFactory.set(profileData);
+         $ionicLoading.show({template: 'Registered!', noBackdrop: true, duration: 2200});
+         $location.path('/tab/signInSignOut');
       };
+
+
 
       $scope.delete = function(){
 

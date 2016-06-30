@@ -49,6 +49,7 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
       };
 
       $scope.delete = function(){
+        console.log("delete function");
 
         var confirmPopup = $ionicPopup.confirm({
           title: '<b>Confirm Sign Out</b>',
