@@ -8,7 +8,7 @@ angular.module('app.register', ['ionic-modal-select'])
       $scope.someModel = null;
       $scope.locations = Locations.get();//['Location 1', 'Location 1', 'Location 2', 'Location 3', 'Location 4', 'Location 5'];
       $scope.myTimes = [];
-    
+
       $scope.record = {
             "fname": "",
             "mname": "",
@@ -22,7 +22,7 @@ angular.module('app.register', ['ionic-modal-select'])
       };
 
       $scope.$on('$ionicView.beforeEnter', function () {
- 
+console.log("**** "+ProfileFactory.isEmpty());
         if(!ProfileFactory.isEmpty()){
           $location.path('/tab/signInSignOut');
         }else{

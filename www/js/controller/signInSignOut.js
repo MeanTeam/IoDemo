@@ -17,13 +17,17 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
             "mlname": "",
             "contact": "",
             "location": "",
-            "time": new Date().toLocaleTimeString().replace(/:\d+ /, ' ')
+            "time": ""
       };
 
       $scope.$on('$ionicView.beforeEnter', function () {
           var profileData = ProfileFactory.get();
           Object.keys(profileData).forEach(function(key) {
-            $scope.record[key] = profileData[key];
+            if(key == 'time') {
+              $scope.record[key] = new Date().toLocaleTimeString().replace(/:\d+ /, ' ');
+            } else {
+              $scope.record[key] = profileData[key];
+            }
           });
           //$location.path('/tab/signInSignOut');
       });
@@ -36,9 +40,6 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
       $scope.timePattern = /^(0?[1-9]|1[012])(:[0-5]\d) [APap][mM]$/;
 
       $scope.save = function(){
-//        $scope.record.time = "02:15:00 PM";
-        console.log("** "+$scope.record.time);
-        console.log("** "+$scope.record.contact);
         SISOSprints.post($scope.record, function (result) {
           if (typeof result !== undefined && typeof result._id !== undefined) {
             $scope.record._id = result._id;
@@ -69,7 +70,7 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
                 "mlname": "",
                 "contact": "",
                 "location": "",
-                "time": new Date().toLocaleTimeString().replace(/:\d+ /, ' '),
+                "time": new Date(),//.toLocaleTimeString().replace(/:\d+ /, ' '),
                 "_id": ""
             };
 
@@ -86,16 +87,18 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
       });
 
     };
-
+/*
     $ionicModal.fromTemplateUrl('templates/userDialog.html', {
         scope: $scope,
         animation: 'slide-in-up',
         focusFirstInput: true
     }).then(function(modal){
+      console.log("******** fromTemplateUrl");
         $scope.userDialog = modal;
     });
 
     $scope.$on('modal.hidden', function(){
+      console.log("******** fromTemplateUrl");
         $scope.user = {fname: '', lname: ''};
     });
     $scope.$on('modal.show', function(){
@@ -118,12 +121,14 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
           $ionicLoading.show({template: 'User name must not be empty!', noBackdrop: true, duration: 2200});
         }
       };
-
+*/
     $scope.myDynamicTimes = function () {
 
       var currentTime = new Date();
+      console.log("myDynamicTimes: currentTime = "+currentTime.toLocaleTimeString().replace(/:\d+ /, ' '));
       var remainMinutes = currentTime.getMinutes()%15;
-      var quarter = Math.ceil(currentTime.getMinutes()/15);
+      var quarter = Math.floor(currentTime.getMinutes()/15);
+      console.log(quarter+","+remainMinutes);
       if(remainMinutes > 7) {
         quarter++;
       }
@@ -132,6 +137,7 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
       } else {
         currentTime.setHours(currentTime.getHours() + 1, 0, 0, 0);
       }
+      console.log("myDynamicTimes: startTime = "+currentTime.toLocaleTimeString().replace(/:\d+ /, ' '));
       currentTime = new Date(currentTime.getTime()-1000*60*15*3);
       // creates times for every lapse of times (15 minutes --> [1000 * 60 * 15])
       if ($scope.myTimes.length === 0 || getLapseOfTime(currentTime) !== $scope.myTimes[0]['hour']) {

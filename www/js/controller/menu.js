@@ -8,12 +8,11 @@ angular.module('app.menu', ['ionic-modal-select'])
    $scope.$on('$ionicView.beforeEnter', function () {
 
         if(!ProfileFactory.isEmpty()) {
-          console.log("ProfileFactory.get().manager " + ProfileFactory.get().manager);
           if(ProfileFactory.get().manager){
             $scope.displayListSignins = true;
           }
         }
-        
+
    });
 
 

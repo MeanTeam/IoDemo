@@ -51,7 +51,6 @@ constant('ApiEndpoint', {
   };
 
   var getProfile = function () {
-    console.log("--Service.get--"+$localStorage.profileData+"--");
     return $localStorage.profileData;
   };
 
