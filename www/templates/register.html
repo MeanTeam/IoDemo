@@ -1,12 +1,5 @@
 <ion-view view-title="Register - SISO" id="sprint1">
-  <ion-nav-buttons side="left">
-    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
-  </ion-nav-buttons>
-  <!--ion-nav-buttons side="right">
-      <button class="button button-positive"
-        ng-disabled=""
-        ng-click="userDialog.show()">Login</button>
-  </ion-nav-buttons-->
+
   <ion-content padding="true" class="has-header">
 
     <form name="sprint1Form" class="list" novalidate>
@@ -81,19 +74,10 @@
      </centered>
      <div class="spacer" style="height: 20px;"></div>
 
-    <button class="button button-block button-positive" ng-disabled="!sprint1Form.$valid" ng-show="!showCheckoutBtn()" ng-click="save()">
+    <button class="button button-block button-positive" ng-disabled="!sprint1Form.$valid" ng-click="save()">
         Register
     </button>
 
-    <!--button class="button button-block button-positive" ng-show="showCheckoutBtn()" ng-click="delete()">
-        Sign Out
-    </button-->
-
-<!--     <button
-      class="button button-block button-positive"
-      ng-click="goToLoginPage()">
-      Already registered? Click here to Login.
-    </button> -->
 
     </form>
   </ion-content>

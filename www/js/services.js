@@ -21,20 +21,34 @@ constant('ApiEndpoint', {
 
 .factory('SISOFactory', ['$localStorage', function($localStorage){
   $localStorage = $localStorage.$default({
-    userData : {pin: "", name: "", manager: "", contact: ""}
+    userData : {}
   });
 
   var saveUser = function (user) {
     $localStorage.userData = user;
   };
 
+
   var getUser = function () {
     return $localStorage.userData;
   };
 
+  var isEmptyObj = function(){
+    return Object.keys($localStorage.userData).length === 0 && $localStorage.userData.constructor === Object;
+  };
+
+  var resetObj = function(){
+    console.log("--inside SISOFactory resetObj--");
+    var userData = {};
+    saveUser(userData)
+  //  });
+  };
+
   return {
     set : saveUser,
-    get : getUser
+    get : getUser,
+    reset: resetObj,
+    isEmpty: isEmptyObj
   };
 }])
 
@@ -59,9 +73,9 @@ constant('ApiEndpoint', {
   };
 
   var resetObj = function(){
-    console.log("--inside resetObj--");
-    var userData = {};
-    saveProfile(userData)
+    console.log("--inside ProfileFactory resetObj--");
+    var profileData = {};
+    saveProfile(profileData)
   //  });
   };
 

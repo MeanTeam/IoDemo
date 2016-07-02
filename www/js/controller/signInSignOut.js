@@ -1,7 +1,7 @@
 angular.module('app.signInSignOut', ['ionic-modal-select'])
 
-  .controller('signInSignOutCtrl', ['$scope', '$location', '$interval', 'SISOSprints', 'Locations', 'ProfileFactory', '$ionicLoading', '$ionicModal', '$ionicPopup',
-    function($scope, $location, $interval, SISOSprints, Locations, ProfileFactory, $ionicLoading, $ionicModal, $ionicPopup){
+  .controller('signInSignOutCtrl', ['$scope',  '$location', '$interval', 'SISOSprints', 'Locations', 'SISOFactory','ProfileFactory', '$ionicLoading', '$ionicModal', '$ionicPopup',
+    function($scope, $location, $interval, SISOSprints, Locations, SISOFactory, ProfileFactory, $ionicLoading, $ionicModal, $ionicPopup){
 
       $scope.user = {fname: '', lname: ''};
       $scope.dialog = {title: 'Search User', buttonLabel:'Find User'};
@@ -21,32 +21,36 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
       };
 
       $scope.$on('$ionicView.beforeEnter', function () {
-          var profileData = ProfileFactory.get();
-          Object.keys(profileData).forEach(function(key) {
+        console.log("before enter");
+          var userData = SISOFactory.get();
+          Object.keys(userData).forEach(function(key) {
             if(key == 'time') {
               $scope.record[key] = new Date().toLocaleTimeString().replace(/:\d+ /, ' ');
             } else {
-              $scope.record[key] = profileData[key];
+              $scope.record[key] = userData[key];
             }
           });
           //$location.path('/tab/signInSignOut');
       });
 
       $scope.showCheckoutBtn = function(){
+        // console.log($scope.record._id);
         return ($scope.record._id !== undefined) && ($scope.record._id !== '');
       };
 
       $scope.ph_numbr = /^(\+?(\d{1}|\d{2}|\d{3})[- ]?)?\d{3}[- ]?\d{3}[- ]?\d{4}$/;
       $scope.timePattern = /^(0?[1-9]|1[012])(:[0-5]\d) [APap][mM]$/;
 
-      $scope.save = function(){
+      $scope.save = function() {
+
         SISOSprints.post($scope.record, function (result) {
           if (typeof result !== undefined && typeof result._id !== undefined) {
             $scope.record._id = result._id;
-
-            $ionicLoading.show({template: 'Check-In Saved!', noBackdrop: true, duration: 2200});
+            SISOFactory.get()._id = result._id;
+            $ionicLoading.show({template: 'Sign In successful!', noBackdrop: true, duration: 2200});
           }
         });
+
       };
 
       $scope.delete = function(){
@@ -54,39 +58,35 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
 
         var confirmPopup = $ionicPopup.confirm({
           title: '<b>Confirm Sign Out</b>',
-          template: 'Check-Out will delete the record'
+          template: 'Sign Out will delete the record'
         });
 
       confirmPopup.then(function (res) {
         if(res && typeof $scope.record._id !== undefined && $scope.record._id !== ""){
-          SISOSprints.delete({id: $scope.record._id}, function (result) {
-            $ionicLoading.show({template: 'Sign Out!', noBackdrop: true, duration: 2200});
 
-            $scope.record = {
-                "fname": "",
-                "mname": "",
-                "lname": "",
-                "mfname": "",
-                "mlname": "",
-                "contact": "",
-                "location": "",
-                "time": new Date(),//.toLocaleTimeString().replace(/:\d+ /, ' '),
-                "_id": ""
-            };
+            SISOSprints.delete({id: $scope.record._id}, function(success) {
+              SISOFactory.reset();
+                   // TODO must be a function to reuse preload
+              if(!ProfileFactory.isEmpty()) {
+                var profileData = ProfileFactory.get();
+                var userData = SISOFactory.get();
+                //set id to null during delte before loading record object
+                // profileData._id='';
+                Object.keys(profileData).forEach(function(key) {
+                  userData[key] = profileData[key];
+                });
+                SISOFactory.set(userData);
+              }
 
-            // TODO must be a function to reuse preload
-            if(!ProfileFactory.isEmpty()){
-              var profileData = ProfileFactory.get();
-              Object.keys(profileData).forEach(function(key) {
-                $scope.record[key] = profileData[key];
-              });
-            }
+              $ionicLoading.show({template: 'Sign Out successful!', noBackdrop: true, duration: 2200});
+              $location.path('/signInSignOut');
 
-          });
-        }
+            });
+        } 
       });
 
     };
+
 /*
     $ionicModal.fromTemplateUrl('templates/userDialog.html', {
         scope: $scope,
