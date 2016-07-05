@@ -15,7 +15,7 @@ angular.module('app.listSignins', ['ionic-modal-select'])
 
         if($scope.user.fname !== '' &&  $scope.user.lname !== '') {
 
-          SISOSprints.get({mfname: ProfileFactory.get().mfname, mlname: ProfileFactory.get().mlname}, function (recs) {
+          SISOSprints.get({mfname: ProfileFactory.get().fname, mlname: ProfileFactory.get().lname}, function (recs) {
             if (typeof recs !== undefined && recs.length > 0) {
               $scope.records = recs;
             }else{
