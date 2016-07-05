@@ -18,7 +18,7 @@ constant('ApiEndpoint', {
     get : getLocations
   };
 }])
-
+/*
 .factory('SISOFactory', ['$localStorage', function($localStorage){
   $localStorage = $localStorage.$default({
     userData : {}
@@ -51,7 +51,7 @@ constant('ApiEndpoint', {
     isEmpty: isEmptyObj
   };
 }])
-
+*/
 .factory('ProfileFactory', ['$localStorage', function($localStorage){
 
   $localStorage = $localStorage.$default({
@@ -60,8 +60,6 @@ constant('ApiEndpoint', {
 
   var saveProfile = function (user) {
     $localStorage.profileData = user;
-    console.log("--Service.save--"+$localStorage.profileData+"--");
-
   };
 
   var getProfile = function () {
@@ -73,7 +71,6 @@ constant('ApiEndpoint', {
   };
 
   var resetObj = function(){
-    console.log("--inside ProfileFactory resetObj--");
     var profileData = {};
     saveProfile(profileData)
   //  });

@@ -1,7 +1,7 @@
 angular.module('app.register', ['ionic-modal-select'])
 
-  .controller('registerCtrl', ['$scope', '$interval', '$location', 'SISOSprints', 'Locations', 'ProfileFactory', 'SISOFactory','$ionicLoading', '$ionicModal', '$ionicPopup',
-    function($scope, $interval, $location, SISOSprints, Locations, ProfileFactory, SISOFactory, $ionicLoading, $ionicModal, $ionicPopup){
+  .controller('registerCtrl', ['$scope', '$interval', '$location', 'SISOSprints', 'Locations', 'ProfileFactory', '$ionicLoading', '$ionicModal', '$ionicPopup',
+    function($scope, $interval, $location, SISOSprints, Locations, ProfileFactory, $ionicLoading, $ionicModal, $ionicPopup){
 
       $scope.user = {fname: '', lname: ''};
       $scope.locations = Locations.get();//['Location 1', 'Location 1', 'Location 2', 'Location 3', 'Location 4', 'Location 5'];
@@ -16,7 +16,6 @@ angular.module('app.register', ['ionic-modal-select'])
             "mlname": "",
             "contact": "",
             "location": "",
-            "time": new Date().toLocaleTimeString().replace(/:\d+ /, ' '),
             "manager": ""
       };
 
@@ -30,28 +29,22 @@ angular.module('app.register', ['ionic-modal-select'])
             $scope.record[key] = profileData[key];
           });
         }
-      
+
       });
 
 
       $scope.ph_numbr = /^(\+?(\d{1}|\d{2}|\d{3})[- ]?)?\d{3}[- ]?\d{3}[- ]?\d{4}$/;
 
 
-      $scope.save = function() {        
+      $scope.save = function() {
         var profileData = {};
-        var userData = {};
         Object.keys($scope.record).forEach(function(key) {
            profileData[key] =  $scope.record[key];
-           userData[key] =     $scope.record[key];
+           console.log("-- register.save "+key+","+profileData[key]);
          });
         ProfileFactory.set(profileData);
-        SISOFactory.set(userData);
         $ionicLoading.show({template: 'Registered!', noBackdrop: true, duration: 2200});
         $location.path('/tab/signInSignOut');
       };
-
-
-
-  
 
   }]);

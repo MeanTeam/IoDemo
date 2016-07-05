@@ -9,7 +9,6 @@ angular.module('app.menu', ['ionic-modal-select'])
         $scope.displayListSignins = false;
         if(!ProfileFactory.isEmpty()) {
           if(ProfileFactory.get().manager){
-            console.log('manger');
             $scope.displayListSignins = true;
           }
         }
