@@ -27,7 +27,7 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
             if(key == 'time') {
               $scope.record[key] = $filter('date')(new Date(), 'h:mm:ss a');//.toLocaleTimeString().replace(/:\d+ /, ' ');
             } else {
-//              console.log("** siso preload: "+key+","+userData[key]);
+              console.log("** siso preload: "+key+","+userData[key]);
               $scope.record[key] = userData[key];
             }
           });
@@ -44,22 +44,29 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
 
       $scope.save = function() {
         delete $scope.record._id;
-//        Object.keys($scope.record).forEach(function(key) {
-//            console.log("** siso save: "+key+","+$scope.record[key]);
-//        });
         SISOSprints.post($scope.record, function (result) {
+          console.log("** "+result);
           if (typeof result !== undefined && typeof result._id !== undefined) {
+            Object.keys(result).forEach(function(key){
+              console.log("sign-in.save: "+key+","+result[key]);
+            });
             $scope.record._id = result._id;
             ProfileFactory.get()._id = result._id;
             $ionicLoading.show({template: 'Sign In successful!', noBackdrop: true, duration: 2200});
             $scope.record.time = $filter('date')(new Date(), 'h:mm:ss a');
+          } else {
+            $ionicLoading.show({template: 'Sign In result error.', noBackdrop: true, duration: 2200});
           }
+        }, function (error) {
+          var confirmPopup = $ionicPopup.alert({
+            title: '<b>Sign In Error</b>',
+            template: error.status+', '+error.statusText
+          });
         });
 
       };
 
       $scope.delete = function(){
-//        console.log("delete function");
 
         var confirmPopup = $ionicPopup.confirm({
           title: '<b>Confirm Sign Out</b>',
@@ -77,8 +84,12 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
               $scope.record._id = "";
               $scope.record.time = $filter('date')(new Date(), 'h:mm:ss a');
               $ionicLoading.show({template: 'Sign Out successful!', noBackdrop: true, duration: 2200});
+            }, function(error) {
+              var confirmPopup = $ionicPopup.alert({
+                title: '<b>Sign Out Error</b>',
+                template: error.status+', '+error.statusText
+              });
             });
-
         }
       });
 
