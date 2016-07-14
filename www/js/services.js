@@ -1,10 +1,21 @@
 angular.module('app.services', ['ngResource', 'ngStorage']).
 
 constant('ApiEndpoint', {
+
   // url : '/api/sisoweb' for web testing, and real url for mobile testing
   url : '/api/sisoweb' // https://lit-basin-60588.herokuapp.com/api/sisoweb
+
 })
 
+.factory('Managers', [function(){
+  var getManagers = function () {
+    return [{'fname':'Manager 1'}];
+  };
+
+  return {
+    get : getManagers
+  };
+}])
 .factory('Locations', [function(){
 //  $localStorage = $localStorage.$default({
   //  userData : {pin: "", name: "", manager: "", contact: ""}
@@ -12,6 +23,20 @@ constant('ApiEndpoint', {
 
   var getLocations = function () {
     return ['Location 1', 'Location 2', 'Location 3', 'Location 4', 'Location 5', 'Location 6'];
+  };
+
+  return {
+    get : getLocations
+  };
+}])
+
+.factory('Managers', [function(){
+//  $localStorage = $localStorage.$default({
+  //  userData : {pin: "", name: "", manager: "", contact: ""}
+//  });
+
+  var getLocations = function () {
+    return ['Manager 6'];
   };
 
   return {
@@ -107,9 +132,11 @@ constant('ApiEndpoint', {
 }])
 
 .service('SISOSprints', ['$resource', 'ApiEndpoint', function($resource, ApiEndpoint){
+  console.log("service: ");
   return $resource('', {},{
-    get : {method: 'GET', url: ApiEndpoint.url, cache: false, params: {fname:'@fname', lname: '@lname'}, responseType: 'json', isArray:true},
-    post : {method: 'POST', url: ApiEndpoint.url, cache: false, responseType: 'json'},
-    delete: {method: 'DELETE', url: ApiEndpoint.url + '/:id', params: {id:'@_id'} ,cache: false, responseType: 'json'}
+    get : {method: 'GET', url: ApiEndpoint.url, cache: false, params: {path:'sisoweb',fname:'@fname', lname: '@lname'}, responseType: 'json', isArray:true},
+    post : {method: 'POST', url: ApiEndpoint.url, cache: false, params: {path:'sisoweb'} ,responseType: 'json'},
+    delete: {method: 'DELETE', url: ApiEndpoint.url + '/:id', params: {path:'sisoweb',id:'@_id'} ,cache: false, responseType: 'json'},
+    getManagerList: {method: 'GET', url: ApiEndpoint.url, params: {path:'profile'}, isArray:true, cache: false, responseType: 'json'}
   });
 }]);

@@ -2,6 +2,10 @@
   "name": "IoDemo",
   "app_id": "",
   "proxies" : [
+  {
+    "path" : "/api/sisoweblocal",
+    "proxyUrl" : "http://localhost:10090/sisomobile"
+  },
     {
       "path" : "/api/sisoweb",
       "proxyUrl" : "https://lit-basin-60588.herokuapp.com/api/sisoweb"
@@ -13,6 +17,16 @@
     {
       "path" : "/sisomine",
       "proxyUrl" : "https://nameless-island-29757.herokuapp.com/siso"
+    },
+    {
+      "path" : "/api/profilelocal",
+      "proxyUrl" : "http://localhost:10090/profile"
+    },
+    {
+      "path" : "/api/profile",
+      "proxyUrl" : "https://lit-basin-60588.herokuapp.com/api/profile"
+    {
+
     }
   ]
 }

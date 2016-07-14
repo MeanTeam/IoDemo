@@ -1,6 +1,8 @@
 angular.module('app.menu', ['ionic-modal-select'])
+
 .controller('menuCtrl', ['$scope', 'ProfileFactory', '$location', '$ionicPopup', '$ionicSideMenuDelegate',
   function ($scope, ProfileFactory, $location, $ionicPopup, $ionicSideMenuDelegate) {
+
 
    $scope.displayListSignins = false;
 
@@ -21,6 +23,7 @@ angular.module('app.menu', ['ionic-modal-select'])
 
 
     $scope.reset = function(){
+      $location.path('/tab/register');
 
       var confirmPopup = $ionicPopup.confirm({
         title: '<b>Confirm Reset</b>',
@@ -34,5 +37,6 @@ angular.module('app.menu', ['ionic-modal-select'])
         }
 
       });
+
     }
   }]);
