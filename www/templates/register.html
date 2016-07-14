@@ -30,7 +30,18 @@
   		  </label>
         </div>
 
-  	  <div class="form-group" ng-class="{ 'has-error' : sprint1Form.mfname.$invalid && !sprint1Form.mfname.$pristine }">
+        <div class="item item-button-right">
+          <span class="input-label" ng-if="record.managerProfile !== undefined">Manager Name</span>
+          <span ng-if="record.managerProfile !== undefined">{{record.managerProfile.fname}} {{record.managerProfile.lname}}</span>
+            <input type="text" ng-if="record.managerProfile === undefined" name="managerProfilef" id="managerProfilef" ng-model="record.managerProfile.name" placeholder="* Manager Name" required disabled="true">
+          <button class="button icon-left ion-location" modal-select="" ng-model="record.managerProfile" options="managers" modal-title="Select Manager">
+            <div class="option">
+              {{option.fname}} {{option.lname}}
+            </div>
+          </button>
+       </div>
+
+<!--  	  <div class="form-group" ng-class="{ 'has-error' : sprint1Form.mfname.$invalid && !sprint1Form.mfname.$pristine }">
   		  <label class="item item-input item-floating-label">
   			<span class="input-label">Task Manager First Name</span>
   			<input type="text" name="mfname" id="mfname" ng-model="record.mfname" placeholder="* Task Manager First Name" required  ng-pattern="/^[a-zA-Z ]*$/">
@@ -45,6 +56,7 @@
   			<p ng-show="sprint1Form.mlname.$invalid && !sprint1Form.mlname.$pristine" class="help-block">Enter a valid Task Manager Last Name.</p>
   		  </label>
         </div>
+-->
 
   	  <div class="form-group" ng-class="{ 'has-error' : (sprint1Form.contact.$invalid && ! sprint1Form.contact.$pristine) }">
   		  <label class="item item-input item-floating-label">
