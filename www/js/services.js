@@ -2,7 +2,7 @@ angular.module('app.services', ['ngResource', 'ngStorage']).
 
 constant('ApiEndpoint', {
   // url : '/api/sisoweb' for web testing, and real url for mobile testing
-  url : '/api/sisoweb' //"http://localhost:8100" //mine "https://nameless-island-29757.herokuapp.com"   //app https://lit-basin-60588.herokuapp.com/api/sisoweb
+  url : '/api/sisoweb' // https://lit-basin-60588.herokuapp.com/api/sisoweb
 })
 
 .factory('Locations', [function(){

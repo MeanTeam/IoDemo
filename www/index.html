@@ -1,106 +1,108 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title></title>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <title></title>
 
-    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
-
-
-    <script src="lib/ionic/js/ionic.bundle.js"></script>
-
-    <!-- cordova script (this will be a 404 during development) -->
-    <script src="lib/angular-resource/angular-resource.min.js"></script>
-	<script src="lib/angular-ui-mask/dist/mask.js"></script> <!-- bower install angular-ui-mask --save -->
-    <script src="lib/ngstorage/ngStorage.min.js"></script>
-    <script src="lib/ionic-modal-select/dist/ionic-modal-select.js"></script>
-    <script src="cordova.js"></script>
+  <link href="lib/ionic/css/ionic.css" rel="stylesheet">
 
 
-    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
-    <link href="css/ionic.app.css" rel="stylesheet">
-    -->
+  <script src="lib/ionic/js/ionic.bundle.js"></script>
 
-    <style type="text/css">
+  <!-- cordova script (this will be a 404 during development) -->
+  <script src="lib/angular-resource/angular-resource.min.js"></script>
+  <script src="lib/angular-ui-mask/dist/mask.js"></script> <!-- bower install angular-ui-mask --save -->
+  <script src="lib/ngstorage/ngStorage.min.js"></script>
+  <script src="lib/ionic-modal-select/dist/ionic-modal-select.js"></script>
+  <script src="cordova.js"></script>
 
-      /*
-      .platform-ios .manual-ios-statusbar-padding{
 
-      }
-      .button.button-block.loc-btn,.button.button-stable{
-        font-size: .9em;
-        margin: 3px 1px;
-        padding: 0px;
-      }*/
+  <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+  <link href="css/ionic.app.css" rel="stylesheet">
+  -->
 
-      /*.loc-buttons{
-        padding: 0px;
-        margin: 0 auto;
-      }*/
+  <style type="text/css">
 
-      form[name="sprint1Form"] input[type='text']{
-        font-weight: normal;
-      }
-      .input-label{
-        color: #063079;
-      }
-      input[type="text"]{
-        color: #031330;
-      }
-    </style>
+    /*
+    .platform-ios .manual-ios-statusbar-padding{
 
-    <script src="js/app.js"></script>
-    <script src="js/controller/menu.js"></script>
-    <script src="js/controller/listSignins.js"></script>
-    <script src="js/controller/signInSignOut.js"></script>
-    <script src="js/controller/login.js"></script>
-    <script src="js/controller/register.js"></script>
-    <script src="js/controllers.js"></script>
-    <script src="js/routes.js"></script>
-    <script src="js/services.js"></script>
-    <script src="js/directives.js"></script>
+    }
+    .button.button-block.loc-btn,.button.button-stable{
+      font-size: .9em;
+      margin: 3px 1px;
+      padding: 0px;
+    }*/
 
-    <!-- Only required for Tab projects w/ pages in multiple tabs
-    <script src="lib/ionicuirouter/ionicUIRouter.js"></script>
-    -->
+    /*.loc-buttons{
+      padding: 0px;
+      margin: 0 auto;
+    }*/
 
-  </head>
-  <body ng-app="app" animation="slide-left-right-ios7">
-    <div>
-      <div>
-          <ion-nav-bar class="bar-stable">
-              <ion-nav-back-button class="button-icon icon ion-ios-arrow-back"></ion-nav-back-button>
-          </ion-nav-bar>
-          <ion-nav-view></ion-nav-view>
+    form[name="sprint1Form"] input[type='text'] {
+      font-weight: normal;
+    }
+
+    .input-label {
+      color: #063079;
+    }
+
+    input[type="text"] {
+      color: #031330;
+    }
+  </style>
+
+  <script src="js/app.js"></script>
+  <script src="js/controller/menu.js"></script>
+  <script src="js/controller/listSignins.js"></script>
+  <script src="js/controller/signInSignOut.js"></script>
+  <script src="js/controller/login.js"></script>
+  <script src="js/controller/register.js"></script>
+  <script src="js/controllers.js"></script>
+  <script src="js/routes.js"></script>
+  <script src="js/services.js"></script>
+  <script src="js/directives.js"></script>
+
+  <!-- Only required for Tab projects w/ pages in multiple tabs
+  <script src="lib/ionicuirouter/ionicUIRouter.js"></script>
+  -->
+
+</head>
+<body ng-app="app" animation="slide-left-right-ios7">
+<div>
+  <div>
+    <ion-nav-bar class="bar-stable">
+      <ion-nav-back-button class="button-icon icon ion-ios-arrow-back"></ion-nav-back-button>
+    </ion-nav-bar>
+    <ion-nav-view></ion-nav-view>
+  </div>
+</div>
+
+<script id="templates/ddd.html" type="text/ng-template">
+  <ion-modal-view>
+    <ion-header-bar class="bar bar-header bar-positive">
+      <h1 class="title">New Contact</h1>
+      <button class="button button-clear button-primary">Cancel</button>
+    </ion-header-bar>
+    <ion-content class="padding">
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">First Name</span>
+          <input type="text">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Last Name</span>
+          <input type="text">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Email</span>
+          <input n type="text">
+        </label>
+        <button class="button button-full button-positive">Create</button>
       </div>
-    </div>
+    </ion-content>
+  </ion-modal-view>
+</script>
 
-    <script id="templates/ddd.html" type="text/ng-template">
-      <ion-modal-view>
-        <ion-header-bar class="bar bar-header bar-positive">
-          <h1 class="title">New Contact</h1>
-          <button class="button button-clear button-primary" >Cancel</button>
-        </ion-header-bar>
-        <ion-content class="padding">
-          <div class="list">
-            <label class="item item-input">
-              <span class="input-label">First Name</span>
-              <input  type="text">
-            </label>
-            <label class="item item-input">
-              <span class="input-label">Last Name</span>
-              <input  type="text">
-            </label>
-            <label class="item item-input">
-              <span class="input-label">Email</span>
-              <input n type="text">
-            </label>
-            <button class="button button-full button-positive">Create</button>
-          </div>
-        </ion-content>
-      </ion-modal-view>
-    </script>
-
-  </body>
+</body>
 </html>

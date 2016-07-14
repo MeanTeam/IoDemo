@@ -1,7 +1,7 @@
 angular.module('app.signInSignOut', ['ionic-modal-select'])
 
-  .controller('signInSignOutCtrl', ['$scope',  '$location', '$interval', 'SISOSprints', 'Locations', 'ProfileFactory', '$ionicLoading', '$ionicModal', '$ionicPopup', '$filter',
-    function($scope, $location, $interval, SISOSprints, Locations, ProfileFactory, $ionicLoading, $ionicModal, $ionicPopup, $filter){
+  .controller('signInSignOutCtrl', ['$scope',  '$location', '$interval', 'SISOSprints', 'Locations', 'ProfileFactory', '$ionicLoading', '$ionicModal', '$ionicPopup', '$filter', '$ionicNavBarDelegate',
+    function($scope, $location, $interval, SISOSprints, Locations, ProfileFactory, $ionicLoading, $ionicModal, $ionicPopup, $filter, $ionicNavBarDelegate){
 
       $scope.user = {fname: '', lname: ''};
       $scope.dialog = {title: 'Search User', buttonLabel:'Find User'};
@@ -21,6 +21,7 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
       };
 
       $scope.$on('$ionicView.beforeEnter', function () {
+        $ionicNavBarDelegate.showBackButton(false);
 //        console.log("** siso before enter");
           var userData = ProfileFactory.get();
           Object.keys(userData).forEach(function(key) {
