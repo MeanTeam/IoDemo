@@ -25,8 +25,6 @@
     {
       "path" : "/api/profile",
       "proxyUrl" : "https://lit-basin-60588.herokuapp.com/api/profile"
-    {
-
     }
   ]
 }
