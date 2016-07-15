@@ -23,13 +23,33 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
       $scope.$on('$ionicView.beforeEnter', function () {
         $ionicNavBarDelegate.showBackButton(false);
           var userData = ProfileFactory.get();
-          Object.keys(userData).forEach(function(key) {
-            if(key == 'time') {
-              $scope.record[key] = $filter('date')(new Date(), 'h:mm:ss a');//.toLocaleTimeString().replace(/:\d+ /, ' ');
-            } else {
+
+          if(ProfileFactory.get()._id == undefined || ProfileFactory.get()._id == '') {
+              SISOSprints.get({fname: ProfileFactory.get().fname, lname: ProfileFactory.get().lname, mname: ProfileFactory.get().mname,}, function (recs) {
+                if (typeof recs !== undefined && recs.length > 0) {
+                   userData = recs[0];
+                   ProfileFactory.get()._id = userData._id;
+                }
+                Object.keys(userData).forEach(function(key) {
+                  if(key == 'time') {
+                    $scope.record[key] = $filter('date')(new Date(), 'h:mm:ss a');//.toLocaleTimeString().replace(/:\d+ /, ' ');
+                  } else {   
+                    $scope.record[key] = userData[key];
+                  }
+                });
+              });
+          } 
+          else 
+          {
+            Object.keys(userData).forEach(function(key) {
+              console.log("id" + userData._id);
+              if(key == 'time') {
+                $scope.record[key] = $filter('date')(new Date(), 'h:mm:ss a');//.toLocaleTimeString().replace(/:\d+ /, ' ');
+              } else {   
               $scope.record[key] = userData[key];
-            }
-          });
+              }
+            });
+          }
       });
 
       $scope.showCheckoutBtn = function(){
@@ -68,6 +88,7 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
 
       confirmPopup.then(function (res) {
         if(res && typeof $scope.record._id !== undefined && $scope.record._id !== "" ){
+          console.log($scope.record._id);
 
             SISOSprints.delete({id: $scope.record._id}, function(success) {
               var profileData = ProfileFactory.get();
