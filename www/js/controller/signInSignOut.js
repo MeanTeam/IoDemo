@@ -1,7 +1,7 @@
 angular.module('app.signInSignOut', ['ionic-modal-select'])
 
-  .controller('signInSignOutCtrl', ['$scope',  '$location', '$interval', 'SISOSprints', 'Locations', 'ProfileFactory', '$ionicLoading', '$ionicModal', '$ionicPopup', '$filter',
-    function($scope, $location, $interval, SISOSprints, Locations, ProfileFactory, $ionicLoading, $ionicModal, $ionicPopup, $filter){
+  .controller('signInSignOutCtrl', ['$scope',  '$location', '$interval', 'SISOSprints', 'Locations', 'ProfileFactory', '$ionicLoading', '$ionicModal', '$ionicPopup', '$filter', '$ionicNavBarDelegate',
+    function($scope, $location, $interval, SISOSprints, Locations, ProfileFactory, $ionicLoading, $ionicModal, $ionicPopup, $filter, $ionicNavBarDelegate){
 
       $scope.user = {fname: '', lname: ''};
       $scope.dialog = {title: 'Search User', buttonLabel:'Find User'};
@@ -21,21 +21,18 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
       };
 
       $scope.$on('$ionicView.beforeEnter', function () {
-//        console.log("** siso before enter");
+        $ionicNavBarDelegate.showBackButton(false);
           var userData = ProfileFactory.get();
           Object.keys(userData).forEach(function(key) {
             if(key == 'time') {
               $scope.record[key] = $filter('date')(new Date(), 'h:mm:ss a');//.toLocaleTimeString().replace(/:\d+ /, ' ');
             } else {
-              console.log("** siso preload: "+key+","+userData[key]);
               $scope.record[key] = userData[key];
             }
           });
-          //$location.path('/tab/signInSignOut');
       });
 
       $scope.showCheckoutBtn = function(){
-//        console.log("### "+$scope.record._id);
         return ($scope.record._id !== undefined) && ($scope.record._id !== '');
       };
 
@@ -45,11 +42,7 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
       $scope.save = function() {
         delete $scope.record._id;
         SISOSprints.post($scope.record, function (result) {
-          console.log("** "+result);
           if (typeof result !== undefined && typeof result._id !== undefined) {
-            Object.keys(result).forEach(function(key){
-              console.log("sign-in.save: "+key+","+result[key]);
-            });
             $scope.record._id = result._id;
             ProfileFactory.get()._id = result._id;
             $ionicLoading.show({template: 'Sign In successful!', noBackdrop: true, duration: 2200});

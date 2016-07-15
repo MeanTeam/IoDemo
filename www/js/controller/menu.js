@@ -1,6 +1,7 @@
 angular.module('app.menu', ['ionic-modal-select'])
-.controller('menuCtrl', ['$scope', 'ProfileFactory', '$location', '$ionicPopup', 'SISOSprints',
-  function ($scope, ProfileFactory, $location, $ionicPopup, SISOSprints) {
+
+.controller('menuCtrl', ['$scope', 'ProfileFactory', '$location', '$ionicPopup', '$ionicSideMenuDelegate',
+  function ($scope, ProfileFactory, $location, $ionicPopup, $ionicSideMenuDelegate) {
 
    $scope.displayListSignins = false;
 
@@ -14,6 +15,10 @@ angular.module('app.menu', ['ionic-modal-select'])
         }
 
    });
+
+    $scope.toggleLeftSideMenu = function() {
+      $ionicSideMenuDelegate.toggleLeft();
+    };
 
 
     $scope.reset = function(){
@@ -31,6 +36,5 @@ angular.module('app.menu', ['ionic-modal-select'])
         }
 
       });
-      
     }
   }]);

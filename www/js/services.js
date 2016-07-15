@@ -1,9 +1,11 @@
 angular.module('app.services', ['ngResource', 'ngStorage']).
 
 constant('ApiEndpoint', {
-  // url : '/api/sisoweb' //for web testing, and real url for mobile testing
-  // url : 'https://lit-basin-60588.herokuapp.com/api/sisoweb' //"http://localhost:8100" //mine "https://nameless-island-29757.herokuapp.com"   //app https://lit-basin-60588.herokuapp.com/api/sisoweb
-  url : '/api/:path' //for web testing, and real url for mobile testing
+
+  // url : 'https://lit-basin-60588.herokuapp.com/api/:path' //for web testing, and real url for mobile testing
+  url : '/api/:path' // ionic proxy
+
+  // keep as record: "http://localhost:8100" //mine "https://nameless-island-29757.herokuapp.com"   //app https://lit-basin-60588.herokuapp.com/api/sisoweb
 })
 
 .factory('Managers', [function(){
@@ -131,7 +133,6 @@ constant('ApiEndpoint', {
 }])
 
 .service('SISOSprints', ['$resource', 'ApiEndpoint', function($resource, ApiEndpoint){
-  console.log("service: ");
   return $resource('', {},{
     get : {method: 'GET', url: ApiEndpoint.url, cache: false, params: {path:'sisoweb',fname:'@fname', lname: '@lname'}, responseType: 'json', isArray:true},
     post : {method: 'POST', url: ApiEndpoint.url, cache: false, params: {path:'sisoweb'} ,responseType: 'json'},
