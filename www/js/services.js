@@ -137,6 +137,6 @@ constant('ApiEndpoint', {
     get : {method: 'GET', url: ApiEndpoint.url, cache: false, params: {path:'sisoweb',fname:'@fname', lname: '@lname'}, responseType: 'json', isArray:true},
     post : {method: 'POST', url: ApiEndpoint.url, cache: false, params: {path:'sisoweb'} ,responseType: 'json'},
     delete: {method: 'DELETE', url: ApiEndpoint.url + '/:id', params: {path:'sisoweb',id:'@_id'} ,cache: false, responseType: 'json'},
-    getManagerList: {method: 'GET', url: ApiEndpoint.url, params: {path:'profile'}, isArray:true, cache: false, responseType: 'json'}
+    getManagerList: {method: 'GET', url: ApiEndpoint.url + '?role=manager', params: {path:'profile'}, isArray:true, cache: false, responseType: 'json'}
   });
 }]);
