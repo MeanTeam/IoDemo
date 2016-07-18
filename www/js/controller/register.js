@@ -1,11 +1,11 @@
 angular.module('app.register', ['ionic-modal-select'])
 
-
-
   .controller('registerCtrl', ['$scope', '$interval', '$location',
-    'SISOSprints', 'Locations', 'ProfileFactory', '$ionicLoading', '$ionicModal', '$ionicPopup', 'Managers', '$stateParams', '$ionicNavBarDelegate',
+    'SISOSprints', 'Locations', 'ProfileFactory', '$ionicLoading', '$ionicModal', '$ionicPopup',
+    'Managers', '$stateParams', '$ionicSideMenuDelegate',
     function ($scope, $interval, $location,
-              SISOSprints, Locations, ProfileFactory, $ionicLoading, $ionicModal, $ionicPopup, Managers, $stateParams, $ionicNavBarDelegate) {
+              SISOSprints, Locations, ProfileFactory, $ionicLoading, $ionicModal,
+              $ionicPopup, Managers, $stateParams, $ionicSideMenuDelegate) {
 
 
       $scope.user = {fname: '', lname: ''};
@@ -13,8 +13,10 @@ angular.module('app.register', ['ionic-modal-select'])
       $scope.dialog = {title: 'Login Page', buttonLabel: 'Login'};
       $scope.someModel = null;
       $scope.managers = [];
+      $scope.title = "Register - SISO";
 
-      $scope.cancelBtn = false;
+      $scope.showCancelBtn = false;
+      $scope.showToggleMenu = true;
 
       $scope.record = {
         "fname": "",
@@ -39,15 +41,20 @@ angular.module('app.register', ['ionic-modal-select'])
           });
         });
 
+        $ionicSideMenuDelegate.canDragContent(true);
+
 
         if ($stateParams.mode === 'home' && !ProfileFactory.isEmpty()) {
           $location.path('/tab/signInSignOut');
         } else {
           if ($stateParams.mode === 'edit') {
-            $scope.cancelBtn = true;
-            $ionicNavBarDelegate.title('');
+            $scope.showCancelBtn = true;
+            $scope.showToggleMenu = true;
+            $scope.title = "Edit Register - SISO"
+
           } else {
-            $scope.cancelBtn = false;
+            $scope.showCancelBtn = false;
+            $scope.showToggleMenu = false;
           }
           var profileData = ProfileFactory.get();
           Object.keys(profileData).forEach(function (key) {

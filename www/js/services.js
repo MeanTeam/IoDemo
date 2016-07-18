@@ -5,7 +5,7 @@ constant('ApiEndpoint', {
   // url : 'https://lit-basin-60588.herokuapp.com/api/:path' //for web testing, and real url for mobile testing
   url : '/api/:path' // ionic proxy
 
-  // keep as record: "http://localhost:8100" //mine "https://nameless-island-29757.herokuapp.com"   //app https://lit-basin-60588.herokuapp.com/api/sisoweb
+  // keep as record: "http://localhost:8100" //app https://lit-basin-60588.herokuapp.com/api/sisoweb
 })
 
 .factory('Managers', [function(){

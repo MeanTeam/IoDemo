@@ -1,10 +1,15 @@
-<ion-view view-title="Register - SISO" id="sprint1">
+<ion-view id="sprint1" cache-view="false">
+  <ion-nav-title> {{ title }}</ion-nav-title>
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" ng-show="showToggleMenu" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
   <ion-nav-buttons side="right">
     <button class="button button-positive"
-            ng-show="cancelBtn"
+            ng-show="showCancelBtn"
             ng-click="cancel()">Cancel
     </button>
   </ion-nav-buttons>
+
   <ion-content padding="true" class="has-header">
 
     <form name="sprint1Form" class="list" novalidate>
@@ -41,33 +46,35 @@
         </label>
       </div>
 
-        <div class="item item-button-right">
-          <span class="input-label" ng-if="record.managerProfile !== undefined">Manager Name</span>
-          <span ng-if="record.managerProfile !== undefined">{{record.managerProfile.fname}} {{record.managerProfile.lname}}</span>
-            <input type="text" ng-if="record.managerProfile === undefined" name="managerProfilef" id="managerProfilef" ng-model="record.managerProfile.name" placeholder="* Manager Name" required disabled="true">
-          <button class="button icon-left ion-location" modal-select="" ng-model="record.managerProfile" options="managers" modal-title="Select Manager">
-            <div class="option">
-              {{option.fname}} {{option.lname}}
-            </div>
-          </button>
-       </div>
+      <div class="item item-button-right">
+        <span class="input-label" ng-if="record.managerProfile !== undefined">Manager Name</span>
+        <span ng-if="record.managerProfile !== undefined">{{record.managerProfile.fname}} {{record.managerProfile.lname}}</span>
+        <input type="text" ng-if="record.managerProfile === undefined" name="managerProfilef" id="managerProfilef"
+               ng-model="record.managerProfile.name" placeholder="* Manager Name" required disabled="true">
+        <button class="button icon-left ion-location" modal-select="" ng-model="record.managerProfile"
+                options="managers" modal-title="Select Manager">
+          <div class="option">
+            {{option.fname}} {{option.lname}}
+          </div>
+        </button>
+      </div>
 
-<!--  	  <div class="form-group" ng-class="{ 'has-error' : sprint1Form.mfname.$invalid && !sprint1Form.mfname.$pristine }">
-  		  <label class="item item-input item-floating-label">
-  			<span class="input-label">Task Manager First Name</span>
-  			<input type="text" name="mfname" id="mfname" ng-model="record.mfname" placeholder="* Task Manager First Name" required  ng-pattern="/^[a-zA-Z ]*$/">
-  			<p ng-show="sprint1Form.mfname.$invalid && !sprint1Form.mfname.$pristine" class="help-block">Enter a valid Task Manager First Name.</p>
-  		  </label>
-        </div>
+      <!--  	  <div class="form-group" ng-class="{ 'has-error' : sprint1Form.mfname.$invalid && !sprint1Form.mfname.$pristine }">
+              <label class="item item-input item-floating-label">
+              <span class="input-label">Task Manager First Name</span>
+              <input type="text" name="mfname" id="mfname" ng-model="record.mfname" placeholder="* Task Manager First Name" required  ng-pattern="/^[a-zA-Z ]*$/">
+              <p ng-show="sprint1Form.mfname.$invalid && !sprint1Form.mfname.$pristine" class="help-block">Enter a valid Task Manager First Name.</p>
+              </label>
+              </div>
 
-  	  <div class="form-group" ng-class="{ 'has-error' : sprint1Form.mlname.$invalid && !sprint1Form.mlname.$pristine }">
-  		  <label class="item item-input item-floating-label">
-  			<span class="input-label">Task Manager Last Name</span>
-  			<input type="text" name="mlname" id="mlname" ng-model="record.mlname" placeholder="* Task Manager Last Name" required  ng-pattern="/^[a-zA-Z ]*$/">
-  			<p ng-show="sprint1Form.mlname.$invalid && !sprint1Form.mlname.$pristine" class="help-block">Enter a valid Task Manager Last Name.</p>
-  		  </label>
-        </div>
--->
+            <div class="form-group" ng-class="{ 'has-error' : sprint1Form.mlname.$invalid && !sprint1Form.mlname.$pristine }">
+              <label class="item item-input item-floating-label">
+              <span class="input-label">Task Manager Last Name</span>
+              <input type="text" name="mlname" id="mlname" ng-model="record.mlname" placeholder="* Task Manager Last Name" required  ng-pattern="/^[a-zA-Z ]*$/">
+              <p ng-show="sprint1Form.mlname.$invalid && !sprint1Form.mlname.$pristine" class="help-block">Enter a valid Task Manager Last Name.</p>
+              </label>
+              </div>
+      -->
 
 
       <div class="form-group"
@@ -96,8 +103,8 @@
         </button>
       </div>
 
-      <div class="form-group">
-        <ion-toggle ng-model="record.manager" toggle-class="toggle-possitive">Manager</ion-toggle>
+      <div class="form-group ">
+        <ion-toggle ng-model="record.manager" toggle-class="toggle-possitive"><span class="input-label">Manager</span></ion-toggle>
       </div>
 
       <button class="button button-block button-positive" ng-disabled="!sprint1Form.$valid" ng-click="save()">
