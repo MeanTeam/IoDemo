@@ -6,7 +6,7 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
       $scope.user = {fname: '', lname: ''};
       $scope.dialog = {title: 'Search User', buttonLabel: 'Find User'};
       $scope.someModel = null;
-      $scope.locations = Locations.get();//['Location 1', 'Location 2', 'Location 3', 'Location 4', 'Location 5'];
+      $scope.locations = Locations.get();
       $scope.myTimes = [];
 
       $scope.record = {
@@ -21,7 +21,14 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
       };
 
       $scope.$on('$ionicView.beforeEnter', function () {
+
+        if (ProfileFactory.isEmpty()) {
+          $location.path('/tab/register');
+          return false;
+        }
+
         $ionicNavBarDelegate.showBackButton(false);
+
         var userData = ProfileFactory.get();
 
         if (ProfileFactory.get()._id == undefined || ProfileFactory.get()._id == '') {
@@ -36,7 +43,7 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
             }
             Object.keys(userData).forEach(function (key) {
               if (key == 'time') {
-                $scope.record[key] = $filter('date')(new Date(), 'h:mm:ss a');//.toLocaleTimeString().replace(/:\d+ /, ' ');
+                $scope.record[key] = $filter('date')(new Date(), 'h:mm a');//.toLocaleTimeString().replace(/:\d+ /, ' ');
               } else {
                 $scope.record[key] = userData[key];
               }
@@ -47,7 +54,7 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
           Object.keys(userData).forEach(function (key) {
             //console.log("id" + userData._id);
             if (key == 'time') {
-              $scope.record[key] = $filter('date')(new Date(), 'h:mm:ss a');//.toLocaleTimeString().replace(/:\d+ /, ' ');
+              $scope.record[key] = $filter('date')(new Date(), 'h:mm a');//.toLocaleTimeString().replace(/:\d+ /, ' ');
             } else {
               $scope.record[key] = userData[key];
             }

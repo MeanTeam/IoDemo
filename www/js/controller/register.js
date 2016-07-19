@@ -31,18 +31,8 @@ angular.module('app.register', ['ionic-modal-select'])
       };
 
       $scope.$on('$ionicView.beforeEnter', function () {
-        SISOSprints.getManagerList({}, function (mgrs) {
-          $scope.managers =mgrs;
-        }, function(error) {
-          var confirmPopup = $ionicPopup.alert({
-            title: '<b>Sign Out Error</b>',
-            template: error.status+', '+error.statusText
 
-          });
-        });
-
-        $ionicSideMenuDelegate.canDragContent(true);
-
+        //console.log('Is ProfileFactory.isEmpty() ', ProfileFactory.isEmpty(), ProfileFactory.get())
 
         if ($stateParams.mode === 'home' && !ProfileFactory.isEmpty()) {
           $location.path('/tab/signInSignOut');
@@ -56,6 +46,17 @@ angular.module('app.register', ['ionic-modal-select'])
             $scope.showCancelBtn = false;
             $scope.showToggleMenu = false;
           }
+
+          SISOSprints.getManagerList({}, function (mgrs) {
+            $scope.managers =mgrs;
+          }, function(error) {
+            var confirmPopup = $ionicPopup.alert({
+              title: '<b>Sign Out Error</b>',
+              template: error.status+', '+error.statusText
+
+            });
+          });
+
           var profileData = ProfileFactory.get();
           Object.keys(profileData).forEach(function (key) {
             $scope.record[key] = profileData[key];
@@ -64,7 +65,7 @@ angular.module('app.register', ['ionic-modal-select'])
 
       });
 
-      $scope.ph_numbr = /^(\+?(\d{1}|\d{2}|\d{3})[- ]?)?\d{3}[- ]?\d{3}[- ]?\d{4}$/;
+      //$scope.ph_numbr = /^(\+?(\d{1}|\d{2}|\d{3})[- ]?)?\d{3}[- ]?\d{3}[- ]?\d{4}$/;
 
       $scope.save = function () {
         var profileData = {};

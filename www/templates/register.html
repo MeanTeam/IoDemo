@@ -19,10 +19,10 @@
           <span class="input-label">First Name</span>
           <input type="text" name="fname" id="fname" ng-model="record.fname" placeholder="* First Name"
                  required ng-pattern="/^[a-zA-Z ]*$/">
-          <p ng-show="sprint1Form.fname.$error.required && !sprint1Form.fname.$pristine" class="help-block">First Name
-            is required.</p>
-          <p ng-show="sprint1Form.fname.$error.pattern && !sprint1Form.fname.$pristine" class="help-block">Enter a valid
-            First Name.</p>
+          <p ng-show="sprint1Form.fname.$error.required && !sprint1Form.fname.$pristine" class="help-block">
+            <span class="errcolor">First Name is required.</span></p>
+          <p ng-show="sprint1Form.fname.$error.pattern && !sprint1Form.fname.$pristine" class="help-block">
+            <span class="errcolor">Enter a valid First Name.</span></p>
         </label>
       </div>
 
@@ -31,8 +31,9 @@
           <span class="input-label">Midle Name</span>
           <input type="text" name="mname" id="mname" ng-model="record.mname" placeholder="Midle Name"
                  ng-pattern="/^[a-zA-Z ]*$/">
-          <p ng-show="sprint1Form.mname.$invalid && !sprint1Form.mname.$pristine" class="help-block">Enter a valid
-            Middle Name </p>
+          <p ng-show="sprint1Form.mname.$invalid && !sprint1Form.mname.$pristine" class="help-block">
+            <span class="errcolor">Enter a valid Middle Name </span>
+          </p>
         </label>
       </div>
 
@@ -41,8 +42,10 @@
           <span class="input-label">Last Name</span>
           <input type="text" name="lname" id="lname" ng-model="record.lname" placeholder="* Last Name" required
                  ng-pattern="/^[a-zA-Z ]*$/">
-          <p ng-show="sprint1Form.lname.$invalid && !sprint1Form.lname.$pristine" class="help-block">Enter a valid Last
-            Name</p>
+          <p ng-show="sprint1Form.lname.$invalid && !sprint1Form.lname.$pristine" class="help-block">
+            <span class="errcolor">Enter a valid Last
+            Name</span>
+          </p>
         </label>
       </div>
 
@@ -59,34 +62,20 @@
         </button>
       </div>
 
-      <!--  	  <div class="form-group" ng-class="{ 'has-error' : sprint1Form.mfname.$invalid && !sprint1Form.mfname.$pristine }">
-              <label class="item item-input item-floating-label">
-              <span class="input-label">Task Manager First Name</span>
-              <input type="text" name="mfname" id="mfname" ng-model="record.mfname" placeholder="* Task Manager First Name" required  ng-pattern="/^[a-zA-Z ]*$/">
-              <p ng-show="sprint1Form.mfname.$invalid && !sprint1Form.mfname.$pristine" class="help-block">Enter a valid Task Manager First Name.</p>
-              </label>
-              </div>
-
-            <div class="form-group" ng-class="{ 'has-error' : sprint1Form.mlname.$invalid && !sprint1Form.mlname.$pristine }">
-              <label class="item item-input item-floating-label">
-              <span class="input-label">Task Manager Last Name</span>
-              <input type="text" name="mlname" id="mlname" ng-model="record.mlname" placeholder="* Task Manager Last Name" required  ng-pattern="/^[a-zA-Z ]*$/">
-              <p ng-show="sprint1Form.mlname.$invalid && !sprint1Form.mlname.$pristine" class="help-block">Enter a valid Task Manager Last Name.</p>
-              </label>
-              </div>
-      -->
-
-
       <div class="form-group"
            ng-class="{ 'has-error' : (sprint1Form.contact.$invalid && ! sprint1Form.contact.$pristine) }">
         <label class="item item-input item-floating-label">
           <span class="input-label">Contact</span>
           <input type="text" name="contact" id="contact" ng-model="record.contact" ui-mask="(999) 999-9999"
                  ui-mask-placeholder ui-mask-placeholder-char="_" placeholder="* Contact" required/>
-          <p ng-show="sprint1Form.contact.$error.required && !sprint1Form.contact.$pristine" class="help-block">Phone
-            number is required.</p>
-          <p ng-show="sprint1Form.contact.$error.pattern && !sprint1Form.contact.$pristine" class="help-block">Phone
-            number is invalid.</p>
+          <p ng-show="sprint1Form.contact.$error.required && !sprint1Form.contact.$pristine" class="help-block"><span class="errcolor">
+            Phone
+            number is required.</span>
+          </p>
+          <p ng-show="sprint1Form.contact.$error.pattern && !sprint1Form.contact.$pristine" class="help-block">
+            <span class="errcolor">Phone
+            number is invalid.</span>
+          </p>
         </label>
       </div>
 

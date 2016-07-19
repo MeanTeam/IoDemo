@@ -2,10 +2,9 @@ angular.module('app.services', ['ngResource', 'ngStorage']).
 
 constant('ApiEndpoint', {
 
-  // url : 'https://lit-basin-60588.herokuapp.com/api/:path' //for web testing, and real url for mobile testing
-  url : '/api/:path' // ionic proxy
-
-  // keep as record: "http://localhost:8100" //app https://lit-basin-60588.herokuapp.com/api/sisoweb
+  // url : 'https://lit-basin-60588.herokuapp.com/api/:path'  <<< USE this for Mobile Device
+  // url: '/api/:path'                                        <<< USE this for web testing
+  url : 'https://lit-basin-60588.herokuapp.com/api/:path' // ionic proxy
 })
 
 .factory('Managers', [function(){
@@ -18,10 +17,6 @@ constant('ApiEndpoint', {
   };
 }])
 .factory('Locations', [function(){
-//  $localStorage = $localStorage.$default({
-  //  userData : {pin: "", name: "", manager: "", contact: ""}
-//  });
-
   var getLocations = function () {
     return ['Location 1', 'Location 2', 'Location 3', 'Location 4', 'Location 5', 'Location 6'];
   };
@@ -32,10 +27,6 @@ constant('ApiEndpoint', {
 }])
 
 .factory('Managers', [function(){
-//  $localStorage = $localStorage.$default({
-  //  userData : {pin: "", name: "", manager: "", contact: ""}
-//  });
-
   var getLocations = function () {
     return ['Manager 6'];
   };
@@ -44,40 +35,6 @@ constant('ApiEndpoint', {
     get : getLocations
   };
 }])
-/*
-.factory('SISOFactory', ['$localStorage', function($localStorage){
-  $localStorage = $localStorage.$default({
-    userData : {}
-  });
-
-  var saveUser = function (user) {
-    $localStorage.userData = user;
-  };
-
-
-  var getUser = function () {
-    return $localStorage.userData;
-  };
-
-  var isEmptyObj = function(){
-    return Object.keys($localStorage.userData).length === 0 && $localStorage.userData.constructor === Object;
-  };
-
-  var resetObj = function(){
-    console.log("--inside SISOFactory resetObj--");
-    var userData = {};
-    saveUser(userData)
-  //  });
-  };
-
-  return {
-    set : saveUser,
-    get : getUser,
-    reset: resetObj,
-    isEmpty: isEmptyObj
-  };
-}])
-*/
 .factory('ProfileFactory', ['$localStorage', function($localStorage){
 
   $localStorage = $localStorage.$default({
@@ -99,7 +56,6 @@ constant('ApiEndpoint', {
   var resetObj = function(){
     var profileData = {};
     saveProfile(profileData)
-  //  });
   };
 
   return {
@@ -137,6 +93,6 @@ constant('ApiEndpoint', {
     get : {method: 'GET', url: ApiEndpoint.url, cache: false, params: {path:'sisoweb',fname:'@fname', lname: '@lname'}, responseType: 'json', isArray:true},
     post : {method: 'POST', url: ApiEndpoint.url, cache: false, params: {path:'sisoweb'} ,responseType: 'json'},
     delete: {method: 'DELETE', url: ApiEndpoint.url + '/:id', params: {path:'sisoweb',id:'@_id'} ,cache: false, responseType: 'json'},
-    getManagerList: {method: 'GET', url: ApiEndpoint.url + '?role=manager', params: {path:'profile'}, isArray:true, cache: false, responseType: 'json'}
+    getManagerList: {method: 'GET', url: ApiEndpoint.url + '?role=manager', params: {path:'profiles'}, isArray:true, cache: false, responseType: 'json'}
   });
 }]);
