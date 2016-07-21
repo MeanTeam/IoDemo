@@ -5,6 +5,7 @@
     "ionic": "driftyco/ionic-bower#1.2.4"
   },
   "dependencies": {
-    "angular-ui-mask": "^1.8.6"
+    "angular-ui-mask": "^1.8.6",
+    "ngCordova": "^0.1.27-alpha"
   }
 }
