@@ -91,14 +91,14 @@ var modalSelectTemplates = modalSelectTemplates || {};modalSelectTemplates['moda
  *
  * ionic-modal-select, v1.0.0
  * Modal select directive for Ionic framework.
- *
+ * 
  * By @bianchimro
  *
  * Licensed under the MIT license. Please see LICENSE for more information.
  *
  */
 
-
+ 
 
 (function(){
 
@@ -121,7 +121,7 @@ angular.module('ionic-modal-select', [])
                 // NOTE: we only compile .childNodes so that
                 // we don't get into infinite loop compiling ourselves
                 $compile(iElement.contents())(scope);
-
+                
                 //deactivate watch if "compile-once" is set to "true"
                 if (iAttrs.compileOnce === 'true') {
                     x();
@@ -137,19 +137,20 @@ angular.module('ionic-modal-select', [])
         require : 'ngModel',
         scope: { initialOptions:"=options", optionGetter:"&", onSelect:"&", onReset:"&" },
         link: function (scope, iElement, iAttrs, ngModelController, transclude) {
+            
             var shortList = true;
             var shortListBreak = iAttrs.shortListBreak ? parseInt(iAttrs.shortListBreak) : 10;
             var setFromProperty= iAttrs.optionProperty;
             var onOptionSelect = iAttrs.optionGetter;
             var clearSearchOnSelect = iAttrs.clearSearchOnSelect !== "false" ? true : false;
 
-
+            
             //#todo: multiple is not working right now
             var multiple = iAttrs.multiple  ? true : false;
             if (multiple) {
                 scope.checkedItems = [];
             }
-
+            
             scope.ui = {
                 modalTitle : iAttrs.modalTitle || 'Select an option',
                 okButton : iAttrs.okButton || 'OK',
@@ -184,17 +185,17 @@ angular.module('ionic-modal-select', [])
                 var listExpr = match[2];
                 var listGetter = $parse(listExpr);
                 var s = iElement.scope();
-
+                
                 scope.$watch(
                     function(){
-                        return listGetter(s);
-                    },
+                        return listGetter(s);    
+                    }, 
                     function(nv, ov){
                         allOptions = angular.copy(nv);
                         scope.options = angular.copy(nv);
-                        updateListMode();
-
-                    },
+                        updateListMode();   
+                        
+                    }, 
                     true
                 );
 
@@ -211,7 +212,7 @@ angular.module('ionic-modal-select', [])
             if (!opt) {
                 throw new Error({
                     name:'modalSelectError:noOptionTemplate',
-                    message:'When using modalSelect directive you must include an element with class "option" to provide a template for your select options.',
+                    message:'When using modalSelect directive you must include an element with class "option" to provide a template for your select options.', 
                     toString:function(){
                         return this.name + " " + this.message;
                     }
@@ -227,7 +228,7 @@ angular.module('ionic-modal-select', [])
             }
 
             angular.element(opt).remove();
-
+            
             function updateListMode(){
                 //shortList controls wether using ng-repeat instead of collection-repeat
                 if (iAttrs.useCollectionRepeat === "true") {
@@ -239,10 +240,10 @@ angular.module('ionic-modal-select', [])
                       shortList = !!(scope.options.length < shortListBreak);
                     }
                 };
-
-                scope.ui.shortList = shortList;
+                
+                scope.ui.shortList = shortList;   
             }
-
+            
             ngModelController.$render = function(){
                 scope.ui.value = ngModelController.$viewValue;
             };
@@ -258,7 +259,7 @@ angular.module('ionic-modal-select', [])
                 if (setFromProperty) {
                     val = option[setFromProperty]
                 } else {
-                    val = option;
+                    val = option;    
                 }
                 return val;
             };
@@ -266,21 +267,21 @@ angular.module('ionic-modal-select', [])
             scope.setOption = function(option){
                 var oldValue = ngModelController.$viewValue;
                 var val = getSelectedValue(option);
-                ngModelController.$setViewValue(val);
+                ngModelController.$setViewValue(val);    
                 ngModelController.$render();
-
+                
                 if (scope.onSelect) {
                     scope.onSelect({ newValue: val, oldValue: oldValue });
                 }
                 scope.modal.hide().then(function(){
-                    scope.showList = false;
+                    scope.showList = false;    
                     if (scope.ui.hasSearch) {
                        if(clearSearchOnSelect){
                             scope.ui.searchValue = '';
                         }
                     }
                 });
-
+                
             };
 
             scope.unsetValue = function(){
@@ -297,14 +298,14 @@ angular.module('ionic-modal-select', [])
 
             scope.closeModal = function(){
                 scope.modal.hide().then(function(){
-                    scope.showList = false;
+                    scope.showList = false;    
                 });
             };
 
             scope.compareValues = function(a, b){
                 return angular.equals(a, b);
             };
-
+            
             //loading the modal
             var modalTpl = multiple ? 'modal-template-multiple.html' : 'modal-template.html';
             scope.modal = $ionicModal.fromTemplate(
@@ -313,19 +314,19 @@ angular.module('ionic-modal-select', [])
             );
 
             scope.$on('$destroy', function(){
-                scope.modal.remove();
+                scope.modal.remove();  
             });
 
             iElement.on('click', function(){
                 if (shortList) {
-                    scope.showList = true;
+                    scope.showList = true;    
                     scope.modal.show();
                 } else {
                     scope.modal.show()
                     .then(function(){
-                        scope.showList = true;
-                        scope.ui.shortList = shortList;
-                    });
+                        scope.showList = true;  
+                        scope.ui.shortList = shortList;  
+                    });    
                 }
             });
 
@@ -338,7 +339,7 @@ angular.module('ionic-modal-select', [])
                     scope.ui.searchValue = '';
                 };
             }
-
+            
             //#TODO ?: WRAP INTO $timeout?
             ngModelController.$render();
 
