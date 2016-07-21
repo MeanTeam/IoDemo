@@ -6,7 +6,7 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 angular.module('app', ['ionic', 'app.listSignins', 'app.signInSignOut',
-  'app.menu', 'app.login', 'app.register', 'app.routes', 'app.services', 'app.directives', 'ui.mask'])
+  'app.menu', 'app.login', 'app.register', 'app.routes', 'app.services', 'app.directives', 'ui.mask', 'ngCordova'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -21,4 +21,7 @@ angular.module('app', ['ionic', 'app.listSignins', 'app.signInSignOut',
       StatusBar.styleDefault();
     }
   });
-})
+
+
+
+});

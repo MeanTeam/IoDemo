@@ -1,7 +1,7 @@
 angular.module('app.signInSignOut', ['ionic-modal-select'])
 
-  .controller('signInSignOutCtrl', ['$scope', '$location', '$interval', 'SISOSprints', 'Locations', 'ProfileFactory', '$ionicLoading', '$ionicModal', '$ionicPopup', '$filter', '$ionicNavBarDelegate',
-    function ($scope, $location, $interval, SISOSprints, Locations, ProfileFactory, $ionicLoading, $ionicModal, $ionicPopup, $filter, $ionicNavBarDelegate) {
+  .controller('signInSignOutCtrl', ['$scope', '$state', '$interval', 'SISOSprints', 'Locations', 'ProfileFactory', '$ionicLoading', '$ionicModal', '$ionicPopup', '$filter', '$ionicNavBarDelegate',
+    function ($scope, $state, $interval, SISOSprints, Locations, ProfileFactory, $ionicLoading, $ionicModal, $ionicPopup, $filter, $ionicNavBarDelegate) {
 
       $scope.user = {fname: '', lname: ''};
       $scope.dialog = {title: 'Search User', buttonLabel: 'Find User'};
@@ -23,7 +23,7 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
       $scope.$on('$ionicView.beforeEnter', function () {
 
         if (ProfileFactory.isEmpty()) {
-          $location.path('/tab/register');
+          $state.go('/tab/register');
           return false;
         }
 
@@ -75,20 +75,15 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
           if (typeof result !== undefined && typeof result._id !== undefined) {
             $scope.record._id = result._id;
             ProfileFactory.get()._id = result._id;
-            $ionicLoading.show({template: 'Sign In successful!', noBackdrop: true, duration: 2200});
             $scope.record.time = $filter('date')(new Date(), 'h:mm a');
+            //$ionicLoading.show({template: 'Sign In successful!', noBackdrop: true, duration: 2200});
+            alert('Sign In successful!');
+
           } else {
             $ionicLoading.show({template: 'Sign In result error.', noBackdrop: true, duration: 2200});
           }
         }, function (error) {
-          var confirmPopup = $ionicPopup.alert({
-            title: '<b>Sign In Error</b>',
-            template: error.status + ', ' + error.statusText
-          });
-
-          confirmPopup.then(function (res) {
-
-          });
+          alert(error.status + ', ' + error.statusText);
         });
 
       };
@@ -111,12 +106,10 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
               ProfileFactory.set(profileData);
               $scope.record._id = "";
               $scope.record.time = $filter('date')(new Date(), 'h:mm a');
-              $ionicLoading.show({template: 'Sign Out successful!', noBackdrop: true, duration: 2200});
+              //$ionicLoading.show({template: 'Sign Out successful!', noBackdrop: true, duration: 2200});
+              alert('Sign Out successful!');
             }, function (error) {
-              var confirmPopup = $ionicPopup.alert({
-                title: '<b>Sign Out Error</b>',
-                template: error.status + ', ' + error.statusText
-              });
+              alert(error.status + ', ' + error.statusText);
             });
           }
         });
