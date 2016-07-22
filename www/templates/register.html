@@ -55,7 +55,7 @@
         <input type="text" ng-if="record.managerProfile === undefined" name="managerProfilef" id="managerProfilef"
                ng-model="record.managerProfile.name" placeholder="* Manager Name" required disabled="true">
         <button class="button icon-left ion-location" modal-select="" ng-model="record.managerProfile"
-                options="managers" modal-title="Select Manager">
+                options="managers" hide-reset="true" modal-title="Select Manager">
           <div class="option">
             {{option.fname}} {{option.lname}}
           </div>
@@ -85,7 +85,7 @@
         <input type="text" ng-if="record.location === ''" name="location" id="location" ng-model="record.location"
                placeholder="* Preferred Location" required disabled="true">
         <button class="button icon-left ion-location" modal-select="" ng-model="record.location" options="locations"
-                modal-title="Select Location">
+                 hide-reset="true" modal-title="Select Location">
           <div class="option">
             {{option}}
           </div>
