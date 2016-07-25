@@ -14,6 +14,11 @@ angular.module('app.register', ['ionic-modal-select'])
       $scope.someModel = null;
       $scope.managers = [];
       $scope.title = "Register - SISO";
+      $scope.fnameDisbl = false;
+      $scope.mnameDisbl = false;
+      $scope.lnameDisbl = false;
+      $scope.registerBtnLabel = 'Register Profile';
+
 
       $scope.showCancelBtn = false;
       $scope.showToggleMenu = true;
@@ -43,11 +48,19 @@ angular.module('app.register', ['ionic-modal-select'])
           if ($stateParams.mode === 'edit') {
             $scope.showCancelBtn = true;
             $scope.showToggleMenu = true;
+            $scope.fnameDisbl = true;
+            $scope.mnameDisbl = true;
+            $scope.lnameDisbl = true;
+            $scope.registerBtnLabel = 'Update Profile';
             $scope.title = "Edit Register - SISO"
 
           } else {
             $scope.showCancelBtn = false;
             $scope.showToggleMenu = false;
+            $scope.fnameDisbl = false;
+            $scope.mnameDisbl = false;
+            $scope.lnameDisbl = false;
+            $scope.registerBtnLabel = 'Register Profile';
           }
 
           SISOSprints.getManagerList({}, function (mgrs) {
