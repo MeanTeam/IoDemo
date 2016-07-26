@@ -77,8 +77,8 @@
         <span ng-if="record.location !== ''">{{record.location}}</span>
         <input type="text" ng-if="record.location === ''" name="location" id="location" ng-model="record.location"
                placeholder="* Location" disabled="true" required>
-        <button class="button icon-left ion-location" modal-select hide-reset="true" ng-model="record.location" options="locations"
-                modal-title="Select Location">
+        <button class="button icon-left ion-location" modal-select ng-model="record.location" options="locations"
+                 hide-reset="true" modal-title="Select Location">
           <div class="option">
             {{option}}
           </div>
@@ -90,8 +90,8 @@
 
         <span class="input-label" ng-if="record.time !== ''">Time</span>
         <input type="text" name="time" id="time" ng-model="record.time" placeholder="* Time" disabled="true" required>
-        <button class="button icon-left ion-ios-time" modal-select hide-reset="true" ng-model="record.time" options="myTimes"
-                modal-title="Select Time" option-property="hour">
+        <button class="button icon-left ion-ios-time" modal-select ng-model="record.time" options="myTimes"
+                 hide-reset="true" modal-title="Select Time" option-property="hour">
           <div class="option">
             {{option.hour}}
           </div>
