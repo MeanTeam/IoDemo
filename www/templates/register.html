@@ -51,9 +51,9 @@
 
       <div class="item item-button-right">
         <span class="input-label" ng-if="record.managerProfile !== undefined">Manager Name</span>
-        <span ng-if="record.managerProfile !== undefined">{{record.managerProfile.fname}} {{record.managerProfile.lname}}</span>
-        <input type="text" ng-if="record.managerProfile === undefined" name="managerProfilef" id="managerProfilef"
-               ng-model="record.managerProfile.name" placeholder="* Manager Name" required disabled="true">
+        <span ng-if="record.managerProfile.fname !== undefined">{{record.managerProfile.fname}} {{record.managerProfile.lname}}</span>
+        <input type="text" ng-if="record.managerProfile.fname === undefined" name="managerProfilef" id="managerProfilef" ng-model="record.managerProfile.name"
+               placeholder="* Manager Name" required disabled="true">
         <button class="button icon-left ion-location" modal-select="" ng-model="record.managerProfile"
                 options="managers" hide-reset="true" modal-title="Select Manager">
           <div class="option">
