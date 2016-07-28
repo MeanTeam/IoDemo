@@ -4,14 +4,19 @@ angular.module('app.menu', ['ionic-modal-select'])
   function ($scope, ProfileFactory, $location, $ionicPopup, $ionicSideMenuDelegate) {
 
    $scope.displayListSignins = false;
+    $scope.isAdmin = false;
 
 
    $scope.$on('$ionicView.beforeEnter', function () {
         $scope.displayListSignins = false;
+         $scope.isAdmin = false;
         if(!ProfileFactory.isEmpty()) {
           if(ProfileFactory.get().manager){
             $scope.displayListSignins = true;
           }
+          //call SISO Service
+           // SISOSprints.get({fname: ProfileFactory.get().fname, lname: ProfileFactory.get().lname, mname: ProfileFactory.get().mname,}, function (recs) {
+           // $scope.isAdmin = true;
         }
 
    });

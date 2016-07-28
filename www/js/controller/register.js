@@ -1,11 +1,11 @@
 angular.module('app.register', ['ionic-modal-select'])
 
-
-
-  .controller('registerCtrl', ['$scope', '$interval', '$location',
-    'SISOSprints', 'Locations', 'ProfileFactory', '$ionicLoading', '$ionicModal', '$ionicPopup', 'Managers', '$stateParams', '$ionicNavBarDelegate',
-    function ($scope, $interval, $location,
-              SISOSprints, Locations, ProfileFactory, $ionicLoading, $ionicModal, $ionicPopup, Managers, $stateParams, $ionicNavBarDelegate) {
+  .controller('registerCtrl', ['$scope', '$interval', '$state',
+    'SISOSprints', 'Locations', 'ProfileFactory', '$ionicLoading', '$ionicModal', '$ionicPopup', '$cordovaDialogs',
+    'Managers', '$stateParams', '$ionicSideMenuDelegate',
+    function ($scope, $interval, $state,
+              SISOSprints, Locations, ProfileFactory, $ionicLoading, $ionicModal,
+              $ionicPopup, $cordovaDialogs, Managers, $stateParams, $ionicSideMenuDelegate) {
 
 
       $scope.user = {fname: '', lname: ''};
@@ -13,8 +13,10 @@ angular.module('app.register', ['ionic-modal-select'])
       $scope.dialog = {title: 'Login Page', buttonLabel: 'Login'};
       $scope.someModel = null;
       $scope.managers = [];
+      $scope.title = "Register - SISO";
 
-      $scope.cancelBtn = false;
+      $scope.showCancelBtn = false;
+      $scope.showToggleMenu = true;
 
       $scope.record = {
         "fname": "",
@@ -29,27 +31,33 @@ angular.module('app.register', ['ionic-modal-select'])
       };
 
       $scope.$on('$ionicView.beforeEnter', function () {
-        SISOSprints.getManagerList({}, function (mgrs) {
-          $scope.managers =mgrs;
-        }, function(error) {
-          var confirmPopup = $ionicPopup.alert({
-            title: '<b>Sign Out Error</b>',
-            template: error.status+', '+error.statusText
 
-          });
-        });
-
+        //console.log('Is ProfileFactory.isEmpty() ', ProfileFactory.isEmpty(), ProfileFactory.get())
 
         if ($stateParams.mode === 'home' && !ProfileFactory.isEmpty()) {
-          $location.path('/tab/signInSignOut');
+
+          $state.go('tab.signInSignOut');
+          return false;
         } else {
+
           if ($stateParams.mode === 'edit') {
-            $scope.cancelBtn = true;
-            $ionicNavBarDelegate.title('');
+            $scope.showCancelBtn = true;
+            $scope.showToggleMenu = true;
+            $scope.title = "Edit Register - SISO"
+
           } else {
-            $scope.cancelBtn = false;
+            $scope.showCancelBtn = false;
+            $scope.showToggleMenu = false;
           }
+
+          SISOSprints.getManagerList({}, function (mgrs) {
+            $scope.managers =mgrs;
+          }, function(error) {
+            $cordovaDialogs.alert('Fail on Server connection', 'Error', 'OK');
+          });
+
           var profileData = ProfileFactory.get();
+
           Object.keys(profileData).forEach(function (key) {
             $scope.record[key] = profileData[key];
           });
@@ -57,7 +65,7 @@ angular.module('app.register', ['ionic-modal-select'])
 
       });
 
-      $scope.ph_numbr = /^(\+?(\d{1}|\d{2}|\d{3})[- ]?)?\d{3}[- ]?\d{3}[- ]?\d{4}$/;
+      //$scope.ph_numbr = /^(\+?(\d{1}|\d{2}|\d{3})[- ]?)?\d{3}[- ]?\d{3}[- ]?\d{4}$/;
 
       $scope.save = function () {
         var profileData = {};
@@ -75,12 +83,12 @@ angular.module('app.register', ['ionic-modal-select'])
 
         ProfileFactory.set(profileData);
         $ionicLoading.show({template: 'Registered!', noBackdrop: true, duration: 2200});
-        $location.path('/tab/signInSignOut');
+        $state.go('tab.signInSignOut');
       };
 
 
       $scope.cancel = function () {
-        $location.path('/tab/signInSignOut');
+        $state.go('tab.signInSignOut');
       };
 
 
