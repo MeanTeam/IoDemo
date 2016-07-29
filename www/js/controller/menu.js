@@ -1,7 +1,7 @@
 angular.module('app.menu', ['ionic-modal-select'])
 
-.controller('menuCtrl', ['$scope', 'ProfileFactory', '$location', '$ionicPopup', '$ionicSideMenuDelegate',
-  function ($scope, ProfileFactory, $location, $ionicPopup, $ionicSideMenuDelegate) {
+.controller('menuCtrl', ['$scope', 'ProfileFactory', '$location', '$ionicPopup', '$ionicSideMenuDelegate','SISOSprints','$cordovaDialogs',
+  function ($scope, ProfileFactory, $location, $ionicPopup, $ionicSideMenuDelegate, SISOSprints, $cordovaDialogs) {
 
    $scope.displayListSignins = false;
     $scope.isAdmin = false;
@@ -11,12 +11,24 @@ angular.module('app.menu', ['ionic-modal-select'])
         $scope.displayListSignins = false;
          $scope.isAdmin = false;
         if(!ProfileFactory.isEmpty()) {
-          if(ProfileFactory.get().manager){
-            $scope.displayListSignins = true;
-          }
-          //call SISO Service
-           // SISOSprints.get({fname: ProfileFactory.get().fname, lname: ProfileFactory.get().lname, mname: ProfileFactory.get().mname,}, function (recs) {
-           // $scope.isAdmin = true;
+          SISOSprints.getUserProfile({
+            fname: ProfileFactory.get().fname,
+            lname: ProfileFactory.get().lname,
+          }, function (userProfileArray) {
+            Object.keys(userProfileArray).forEach(function (key) {
+              var userProfile = userProfileArray[key];
+              if(userProfile.role === 'administrator') {
+                $scope.isAdmin = true;
+              };
+              if(userProfile.role === 'manager') {
+                $scope.displayListSignins = true;
+              };
+            });
+
+          }, function(error) {
+            $cordovaDialogs.alert('Fail on Server connection', 'Error', 'OK');
+          });
+
         }
 
    });
