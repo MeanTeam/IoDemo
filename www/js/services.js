@@ -94,6 +94,9 @@ constant('ApiEndpoint', {
     post : {method: 'POST', url: ApiEndpoint.url, cache: false, params: {path:'sisoweb'} ,responseType: 'json'},
     delete: {method: 'DELETE', url: ApiEndpoint.url + '/:id', params: {path:'sisoweb',id:'@_id'} ,cache: false, responseType: 'json'},
     getUserProfile: {method: 'GET', url: ApiEndpoint.url, params: {path:'profiles',fname:'@fname', lname: '@lname'}, isArray:true, cache: false, responseType: 'json'},
-    getManagerList: {method: 'GET', url: ApiEndpoint.url + '?role=manager', params: {path:'profiles'}, isArray:true, cache: false, responseType: 'json'}
+    getManagerList: {method: 'GET', url: ApiEndpoint.url + '?role=manager', params: {path:'profiles'}, isArray:true, cache: false, responseType: 'json'},
+    psotProfile : {method: 'POST', url: ApiEndpoint.url, cache: false, params: {path:'profiles'} ,responseType: 'json'},
+    deleteProfile: {method: 'DELETE', url: ApiEndpoint.url + '/:id', params: {path:'profiles',id:'@_id'} ,cache: false, responseType: 'json'},
+    updateProfile: {method: 'PUT', url: ApiEndpoint.url + '/:id', params: {path:'profiles',id:'@_id'} ,cache: false, responseType: 'json'}
   });
 }]);
