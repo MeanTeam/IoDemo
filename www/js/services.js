@@ -38,8 +38,22 @@ constant('ApiEndpoint', {
 .factory('ProfileFactory', ['$localStorage', function($localStorage){
 
   $localStorage = $localStorage.$default({
-    profileData : {}
+    profileData : {},
+    sisoData    : {}
   });
+
+  var saveSISO = function (user) {
+    $localStorage.sisoData = user;
+  };
+
+  var getSISO = function () {
+    return $localStorage.sisoData;
+  };
+
+  var isSISOEmptyObj = function(){
+    return Object.keys($localStorage.sisoData).length === 0 && $localStorage.sisoData.constructor === Object;
+  };
+
 
   var saveProfile = function (user) {
     $localStorage.profileData = user;
@@ -49,20 +63,23 @@ constant('ApiEndpoint', {
     return $localStorage.profileData;
   };
 
-  var isEmptyObj = function(){
+  var isProfileEmptyObj = function(){
     return Object.keys($localStorage.profileData).length === 0 && $localStorage.profileData.constructor === Object;
   };
 
-  var resetObj = function(){
-    var profileData = {};
-    saveProfile(profileData)
+  var resetObj = function(){    
+    saveSISO({});
+    saveProfile({});
   };
 
   return {
-    set : saveProfile,
-    get : getProfile,
+    setProfile : saveProfile,
+    getProfile : getProfile,
+    setSISO : saveSISO,
+    getSISO : getSISO,
     reset: resetObj,
-    isEmpty: isEmptyObj
+    isProfileEmpty: isProfileEmptyObj,
+    isSISOEmpty: isSISOEmptyObj
   };
 
 }])
@@ -95,7 +112,7 @@ constant('ApiEndpoint', {
     delete: {method: 'DELETE', url: ApiEndpoint.url + '/:id', params: {path:'sisoweb',id:'@_id'} ,cache: false, responseType: 'json'},
     getUserProfile: {method: 'GET', url: ApiEndpoint.url, params: {path:'profiles',fname:'@fname', lname: '@lname'}, isArray:true, cache: false, responseType: 'json'},
     getManagerList: {method: 'GET', url: ApiEndpoint.url + '?role=manager', params: {path:'profiles'}, isArray:true, cache: false, responseType: 'json'},
-    psotProfile : {method: 'POST', url: ApiEndpoint.url, cache: false, params: {path:'profiles'} ,responseType: 'json'},
+    postProfile : {method: 'POST', url: ApiEndpoint.url, cache: false, params: {path:'profiles'} ,responseType: 'json'},
     deleteProfile: {method: 'DELETE', url: ApiEndpoint.url + '/:id', params: {path:'profiles',id:'@_id'} ,cache: false, responseType: 'json'},
     updateProfile: {method: 'PUT', url: ApiEndpoint.url + '/:id', params: {path:'profiles',id:'@_id'} ,cache: false, responseType: 'json'}
   });

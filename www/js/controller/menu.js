@@ -10,10 +10,10 @@ angular.module('app.menu', ['ionic-modal-select'])
    $scope.$on('$ionicView.beforeEnter', function () {
         $scope.displayListSignins = false;
          $scope.isAdmin = false;
-        if(!ProfileFactory.isEmpty()) {
+        if(!ProfileFactory.isProfileEmpty()) {
           SISOSprints.getUserProfile({
-            fname: ProfileFactory.get().fname,
-            lname: ProfileFactory.get().lname,
+            fname: ProfileFactory.getProfile().fname,
+            lname: ProfileFactory.getProfile().lname,
           }, function (userProfileArray) {
             Object.keys(userProfileArray).forEach(function (key) {
               var userProfile = userProfileArray[key];
@@ -39,7 +39,7 @@ angular.module('app.menu', ['ionic-modal-select'])
 
 
     $scope.reset = function(){
-      $location.path('/tab/register');
+      
 
       var confirmPopup = $ionicPopup.confirm({
         title: '<b>Confirm Reset</b>',
