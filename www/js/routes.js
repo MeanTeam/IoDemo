@@ -37,6 +37,17 @@ angular.module('app.routes', [])
         }
       })
 
+      .state('tab.deleteManager', {
+        url: '/deleteManager',
+        cache: false,
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/deleteManager.html',
+            controller: 'deleteManagerCtrl'
+          }
+        }
+      })
+
       .state('tab.signInSignOut', {
         url: '/signInSignOut',
         cache: false,

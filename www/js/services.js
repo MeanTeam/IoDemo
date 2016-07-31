@@ -3,7 +3,7 @@ angular.module('app.services', ['ngResource', 'ngStorage']).
 constant('ApiEndpoint', {
 
   // url : 'https://lit-basin-60588.herokuapp.com/api/:path'  <<< USE this for Mobile Device
-   url: '/api/:path'                                        // <<< USE this for web testing
+   url: '/local/api/:path'                                        // <<< USE this for web testing
   //url : 'https://lit-basin-60588.herokuapp.com/api/:path' // ionic proxy
 })
 
@@ -67,7 +67,7 @@ constant('ApiEndpoint', {
     return Object.keys($localStorage.profileData).length === 0 && $localStorage.profileData.constructor === Object;
   };
 
-  var resetObj = function(){    
+  var resetObj = function(){
     saveSISO({});
     saveProfile({});
   };
@@ -112,6 +112,7 @@ constant('ApiEndpoint', {
     delete: {method: 'DELETE', url: ApiEndpoint.url + '/:id', params: {path:'sisoweb',id:'@_id'} ,cache: false, responseType: 'json'},
     getUserProfile: {method: 'GET', url: ApiEndpoint.url, params: {path:'profiles',fname:'@fname', lname: '@lname'}, isArray:true, cache: false, responseType: 'json'},
     getManagerList: {method: 'GET', url: ApiEndpoint.url + '?role=manager', params: {path:'profiles'}, isArray:true, cache: false, responseType: 'json'},
+    getUsersByManager: {method: 'GET', url: ApiEndpoint.url, params: {path:'profiles',mfname:'@fname',mlname:'@lname'}, isArray:true, cache: false, responseType: 'json'},
     postProfile : {method: 'POST', url: ApiEndpoint.url, cache: false, params: {path:'profiles'} ,responseType: 'json'},
     deleteProfile: {method: 'DELETE', url: ApiEndpoint.url + '/:id', params: {path:'profiles',id:'@_id'} ,cache: false, responseType: 'json'},
     updateProfile: {method: 'PUT', url: ApiEndpoint.url + '/:id', params: {path:'profiles',id:'@_id'} ,cache: false, responseType: 'json'}
