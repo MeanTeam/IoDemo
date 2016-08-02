@@ -1,0 +1,48 @@
+<ion-view view-title="Re-assign Manager" id="managerList">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+  <ion-nav-buttons side="right">
+
+  </ion-nav-buttons>
+  <ion-content padding="true" class="has-header">
+    <form name="assignManagerForm" class="list" novalidate>
+
+
+      <div class="item item-button-right">
+        <label class="item item-input item-floating-label">
+          <span class="input-label">From Manager</span>
+          <input type="text" name="from-manager" id="from-manager" ng-model="record.fromManager"
+                 placeholder="* From Manager" required disabled="true">
+        </label>
+          <button class="button icon-left ion-location" modal-select="" ng-model="record.fromManager"
+                  options="managerList" hide-reset="true" modal-title="From Manager"
+                  option-getter="optionManager(option)">
+            <div class="option">
+              {{option.fname}} {{option.lname}}
+            </div>
+          </button>
+      </div>
+
+      <div class="item item-button-right">
+        <label class="item item-input item-floating-label">
+          <span class="input-label">To Manager</span>
+          <input type="text" name="to-manager" id="to-manager" ng-model="record.toManager"
+                 placeholder="* To Manager" required disabled="true">
+        </label>
+        <button class="button icon-left ion-location" modal-select="" ng-model="record.toManager"
+                options="managerList" hide-reset="true" modal-title="From Manager"
+                option-getter="optionManager(option)">
+          <div class="option">
+            {{option.fname}} {{option.lname}}
+          </div>
+        </button>
+      </div>
+
+      <button class="button button-block button-positive" ng-disabled="!assignManagerForm.$valid" ng-click="reassignManager()">
+        Re-assign Manager
+      </button>
+
+    </form>
+  </ion-content>
+</ion-view>

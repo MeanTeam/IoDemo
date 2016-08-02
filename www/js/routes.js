@@ -59,6 +59,17 @@ angular.module('app.routes', [])
         }
       })
 
+      .state('tab.reassignManager', {
+        url: '/reassignManager',
+        cache: false,
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/reassignManager.html',
+            controller: 'reassignManagerCtrl'
+          }
+        }
+      })
+
       .state('tab.signInSignOut', {
         url: '/signInSignOut',
         cache: false,
