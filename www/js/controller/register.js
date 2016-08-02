@@ -39,6 +39,14 @@ angular.module('app.register', ['ionic-modal-select'])
       };
 
 
+      // $scope.selected = function() {
+      //   console.log("selected");
+      //    return   $scope.record.managerProfile.fname 
+      //               + " " + $scope.record.managerProfile.lname;
+
+
+      // }
+
       $scope.$on('$ionicView.beforeEnter', function () {
         if ($stateParams.mode === 'home' && !ProfileFactory.isProfileEmpty()) {
           $state.go('tab.signInSignOut');
@@ -78,10 +86,15 @@ angular.module('app.register', ['ionic-modal-select'])
             else if(key === 'mlname') {
                $scope.record['managerProfile'].lname = profileData[key];
             }
-
             $scope.record[key] = profileData[key];
-
           });
+
+                    //   $scope.record.managerProfile.name = $scope.record.managerProfile.fname 
+                    // + " " + $scope.record.managerProfile.lname;
+                    // $scope.record.managerProfile = $scope.record.managerProfile.name
+                    // console.log($scope.record.managerProfile.name);
+
+
 
       });// End beforeEnter function event
 

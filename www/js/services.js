@@ -3,8 +3,8 @@ angular.module('app.services', ['ngResource', 'ngStorage']).
 constant('ApiEndpoint', {
 
   // url : 'https://lit-basin-60588.herokuapp.com/api/:path'  <<< USE this for Mobile Device
-   url: '/api/:path'                                        // <<< USE this for web testing
-  //url : 'https://lit-basin-60588.herokuapp.com/api/:path' // ionic proxy
+  // url: '/api/:path'                                        // <<< USE this for web testing
+  url : 'https://lit-basin-60588.herokuapp.com/api/:path' // ionic proxy
 })
 
 .factory('Managers', [function(){

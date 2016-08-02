@@ -1,4 +1,4 @@
-<ion-view id="sprint1" cache-view="false">
+<ion-view id="createMgr" cache-view="false">
   <ion-nav-title> {{ title }}</ion-nav-title>
   <ion-nav-buttons side="left">
     <button menu-toggle="left" ng-show="showToggleMenu" class="button button-icon icon ion-navicon"></button>
@@ -11,6 +11,72 @@
   </ion-nav-buttons>
 
   <ion-content padding="true" class="has-header">
-      HH
+ <form name="createMgrForm" class="list" novalidate>
+
+      <div class="form-group" ng-class="{ 'has-error' : createMgrForm.fname.$invalid && !createMgrForm.fname.$pristine }">
+        <label class="item item-input item-floating-label">
+          <span class="input-label">First Name</span>
+          <input type="text" name="fname" id="fname" ng-model="record.fname" placeholder="* First Name"
+                 required ng-pattern="/^[a-zA-Z ]*$/">
+          <p ng-show="createMgrForm.fname.$error.required && !createMgrForm.fname.$pristine" class="help-block">
+            <span class="errcolor">First Name is required.</span></p>
+          <p ng-show="createMgrForm.fname.$error.pattern && !createMgrForm.fname.$pristine" class="help-block">
+            <span class="errcolor">Enter a valid First Name.</span></p>
+        </label>
+      </div>
+
+      <div class="form-group" ng-class="{ 'has-error' : createMgrForm.lname.$invalid && !createMgrForm.lname.$pristine }">
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Last Name</span>
+          <input type="text" name="lname" id="lname" ng-model="record.lname" placeholder="* Last Name" required
+                 ng-pattern="/^[a-zA-Z ]*$/">
+          <p ng-show="createMgrForm.lname.$invalid && !createMgrForm.lname.$pristine" class="help-block">
+            <span class="errcolor">Enter a valid Last Name</span>
+          </p>
+        </label>
+      </div>
+
+      <div class="form-group"
+           ng-class="{ 'has-error' : (createMgrForm.contact.$invalid && ! createMgrForm.contact.$pristine) }">
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Contact</span>
+          <input type="text" name="contact" id="contact" ng-model="record.contact" ui-mask="(999) 999-9999"
+                 ui-mask-placeholder ui-mask-placeholder-char="_" placeholder="* Contact" required/>
+          <p ng-show="createMgrForm.contact.$error.required && !createMgrForm.contact.$pristine" class="help-block"><span class="errcolor">
+            Phone number is required.</span>
+          </p>
+          <p ng-show="createMgrForm.contact.$error.pattern && !createMgrForm.contact.$pristine" class="help-block">
+            <span class="errcolor">Phone number is invalid.</span>
+          </p>
+        </label>
+      </div>
+
+       <div class="form-group" ng-class="{ 'has-error' : createMgrForm.email.$invalid && !createMgrForm.email.$pristine }">
+        <label class="item item-input item-floating-label">
+          <span class="input-label">Email</span>
+          <input type="email" name="email" id="email" ng-model="record.email" placeholder="* Email" required>
+          <p ng-show="createMgrForm.email.$invalid && !createMgrForm.email.$pristine" class="help-block">
+            <span class="errcolor">Enter a valid Email</span>
+          </p>
+        </label>
+      </div>     
+
+      <div class="item item-button-right">
+        <span class="input-label" ng-if="record.managerProfile !== undefined">Reporting Manager </span>
+        <span ng-if="record.managerProfile.fname !== undefined">{{record.managerProfile.fname}} {{record.managerProfile.lname}}</span>
+        <button class="button icon-left ion-location" modal-select="" ng-model="record.managerProfile"
+                options="managers" hide-reset="true" modal-title="Select Manager">
+          <div class="option">
+            {{option.fname}} {{option.lname}}
+          </div>
+        </button>
+      </div>
+
+      <button class="button button-block button-positive" ng-disabled="!createMgrForm.$valid" ng-click="create()">
+        Create
+      </button>
+
+
+    </form>
   </ion-content>
 </ion-view>
