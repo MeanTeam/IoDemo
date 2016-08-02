@@ -18,7 +18,7 @@
         <label class="item item-input item-floating-label">
           <span class="input-label">First Name</span>
           <input type="text" name="fname" id="fname" ng-model="record.fname" placeholder="* First Name"
-                 required ng-pattern="/^[a-zA-Z ]*$/">
+                 required ng-pattern="/^[a-zA-Z ]*$/" ng-disabled="fnameDisbl">
           <p ng-show="sprint1Form.fname.$error.required && !sprint1Form.fname.$pristine" class="help-block">
             <span class="errcolor">First Name is required.</span></p>
           <p ng-show="sprint1Form.fname.$error.pattern && !sprint1Form.fname.$pristine" class="help-block">
@@ -30,7 +30,7 @@
         <label class="item item-input item-floating-label">
           <span class="input-label">Midle Name</span>
           <input type="text" name="mname" id="mname" ng-model="record.mname" placeholder="Midle Name"
-                 ng-pattern="/^[a-zA-Z ]*$/">
+                 ng-pattern="/^[a-zA-Z ]*$/" ng-disabled="mnameDisbl">
           <p ng-show="sprint1Form.mname.$invalid && !sprint1Form.mname.$pristine" class="help-block">
             <span class="errcolor">Enter a valid Middle Name </span>
           </p>
@@ -41,7 +41,7 @@
         <label class="item item-input item-floating-label">
           <span class="input-label">Last Name</span>
           <input type="text" name="lname" id="lname" ng-model="record.lname" placeholder="* Last Name" required
-                 ng-pattern="/^[a-zA-Z ]*$/">
+                 ng-pattern="/^[a-zA-Z ]*$/" ng-disabled="lnameDisbl">
           <p ng-show="sprint1Form.lname.$invalid && !sprint1Form.lname.$pristine" class="help-block">
             <span class="errcolor">Enter a valid Last
             Name</span>
@@ -69,12 +69,10 @@
           <input type="text" name="contact" id="contact" ng-model="record.contact" ui-mask="(999) 999-9999"
                  ui-mask-placeholder ui-mask-placeholder-char="_" placeholder="* Contact" required/>
           <p ng-show="sprint1Form.contact.$error.required && !sprint1Form.contact.$pristine" class="help-block"><span class="errcolor">
-            Phone
-            number is required.</span>
+            Phone number is required.</span>
           </p>
           <p ng-show="sprint1Form.contact.$error.pattern && !sprint1Form.contact.$pristine" class="help-block">
-            <span class="errcolor">Phone
-            number is invalid.</span>
+            <span class="errcolor">Phone number is invalid.</span>
           </p>
         </label>
       </div>
@@ -97,7 +95,7 @@
       </div> -->
 
       <button class="button button-block button-positive" ng-disabled="!sprint1Form.$valid" ng-click="save()">
-        Register
+        {{registerBtnLabel}}
       </button>
 
 

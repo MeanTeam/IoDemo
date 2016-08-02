@@ -15,6 +15,11 @@ angular.module('app.register', ['ionic-modal-select'])
       $scope.someModel = null;
       $scope.managers = [];
       $scope.title = "Register - SISO";
+      $scope.fnameDisbl = false;
+      $scope.mnameDisbl = false;
+      $scope.lnameDisbl = false;
+      $scope.registerBtnLabel = 'Register Profile';
+
 
       $scope.showCancelBtn = false;
       $scope.showToggleMenu = true;
@@ -34,15 +39,30 @@ angular.module('app.register', ['ionic-modal-select'])
       };
 
 
-
-
       $scope.$on('$ionicView.beforeEnter', function () {
 
 
         if ($stateParams.mode === 'home' && !ProfileFactory.isProfileEmpty()) {
           $state.go('tab.signInSignOut');
           return false;
+        } else if ($stateParams.mode === 'edit') {
+          $scope.showCancelBtn = true;
+          $scope.showToggleMenu = true;
+          $scope.fnameDisbl = true;
+          $scope.mnameDisbl = true;
+          $scope.lnameDisbl = true;
+          $scope.registerBtnLabel = 'Update Profile';
+          $scope.title = "Edit Register - SISO"
+
+        } else {
+          $scope.showCancelBtn = false;
+          $scope.showToggleMenu = false;
+          $scope.fnameDisbl = false;
+          $scope.mnameDisbl = false;
+          $scope.lnameDisbl = false;
+          $scope.registerBtnLabel = 'Register Profile';
         }
+<<<<<<< HEAD
         else if ($stateParams.mode === 'edit') {
             $scope.showCancelBtn = true;
             $scope.showToggleMenu = true;
@@ -50,18 +70,33 @@ angular.module('app.register', ['ionic-modal-select'])
 
         }
         else if(ProfileFactory.isProfileEmpty()) {
+=======
+
+        SISOSprints.getManagerList({}, function (mgrs) {
+          $scope.managers = mgrs;
+        }, function (error) {
+          $cordovaDialogs.alert('Fail on Server connection', 'Error', 'OK');
+        });
+
+        var profileData = ProfileFactory.getProfile();
+
+        Object.keys(profileData).forEach(function (key) {
+          $scope.record[key] = profileData[key];
+        });
+
+        if (ProfileFactory.isProfileEmpty()) {
+>>>>>>> 0e0e91662edd13d7b93e315b04d1c5bbc284ef8e
           $scope.showCancelBtn = false;
           $scope.showToggleMenu = false;
           $ionicModal.fromTemplateUrl('templates/userDialog.html', {
             scope: $scope,
             animation: 'slide-in-up',
             focusFirstInput: true
-          }).then(function(modal){
+          }).then(function (modal) {
             $scope.userDialog = modal;
             $scope.userDialog.show();
           });
-
-         }
+        }
 
         SISOSprints.getManagerList({}, function (mgrs) {
             $scope.managers =mgrs;
@@ -85,11 +120,12 @@ angular.module('app.register', ['ionic-modal-select'])
 
       });
 
-      $scope.searchUser = function(u) {
+      $scope.searchUser = function (u) {
         var profileData = {};
-        if(u.fname !== '' && u.lname !== ''){
+        if (u.fname !== '' && u.lname !== '') {
           SISOSprints.getUserProfile(u, function (recs) {
             if (typeof recs !== undefined && recs.length > 0) {
+<<<<<<< HEAD
                 $scope.record = recs[0];
                 Object.keys($scope.record).forEach(function (key) {
                  profileData[key] = $scope.record[key];
@@ -97,8 +133,19 @@ angular.module('app.register', ['ionic-modal-select'])
 
               ProfileFactory.setProfile(profileData); 
               $scope.userDialog.hide();               
+=======
+              $scope.record = recs[0];
+              Object.keys($scope.record).forEach(function (key) {
+                profileData[key] = $scope.record[key];
+                // ProfileFactory.setProfile(profileData);
+                // $scope.userDialog.hide();
+                // $state.go('tab.signInSignOut');
+              });
+              ProfileFactory.setProfile(profileData);
+              $scope.userDialog.hide();
+>>>>>>> 0e0e91662edd13d7b93e315b04d1c5bbc284ef8e
               $state.go('tab.signInSignOut');
-            }else{
+            } else {
               $scope.userDialog.hide();
               // SISOSprints.getManagerList({}, function (mgrs) {
               //   $scope.managers =mgrs;
@@ -107,7 +154,7 @@ angular.module('app.register', ['ionic-modal-select'])
               // });
             }
           });
-        }else{
+        } else {
           $ionicLoading.show({template: 'User name must not be empty!', noBackdrop: true, duration: 2200});
         }
       };
@@ -116,6 +163,7 @@ angular.module('app.register', ['ionic-modal-select'])
       //$scope.ph_numbr = /^(\+?(\d{1}|\d{2}|\d{3})[- ]?)?\d{3}[- ]?\d{3}[- ]?\d{4}$/;
 
       $scope.save = function () {
+<<<<<<< HEAD
         var profileData = ProfileFactory.getProfile();
         $scope.record.role='user';
         $scope.record.mfname = $scope.record.managerProfile.fname;
@@ -163,6 +211,36 @@ angular.module('app.register', ['ionic-modal-select'])
                   alert(error.status + ', ' + error.statusText); 
             }); //End updateProfile service call
         }// End ProfileFactory NOT empty check
+=======
+        var profileData = {};
+        $scope.record.role = 'user';
+        Object.keys($scope.record).forEach(function (key) {
+          profileData[key] = $scope.record[key];
+
+          if (key === 'mfname') {
+            profileData[key] = $scope.record['managerProfile'].fname;
+          } else if (key === 'mlname') {
+            profileData[key] = $scope.record['managerProfile'].lname;
+          }
+        });
+
+        SISOSprints.postProfile($scope.record, function (result) {
+          if (typeof result !== undefined && typeof result._id !== undefined) {
+            ProfileFactory.getProfile()._id = result._id;
+            ProfileFactory.setProfile(profileData);
+
+            //$ionicLoading.show({template: 'Sign In successful!', noBackdrop: true, duration: 2200});
+            //alert('Registration successful!');
+            $ionicLoading.show({template: 'Registered!', noBackdrop: true, duration: 2200});
+            $state.go('tab.signInSignOut');
+
+          } else {
+            $ionicLoading.show({template: 'Registration In result error.', noBackdrop: true, duration: 2200});
+          }
+        }, function (error) {
+          alert(error.status + ', ' + error.statusText);
+        }); //End postProfile service call
+>>>>>>> 0e0e91662edd13d7b93e315b04d1c5bbc284ef8e
 
       }; // End save function
 
@@ -172,4 +250,5 @@ angular.module('app.register', ['ionic-modal-select'])
       };
 
 
-    }]);
+    }])
+;
