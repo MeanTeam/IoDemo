@@ -24,9 +24,15 @@
         <ion-item nav-clear menu-close href="#/tab/listSignins"  ng-show="displayListSignins">
           List Sign-In(s)
         </ion-item>
-        <ion-item nav-clear menu-close ng-click="reset()">
-          Reset
+        <ion-item nav-clear menu-close href="#/tab/createManager"  ng-show="isAdmin">
+          Create Manager
         </ion-item>
+        <ion-item nav-clear menu-close href="#/tab/deleteManager"  ng-show="isAdmin">
+          Delete Manager
+        </ion-item>
+        <!--ion-item nav-clear menu-close ng-click="reset()">
+          Reset
+        </ion-item-->
         <ion-item nav-clear menu-close href="#/tab/register/edit"> <!---->
           Edit Profile
         </ion-item>

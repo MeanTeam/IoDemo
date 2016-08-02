@@ -9,12 +9,12 @@ angular.module('app.listSignins', ['ionic-modal-select'])
 
 
       $scope.$on('$ionicView.beforeEnter', function () {
-         $scope.user.fname = ProfileFactory.get().fname;
-         $scope.user.lname = ProfileFactory.get().lname;
+         $scope.user.fname = ProfileFactory.getProfile().fname;
+         $scope.user.lname = ProfileFactory.getProfile().lname;
 
         if($scope.user.fname !== '' &&  $scope.user.lname !== '') {
 
-          SISOSprints.get({mfname: ProfileFactory.get().fname, mlname: ProfileFactory.get().lname}, function (recs) {
+          SISOSprints.get({mfname: ProfileFactory.getProfile().fname, mlname: ProfileFactory.getProfile().lname}, function (recs) {
             if (typeof recs !== undefined && recs.length > 0) {
               $scope.records = recs;
             }else{

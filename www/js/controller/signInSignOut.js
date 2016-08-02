@@ -22,44 +22,49 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
 
       $scope.$on('$ionicView.beforeEnter', function () {
 
-        if (ProfileFactory.isEmpty()) {
+        if (ProfileFactory.isProfileEmpty()) {
           $state.go('/tab/register');
           return false;
         }
 
+
         $ionicNavBarDelegate.showBackButton(false);
 
-        var userData = ProfileFactory.get();
+        var userData = ProfileFactory.getProfile();
 
-        if (ProfileFactory.get()._id == undefined || ProfileFactory.get()._id == '') {
+
           SISOSprints.get({
-            fname: ProfileFactory.get().fname,
-            lname: ProfileFactory.get().lname,
-            mname: ProfileFactory.get().mname,
+            fname: ProfileFactory.getProfile().fname,
+            lname: ProfileFactory.getProfile().lname,
+            mname: ProfileFactory.getProfile().mname,
           }, function (recs) {
             if (typeof recs !== undefined && recs.length > 0) {
               userData = recs[0];
-              ProfileFactory.get()._id = userData._id;
+              ProfileFactory.setSISO(userData);
+              ProfileFactory.getSISO()._id = userData._id;
+              Object.keys(userData).forEach(function (key) {
+                if (key == 'time') {
+                  $scope.record[key] = $filter('date')(new Date(), 'h:mm a');//.toLocaleTimeString().replace(/:\d+ /, ' ');
+                } else {
+                  $scope.record[key] = userData[key];
+                }
+              });
+            }        
+            else {
+                 ProfileFactory.setSISO(userData);
+                 ProfileFactory.getSISO()._id = '';
+                Object.keys(userData).forEach(function (key) {
+                  //console.log("id" + userData._id);
+                  if (key == 'time') {
+                    $scope.record[key] = $filter('date')(new Date(), 'h:mm a');//.toLocaleTimeString().replace(/:\d+ /, ' ');
+                  } else {
+                    $scope.record[key] = userData[key];
+                  }
+                });
             }
-            Object.keys(userData).forEach(function (key) {
-              if (key == 'time') {
-                $scope.record[key] = $filter('date')(new Date(), 'h:mm a');//.toLocaleTimeString().replace(/:\d+ /, ' ');
-              } else {
-                $scope.record[key] = userData[key];
-              }
-            });
+
           });
-        }
-        else {
-          Object.keys(userData).forEach(function (key) {
-            //console.log("id" + userData._id);
-            if (key == 'time') {
-              $scope.record[key] = $filter('date')(new Date(), 'h:mm a');//.toLocaleTimeString().replace(/:\d+ /, ' ');
-            } else {
-              $scope.record[key] = userData[key];
-            }
-          });
-        }
+
       });
 
       $scope.showCheckoutBtn = function () {
@@ -74,7 +79,7 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
         SISOSprints.post($scope.record, function (result) {
           if (typeof result !== undefined && typeof result._id !== undefined) {
             $scope.record._id = result._id;
-            ProfileFactory.get()._id = result._id;
+            ProfileFactory.getSISO()._id = result._id;
             $scope.record.time = $filter('date')(new Date(), 'h:mm a');
             //$ionicLoading.show({template: 'Sign In successful!', noBackdrop: true, duration: 2200});
             alert('Sign In successful!');
@@ -100,10 +105,10 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
             //console.log($scope.record._id);
 
             SISOSprints.delete({id: $scope.record._id}, function (success) {
-              var profileData = ProfileFactory.get();
+              var sisoData = ProfileFactory.getSISO();
               // remove $scope.record._id and prepare for next sign-in
-              profileData['_id'] = "";
-              ProfileFactory.set(profileData);
+              sisoData['_id'] = "";
+              ProfileFactory.setSISO(sisoData);
               $scope.record._id = "";
               $scope.record.time = $filter('date')(new Date(), 'h:mm a');
               //$ionicLoading.show({template: 'Sign Out successful!', noBackdrop: true, duration: 2200});

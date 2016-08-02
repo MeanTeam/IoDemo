@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('app', ['ionic', 'app.listSignins', 'app.signInSignOut',
+angular.module('app', ['ionic', 'app.listSignins', 'app.signInSignOut', 'app.deleteManager',
   'app.menu', 'app.login', 'app.register', 'app.routes', 'app.services', 'app.directives', 'ui.mask', 'ngCordova'])
 
 .run(function($ionicPlatform) {

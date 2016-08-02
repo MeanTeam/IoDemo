@@ -1,0 +1,15 @@
+<ion-view view-title="Delete Manager" id="deleteList">
+  <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+
+  <ion-content padding="true" class="has-header">
+    <h4> {{message}} </h4>
+      <div  ng-repeat="mgr in managers">
+            <ion-toggle ng-model="mgr.delete" toggle-class="toggle-possitive"><span class="input-label">{{mgr.lname}}, {{ mgr.fname }}</span></ion-toggle>
+      </div>
+    <button class="button button-block button-positive"  ng-click="delete(mgr)">Delete</button>
+
+  </ion-content>
+
+</ion-view>
