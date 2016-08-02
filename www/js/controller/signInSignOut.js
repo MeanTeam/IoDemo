@@ -51,16 +51,20 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
               });
             }        
             else {
-                 ProfileFactory.setSISO(userData);
-                 ProfileFactory.getSISO()._id = '';
                 Object.keys(userData).forEach(function (key) {
                   //console.log("id" + userData._id);
                   if (key == 'time') {
                     $scope.record[key] = $filter('date')(new Date(), 'h:mm a');//.toLocaleTimeString().replace(/:\d+ /, ' ');
-                  } else {
+                  } 
+                  else if(key == 'preferredLocation'){
+                     $scope.record.location = userData[key];
+                  }
+                  else {
                     $scope.record[key] = userData[key];
                   }
                 });
+                ProfileFactory.setSISO($scope.record);
+                ProfileFactory.getSISO()._id = '';    
             }
 
           });

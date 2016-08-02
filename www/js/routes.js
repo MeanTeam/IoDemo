@@ -37,6 +37,17 @@ angular.module('app.routes', [])
         }
       })
 
+      .state('tab.createManager', {
+        url: '/createManager',
+        cache: false,
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/createManager.html',
+            controller: 'createManagerCtrl'
+          }
+        }
+      })
+
       .state('tab.deleteManager', {
         url: '/deleteManager',
         cache: false,
