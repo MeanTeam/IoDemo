@@ -14,7 +14,12 @@ angular.module('app.deleteManager', ['ionic-modal-select'])
       $scope.lname = "";
       $scope.search = {"fname":"","lname":""};
 
+      $scope.lChange = function(n) {
+        console.log("** "+$scope.lname+","+n);
+        $scope.lname = 'asdf';
+      }
       $scope.searchChange = function() {
+        console.log("## "+$scope.search.fname+","+$scope.search.lname);
         $scope.managers = [];
         Object.keys($scope.allManagers).forEach(function (key) {
           var mgr = $scope.allManagers[key];
