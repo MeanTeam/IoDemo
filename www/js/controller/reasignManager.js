@@ -28,7 +28,6 @@ angular.module('app.reassignManager', ['ionic-modal-select'])
         // Get all user under manager (FROM)
 
         var fromManagerName = $scope.record.fromManager.split(' ');
-        //console.log(fromManagerName);
 
         SISOSprints.getUsersByManager({'mfname': fromManagerName[0], 'mlname': fromManagerName[1]}, function (users) {
           //console.log(users);

@@ -28,8 +28,8 @@
 
       <div class="form-group" ng-class="{ 'has-error' : sprint1Form.mname.$invalid && !sprint1Form.mname.$pristine }">
         <label class="item item-input item-floating-label">
-          <span class="input-label">Midle Name</span>
-          <input type="text" name="mname" id="mname" ng-model="record.mname" placeholder="Midle Name"
+          <span class="input-label">Middle Name</span>
+          <input type="text" name="mname" id="mname" ng-model="record.mname" placeholder="Middle Name"
                  ng-pattern="/^[a-zA-Z ]*$/" ng-disabled="mnameDisbl">
           <p ng-show="sprint1Form.mname.$invalid && !sprint1Form.mname.$pristine" class="help-block">
             <span class="errcolor">Enter a valid Middle Name </span>
@@ -50,16 +50,18 @@
       </div>
 
       <div class="item item-button-right">
-        <span class="input-label" ng-if="record.managerProfile !== undefined">Manager Name</span>
-        <span ng-if="record.managerProfile.fname !== undefined">{{record.managerProfile.fname}} {{record.managerProfile.lname}}</span>
-        <input type="text" ng-if="record.managerProfile.fname === undefined" name="managerProfilef" id="managerProfilef" ng-model="record.managerProfile.name" placeholder="* Manager Name" required disabled="true">
-        <button class="button icon-left ion-location" modal-select="" ng-model="record.managerProfile"
-                options="managers" hide-reset="true" modal-title="Select Manager" >
-          <div class="option">
-            {{option.fname}} {{option.lname}}
-          </div>
-        </button>
+          <span class="input-label" ng-if="record.managerProfile !== ''">Manager Name</span> 
+          <input type="text" name="manager-name" id="manager-name" ng-model="record.managerProfile"
+                 placeholder="* Manager Name" required disabled="true">
+          <button class="button icon-left ion-location" modal-select="" ng-model="record.managerProfile"
+                  options="managers" hide-reset="true" modal-title="Select Manager"
+                  option-getter="optionManager(option)">
+            <div class="option">
+              {{option.fname}} {{option.lname}}
+            </div>
+          </button>
       </div>
+
 
       <div class="form-group"
            ng-class="{ 'has-error' : (sprint1Form.contact.$invalid && ! sprint1Form.contact.$pristine) }">

@@ -29,25 +29,21 @@ angular.module('app.register', ['ionic-modal-select'])
         "mname": "",
         "lname": "",
         "role": "",
-        "managerProfile": {},
+        'managerProfile': '',
         "mfname": "",
         "mlname": "",
         "contact": "",
         "preferredLocation": "",
-        "manager": "",
         "._id": ""
       };
 
+      $scope.optionManager = function (opt) {
+        return opt.fname + ' ' + opt.lname;
+      };
 
-      // $scope.selected = function() {
-      //   console.log("selected");
-      //    return   $scope.record.managerProfile.fname 
-      //               + " " + $scope.record.managerProfile.lname;
-
-
-      // }
 
       $scope.$on('$ionicView.beforeEnter', function () {
+        
         if ($stateParams.mode === 'home' && !ProfileFactory.isProfileEmpty()) {
           $state.go('tab.signInSignOut');
           return false;
@@ -57,7 +53,12 @@ angular.module('app.register', ['ionic-modal-select'])
           $scope.mnameDisbl = true;
           $scope.lnameDisbl = true;
           $scope.registerBtnLabel = 'Update Profile';
-          $scope.title = "Edit Register - SISO"
+          $scope.title = "Edit Register - SISO" ;
+          var profileData = ProfileFactory.getProfile();
+            Object.keys(profileData).forEach(function (key) {
+              $scope.record[key] = profileData[key];
+            });
+          $scope.record.managerProfile = $scope.record.mfname + ' ' +  $scope.record.mlname;
         }
         else if (ProfileFactory.isProfileEmpty()) {
           $scope.showCancelBtn = false;
@@ -77,23 +78,6 @@ angular.module('app.register', ['ionic-modal-select'])
           }, function(error) {
             $cordovaDialogs.alert('Fail on Server connection', 'Error', 'OK');
           });
-
-         var profileData = ProfileFactory.getProfile();
-          Object.keys(profileData).forEach(function (key) {
-            if(key === 'mfname') {
-              $scope.record['managerProfile'].fname =profileData[key];
-            } 
-            else if(key === 'mlname') {
-               $scope.record['managerProfile'].lname = profileData[key];
-            }
-            $scope.record[key] = profileData[key];
-          });
-
-                    //   $scope.record.managerProfile.name = $scope.record.managerProfile.fname 
-                    // + " " + $scope.record.managerProfile.lname;
-                    // $scope.record.managerProfile = $scope.record.managerProfile.name
-                    // console.log($scope.record.managerProfile.name);
-
 
 
       });// End beforeEnter function event
@@ -124,13 +108,14 @@ angular.module('app.register', ['ionic-modal-select'])
 
       $scope.save = function () {
         var profileData = ProfileFactory.getProfile();
-        $scope.record.role='user';
-        $scope.record.mfname = $scope.record.managerProfile.fname;
-        $scope.record.mlname = $scope.record.managerProfile.lname;
-        $scope.record._id = ProfileFactory.getProfile()._id;
-        
+        var managerName = $scope.record.managerProfile.split(' ');
+        $scope.record.mfname = managerName[0];
+        $scope.record.mlname = managerName[1];;
+       
         if(ProfileFactory.isProfileEmpty()) {
-              SISOSprints.postProfile($scope.record, function (result) {          
+              profileData = {};
+              $scope.record.role='user';   
+              SISOSprints.postProfile($scope.record, function (result) {      
               if (typeof result !== undefined && typeof result._id !== undefined) {
                     Object.keys(result).forEach(function (key) {
                         profileData[key] = result[key];
@@ -148,12 +133,11 @@ angular.module('app.register', ['ionic-modal-select'])
             }); //End postProfile service call
         } // End ProfileFactory empty check
         else if ($stateParams.mode === 'edit' && !ProfileFactory.isProfileEmpty()) {
-          console.log("edit user profile " + $scope.record);      
+            $scope.record._id = ProfileFactory.getProfile()._id;      
             SISOSprints.updateProfile($scope.record, function (result) {
                 if (typeof result !== undefined && typeof result._id !== undefined) {
                         Object.keys(result).forEach(function (key) {
                             profileData[key] = result[key];
-                            console.log("profileData[key]" + profileData[key]);
                         });
                       ProfileFactory.setProfile(profileData);
                       $ionicLoading.show({template: 'Successfully Updated Profile!', noBackdrop: true, duration: 2200});
