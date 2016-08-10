@@ -43,11 +43,11 @@ angular.module('app.register', ['ionic-modal-select'])
 
 
       $scope.$on('$ionicView.beforeEnter', function () {
-        
+
         if ($stateParams.mode === 'home' && !ProfileFactory.isProfileEmpty()) {
           $state.go('tab.signInSignOut');
           return false;
-        } 
+        }
         else if ($stateParams.mode === 'edit') {
           $scope.fnameDisbl = true;
           $scope.mnameDisbl = true;
@@ -92,12 +92,16 @@ angular.module('app.register', ['ionic-modal-select'])
                  profileData[key] = $scope.record[key];
                });
 
-              ProfileFactory.setProfile(profileData); 
-              $scope.userDialog.hide();               
+              ProfileFactory.setProfile(profileData);
+              $scope.userDialog.hide();
               $state.go('tab.signInSignOut');
             } else {
               $scope.userDialog.hide();
             }
+          }, function (error) {
+            console.log(error);
+            $ionicLoading.show({template: error.status + ', ' + error.statusText, noBackdrop: true, duration: 2200});
+            alert(error.status + ', ' + error.statusText);
           });
         } else {
           $ionicLoading.show({template: 'User name must not be empty!', noBackdrop: true, duration: 2200});
@@ -111,11 +115,11 @@ angular.module('app.register', ['ionic-modal-select'])
         var managerName = $scope.record.managerProfile.split(' ');
         $scope.record.mfname = managerName[0];
         $scope.record.mlname = managerName[1];;
-       
+
         if(ProfileFactory.isProfileEmpty()) {
               profileData = {};
-              $scope.record.role='user';   
-              SISOSprints.postProfile($scope.record, function (result) {      
+              $scope.record.role='user';
+              SISOSprints.postProfile($scope.record, function (result) {
               if (typeof result !== undefined && typeof result._id !== undefined) {
                     Object.keys(result).forEach(function (key) {
                         profileData[key] = result[key];
@@ -133,7 +137,7 @@ angular.module('app.register', ['ionic-modal-select'])
             }); //End postProfile service call
         } // End ProfileFactory empty check
         else if ($stateParams.mode === 'edit' && !ProfileFactory.isProfileEmpty()) {
-            $scope.record._id = ProfileFactory.getProfile()._id;      
+            $scope.record._id = ProfileFactory.getProfile()._id;
             SISOSprints.updateProfile($scope.record, function (result) {
                 if (typeof result !== undefined && typeof result._id !== undefined) {
                         Object.keys(result).forEach(function (key) {
@@ -143,14 +147,14 @@ angular.module('app.register', ['ionic-modal-select'])
                       $ionicLoading.show({template: 'Successfully Updated Profile!', noBackdrop: true, duration: 2200});
                       $state.go('tab.signInSignOut');
 
-                  } 
-                  else 
+                  }
+                  else
                   {
                       $ionicLoading.show({template: 'Update Registration In result error.', noBackdrop: true, duration: 2200});
                   }
                 }, function (error) {
                   $ionicLoading.show({template: error.status + ', ' + error.statusText, noBackdrop: true, duration: 2200});
-                  alert(error.status + ', ' + error.statusText); 
+                  alert(error.status + ', ' + error.statusText);
             }); //End updateProfile service call
         }// End ProfileFactory NOT empty check
       }; // End save function
