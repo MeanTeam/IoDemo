@@ -5,26 +5,32 @@
 
   <ion-content padding="true" class="has-header">
 
-    <div>
-      
-      <div>
+    <div ng-show="showSearch">
+
         <label class="item item-input">
           <span class="input-label">Search by Last Name</span>
           <input type="text" name="lname" id="lname" ng-model="search.lname" ng-change="searchChange(search)" placeholder="Search Last Name">
         </label>
-      </div>
       <label class="item item-input">
         <span class="input-label">Search by First Name</span>
         <input type="text" name="fname" id="fname" ng-model="search.fname" ng-change="searchChange(search)" placeholder="Search First Name">
       </label>
-    </div>
+
     <hr/>
     <h4> {{message}} </h4>
+    <div>
       <div  ng-repeat="mgr in managers">
             <ion-toggle ng-model="mgr.delete" toggle-class="toggle-possitive"><span class="input-label">{{mgr.lname}}, {{ mgr.fname }}</span></ion-toggle>
       </div>
-    <button class="button button-block button-positive"  ng-click="delete(mgr)">Delete</button>
-
+    </div>
+    <div ng-class="item">
+        <button type="button" class="button button-stable modal-select-close-button" ng-click="delete(mgr)">Delete</button>
+        <button type="button" class="button button-stable" ng-click="cancelSearch()">Cancel</button>
+    </div>
+    </div>
+    <div ng-show="showSearchButton">
+    <button class="button button-block button-positive"  ng-click="startSearch()">Search Manager</button>
+  </div>
   </ion-content>
 
 </ion-view>
