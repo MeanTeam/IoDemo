@@ -13,13 +13,19 @@ angular.module('app.deleteManager', ['ionic-modal-select'])
       $scope.fname = "";
       $scope.lname = "";
       $scope.search = {"fname":"","lname":""};
+      $scope.showSearch = false;
+      $scope.showSearchButton = true;
 
-      $scope.lChange = function(n) {
-        console.log("** "+$scope.lname+","+n);
-        $scope.lname = 'asdf';
+      $scope.startSearch = function() {
+        $scope.showSearch = true;
+        $scope.showSearchButton = false;
       }
+      $scope.cancelSearch = function() {
+        $scope.showSearch = false;
+        $scope.showSearchButton = true;
+      }
+
       $scope.searchChange = function() {
-        console.log("## "+$scope.search.fname+","+$scope.search.lname);
         $scope.managers = [];
         Object.keys($scope.allManagers).forEach(function (key) {
           var mgr = $scope.allManagers[key];
@@ -32,56 +38,12 @@ angular.module('app.deleteManager', ['ionic-modal-select'])
           }
         });
       };
-/*      $scope.fChange = function(n) {
-        var _n = n.toLowerCase();
-        $scope.managers = [];
-        Object.keys($scope.allManagers).forEach(function (key) {
-          var mfname = $scope.allManagers[key].fname.toLowerCase();
-          var mlname = $scope.allManagers[key].lname.toLowerCase();
-          if($scope.lname.length === 0) {
-            if(_n.length === 0 || mfname.indexOf(_n) === 0){
-              $scope.managers.push($scope.allManagers[key]);
-            }
-          } else {
-            if(mlname.indexOf($scope.lname.toLowerCase()) === 0 &&
-              (_n.length === 0 || mfname.indexOf(_n) === 0)){
-              $scope.managers.push($scope.allManagers[key]);
-            }
-
-          }
-        });
-      }
-
-      $scope.lChange = function(n) {
-        console.log(n+","+$scope.lname);
-        $scope.lname = n;
-        var _n = n.toLowerCase();
-        $scope.managers = [];
-        Object.keys($scope.allManagers).forEach(function (key) {
-          var mfname = $scope.allManagers[key].fname.toLowerCase();
-          var mlname = $scope.allManagers[key].lname.toLowerCase();
-          if($scope.fname.length === 0) {
-            if(_n.length === 0 || mlname.indexOf(_n) === 0){
-              $scope.managers.push($scope.allManagers[key]);
-            }
-          } else {
-            if(mfname.indexOf($scope.fname.toLowerCase()) === 0 &&
-              (_n.length === 0 || mlname.indexOf(_n) === 0)){
-              $scope.managers.push($scope.allManagers[key]);
-            }
-
-          }
-        });
-      }
-
-*/
       $scope.delete = function() {
         var msg = "";
         var deleteManager = [];
 
         Object.keys($scope.managers).forEach(function (key) {
           var mgr = $scope.managers[key];
-          console.log(mgr);
           if(mgr.delete){
             msg += mgr.lname+','+mgr.fname+'<br/>';
             deleteManager.push(mgr);
@@ -100,6 +62,8 @@ angular.module('app.deleteManager', ['ionic-modal-select'])
             if(res) {
               $scope.search.fname = "";
               $scope.search.lname = "";
+              $scope.showSearch = false;
+              $scope.showSearchButton = true;
             Object.keys(deleteManager).forEach(function(key) {
               var mgr = deleteManager[key];
               SISOSprints.deleteProfile({id: mgr._id}, function (success) {
