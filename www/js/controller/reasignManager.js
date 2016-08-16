@@ -74,11 +74,25 @@ angular.module('app.reassignManager', ['ionic-modal-select'])
 
         SISOSprints.postProfile({
           'transaction-type': 'reassign-manager',
-          'fromManagerId': $scope.record.fromManager.id,
-          'toManagerId': $scope.record.toManager.id,
-          'userIds': allSelected
+          parameters: {
+            'fromManagerId': $scope.record.fromManager.id,
+            'toManagerId': $scope.record.toManager.id,
+            'userIds': allSelected
+          }
         }, function (result) {
           console.log(result.message);
+          SISOSprints.getUsersByManager({
+            'mfname': $scope.record.fromManager.mfname,
+            'mlname': $scope.record.fromManager.mlname
+          }, function (users) {
+
+            $scope.usersFromManager = users;
+            $scope.usersFromManager.forEach(function (e) {
+              e.selected = false;
+            });
+          }, function (error) {
+            $cordovaDialogs.alert('Fail on Server connection', 'Error', 'OK');
+          });
           $ionicLoading.show({template: 'Profiles updated.', noBackdrop: true, duration: 2200});
         }, function (error) {
           console.log(error);
