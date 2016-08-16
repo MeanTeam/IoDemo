@@ -12,22 +12,23 @@
       <div class="item item-button-right">
         <label class="item item-input item-floating-label">
           <span class="input-label">From Manager</span>
-          <input type="text" name="from-manager" id="from-manager" ng-model="record.fromManager"
+          <input type="text" name="from-manager" id="from-manager" ng-model="record.fromManager.name"
                  placeholder="* From Manager" required disabled="true">
         </label>
-          <button class="button icon-left ion-location" modal-select="" ng-model="record.fromManager"
-                  options="managerList" hide-reset="true" modal-title="From Manager"
-                  option-getter="optionManager(option)">
-            <div class="option">
-              {{option.fname}} {{option.lname}}
-            </div>
-          </button>
+        <button class="button icon-left ion-location" modal-select="" ng-model="record.fromManager"
+                options="managerList" hide-reset="true" modal-title="From Manager"
+                on-select="onSelect(newValue,oldValue)" load-list-message="Loading Managers"
+                option-getter="optionManager(option)">
+          <div class="option">
+            {{option.fname}} {{option.lname}}
+          </div>
+        </button>
       </div>
 
       <div class="item item-button-right">
         <label class="item item-input item-floating-label">
           <span class="input-label">To Manager</span>
-          <input type="text" name="to-manager" id="to-manager" ng-model="record.toManager"
+          <input type="text" name="to-manager" id="to-manager" ng-model="record.toManager.name"
                  placeholder="* To Manager" required disabled="true">
         </label>
         <button class="button icon-left ion-location" modal-select="" ng-model="record.toManager"
@@ -39,9 +40,28 @@
         </button>
       </div>
 
-      <button class="button button-block button-positive" ng-disabled="!assignManagerForm.$valid" ng-click="reassignManager()">
+      <button class="button button-block button-positive" ng-disabled="!assignManagerForm.$valid"
+              ng-click="reassignManager()">
         Re-assign Manager
       </button>
+
+      <div class="item item-divider" ng-show="usersFromManager.length > 0">
+        <strong>{{record.fromManager.name}}'s Users</strong>
+      </div>
+      <ion-list>
+
+
+        <ion-checkbox ng-model="usr.selected" ng-repeat="usr in usersFromManager">
+          <h2>
+            {{usr.fname}} {{usr.lname}}
+          </h2>
+          <p>
+            Role: {{ usr.role.toUpperCase() }}
+          </p>
+        </ion-checkbox>
+
+
+      </ion-list>
 
     </form>
   </ion-content>
