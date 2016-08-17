@@ -4,9 +4,7 @@
   </ion-nav-buttons>
 
   <ion-content padding="true" class="has-header">
-
-    <div ng-show="showSearch">
-
+    <div>
         <label class="item item-input">
           <span class="input-label">Search by Last Name</span>
           <input type="text" name="lname" id="lname" ng-model="search.lname" ng-change="searchChange(search)" placeholder="Search Last Name">
@@ -17,20 +15,27 @@
       </label>
 
     <hr/>
-    <h4> {{message}} </h4>
+  </div>
+  <div  ng-show="showMessage">
+    <h4> {{allManagers.length}} managers are not assigned to any user.<br/> {{message()}} </h4>
+    <button class="button button-block button-positive" ng-click="showAllManagers()">Show All Managers</button>
+  </div>
+  <div ng-show="showSearch">
     <div>
       <div  ng-repeat="mgr in managers">
             <ion-toggle ng-model="mgr.delete" toggle-class="toggle-possitive"><span class="input-label">{{mgr.lname}}, {{ mgr.fname }}</span></ion-toggle>
       </div>
     </div>
-    <div ng-class="item">
+    <div ng-show="showSearch">
+  </div>
+  <div ng-show="showSearch">
+    <button class="button button-block button-positive"  ng-click="delete()">Delete</button>
+</div>
+    <!--div ng-class="item">
         <button type="button" class="button button-stable modal-select-close-button" ng-click="delete(mgr)">Delete</button>
         <button type="button" class="button button-stable" ng-click="cancelSearch()">Cancel</button>
+    </div-->
     </div>
-    </div>
-    <div ng-show="showSearchButton">
-    <button class="button button-block button-positive"  ng-click="startSearch()">Search Manager</button>
-  </div>
   </ion-content>
 
 </ion-view>

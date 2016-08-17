@@ -15,6 +15,7 @@ angular.module('app.deleteManager', ['ionic-modal-select'])
       $scope.search = {"fname":"","lname":""};
       $scope.showSearch = false;
       $scope.showSearchButton = true;
+      $scope.showMessage = !$scope.showSearch;
 
       $scope.startSearch = function() {
         $scope.showSearch = true;
@@ -24,7 +25,24 @@ angular.module('app.deleteManager', ['ionic-modal-select'])
         $scope.showSearch = false;
         $scope.showSearchButton = true;
       }
+      $scope.message = function() {
+        var msg = "";
+        if($scope.managers.length == 0) {
+          if($scope.search.lname.length > 0 || $scope.search.fname.length > 0) {
+            msg = "No match.";
+          }
+        }
+        return msg;
+      }
+      $scope.showAllManagers = function() {
+        $scope.showAll = true;
+        $scope.managers = $scope.allManagers;
+        displaySearchResult();
 
+      }
+      $scope.numberOfManager = function() {
+        return AllManagers.length;
+      }
       $scope.searchChange = function() {
         $scope.managers = [];
         Object.keys($scope.allManagers).forEach(function (key) {
@@ -33,15 +51,37 @@ angular.module('app.deleteManager', ['ionic-modal-select'])
             mgr.lname.toLowerCase().indexOf($scope.search.lname.toLowerCase()) == 0;
           var fmatch = $scope.search.fname.length ==0 ||
             mgr.fname.toLowerCase().indexOf($scope.search.fname.toLowerCase()) == 0;
-          if(fmatch && lmatch) {
+          var empty = isEmpty();
+          if(!empty && fmatch && lmatch) {
             $scope.managers.push($scope.allManagers[key]);
           }
         });
+        if(isEmpty() && $scope.showAll) {
+          $scope.managers = $scope.allManagers;
+        }
+        displaySearchResult();
       };
+
+      function isEmpty() {
+        return ($scope.search.lname.length ==0 && $scope.search.fname.length ==0);
+      }
+      function displaySearchResult() {
+        if($scope.managers.length > 0) {
+          $scope.showSearch = true;
+        } else {
+          if($scope.showAll && isEmpty()) {
+            $scope.showSearch = true;
+          } else {
+            $scope.showSearch = false;
+          }
+        }
+        $scope.showMessage = !$scope.showSearch;
+      }
+
       $scope.delete = function() {
         var msg = "";
         var deleteManager = [];
-
+console.log($scope.managers);
         Object.keys($scope.managers).forEach(function (key) {
           var mgr = $scope.managers[key];
           if(mgr.delete){
@@ -58,6 +98,7 @@ angular.module('app.deleteManager', ['ionic-modal-select'])
             title: '<b>Delete Manager</b>',
             template: msg
           });
+          console.log(confirmPopup);
           confirmPopup.then(function (res) {
             if(res) {
               $scope.search.fname = "";
@@ -75,10 +116,9 @@ angular.module('app.deleteManager', ['ionic-modal-select'])
                   }
                 });
                 $scope.managers = newManagers;
+                console.log("newManagers: "+newManagers);
                 $scope.allManagers = newManagers;
-                if($scope.managers.length === 0) {
-                  $scope.message = "No manager to delete.";
-                }
+                displaySearchResult();
               }, function(error) {
                 $cordovaDialogs.alert('Fail on Server connection', 'Error', 'OK');
               });
@@ -107,7 +147,7 @@ angular.module('app.deleteManager', ['ionic-modal-select'])
           });
         }, function(error) {
           $cordovaDialogs.alert('Fail on Server connection', 'Error', 'OK');
-        });
+});
 
       });
 
