@@ -48,9 +48,11 @@ angular.module('app.deleteManager', ['ionic-modal-select'])
         $scope.managers = [];
         Object.keys($scope.allManagers).forEach(function (key) {
           var mgr = $scope.allManagers[key];
+          var name = mgr.lname+", "+mgr.fname;
           var nmatch = $scope.search.name.length ==0 ||
-            mgr.lname.toLowerCase().indexOf($scope.search.name.toLowerCase()) >= 0 ||
-            mgr.fname.toLowerCase().indexOf($scope.search.name.toLowerCase()) >= 0;
+            name.toLowerCase().indexOf($scope.search.name.toLowerCase()) >= 0;
+//            mgr.lname.toLowerCase().indexOf($scope.search.name.toLowerCase()) >= 0 ||
+//            mgr.fname.toLowerCase().indexOf($scope.search.name.toLowerCase()) >= 0;
 /*
           var lmatch = $scope.search.lname.length ==0 ||
             mgr.lname.toLowerCase().indexOf($scope.search.lname.toLowerCase()) == 0;
