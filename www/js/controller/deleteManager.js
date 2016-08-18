@@ -12,7 +12,7 @@ angular.module('app.deleteManager', ['ionic-modal-select'])
       $scope.message = "";
       $scope.fname = "";
       $scope.lname = "";
-      $scope.search = {"fname":"","lname":""};
+      $scope.search = {"fname":"","lname":"","name":""};
       $scope.showSearch = false;
       $scope.showSearchButton = true;
       $scope.showMessage = !$scope.showSearch;
@@ -28,7 +28,8 @@ angular.module('app.deleteManager', ['ionic-modal-select'])
       $scope.message = function() {
         var msg = "";
         if($scope.managers.length == 0) {
-          if($scope.search.lname.length > 0 || $scope.search.fname.length > 0) {
+//          if($scope.search.lname.length > 0 || $scope.search.fname.length > 0) {
+          if($scope.search.name.length > 0) {
             msg = "No match.";
           }
         }
@@ -47,12 +48,17 @@ angular.module('app.deleteManager', ['ionic-modal-select'])
         $scope.managers = [];
         Object.keys($scope.allManagers).forEach(function (key) {
           var mgr = $scope.allManagers[key];
+          var nmatch = $scope.search.name.length ==0 ||
+            mgr.lname.toLowerCase().indexOf($scope.search.name.toLowerCase()) >= 0 ||
+            mgr.fname.toLowerCase().indexOf($scope.search.name.toLowerCase()) >= 0;
+/*
           var lmatch = $scope.search.lname.length ==0 ||
             mgr.lname.toLowerCase().indexOf($scope.search.lname.toLowerCase()) == 0;
           var fmatch = $scope.search.fname.length ==0 ||
             mgr.fname.toLowerCase().indexOf($scope.search.fname.toLowerCase()) == 0;
-          var empty = isEmpty();
-          if(!empty && fmatch && lmatch) {
+*/          var empty = isEmpty();
+//          if(!empty && fmatch && lmatch) {
+          if(!isEmpty() && nmatch) {
             $scope.managers.push($scope.allManagers[key]);
           }
         });
@@ -63,7 +69,7 @@ angular.module('app.deleteManager', ['ionic-modal-select'])
       };
 
       function isEmpty() {
-        return ($scope.search.lname.length ==0 && $scope.search.fname.length ==0);
+        return $scope.search.name.length ==0; // ($scope.search.lname.length ==0 && $scope.search.fname.length ==0);
       }
       function displaySearchResult() {
         if($scope.managers.length > 0) {
@@ -103,6 +109,7 @@ console.log($scope.managers);
             if(res) {
               $scope.search.fname = "";
               $scope.search.lname = "";
+              $scope.search.name = "";
               $scope.showSearch = false;
               $scope.showSearchButton = true;
             Object.keys(deleteManager).forEach(function(key) {

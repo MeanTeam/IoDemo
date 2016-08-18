@@ -6,14 +6,9 @@
   <ion-content padding="true" class="has-header">
     <div>
         <label class="item item-input">
-          <span class="input-label">Search by Last Name</span>
-          <input type="text" name="lname" id="lname" ng-model="search.lname" ng-change="searchChange(search)" placeholder="Search Last Name">
+          <span class="input-label">Search by Name</span>
+          <input type="text" name="lname" id="lname" ng-model="search.name" ng-change="searchChange()" placeholder="Search Name">
         </label>
-      <label class="item item-input">
-        <span class="input-label">Search by First Name</span>
-        <input type="text" name="fname" id="fname" ng-model="search.fname" ng-change="searchChange(search)" placeholder="Search First Name">
-      </label>
-
     <hr/>
   </div>
   <div  ng-show="showMessage">
