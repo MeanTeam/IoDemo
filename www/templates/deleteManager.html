@@ -7,18 +7,19 @@
     <div>
         <label class="item item-input">
           <span class="input-label">Search by Name</span>
-          <input type="text" name="lname" id="lname" ng-model="search.name" ng-change="searchChange()" placeholder="Search Name">
+          <input type="text" name="name" id="name" ng-model="search.name" ng-change="searchChange()" placeholder="Search Name">
         </label>
     <hr/>
   </div>
   <div  ng-show="showMessage">
-    <h4> {{allManagers.length}} managers are not assigned to any user.<br/> {{message()}} </h4>
+    <h4> {{allManagers.length}} managers are not assigned to any user. </h4><span style="color:red;">{{message()}}</span>
     <button class="button button-block button-positive" ng-click="showAllManagers()">Show All Managers</button>
   </div>
   <div ng-show="showSearch">
     <div>
       <div  ng-repeat="mgr in managers">
-            <ion-toggle ng-model="mgr.delete" toggle-class="toggle-possitive"><span class="input-label">{{mgr.lname}}, {{ mgr.fname }}</span></ion-toggle>
+            <ion-toggle ng-model="mgr.delete" toggle-class="toggle-possitive"><span class="input-label">
+              {{mgr.name.first}}<span style="color:red;">{{mgr.name.found}}</span>{{mgr.name.second}}</span></ion-toggle>
       </div>
     </div>
     <div ng-show="showSearch">
