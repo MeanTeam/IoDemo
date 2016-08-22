@@ -3,7 +3,7 @@
     <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
   </ion-nav-buttons>
   <ion-nav-buttons side="right">
-    <button menu-toggle="right" class="button button-icon icon ion-ios-undo" ng-click="undoForm()"></button>
+    <button menu-toggle="right" class="button button-outline button-positive" ng-click="undoForm()">Clear</button>
   </ion-nav-buttons>
   <ion-content padding="true" class="has-header">
     <form name="assignManagerForm" class="list" novalidate>
@@ -11,7 +11,7 @@
       <label class="item item-input item-floating-label">
         <span class="input-label">From Manager</span>
         <live-search id="fromManager" name="fromManager" type="text"
-                     live-search-callback="managerSearch"
+                     live-search-callback="fromManagerSearch"
                      live-search-select-callback="fromManagerSelected"
                      live-search-max-result-size="10"
                      live-search-item-template="<ion-item>{{result.fname}} {{result.lname}}</ion-item>"
@@ -21,9 +21,9 @@
       </label>
 
       <label class="item item-input item-floating-label">
-        <span class="input-label">From Manager</span>
+        <span class="input-label">To Manager</span>
         <live-search id="toManager" name="toManager" type="text"
-                     live-search-callback="managerSearch"
+                     live-search-callback="toManagerSearch"
                      live-search-select-callback="toManagerSelected"
                      live-search-max-result-size="10"
                      live-search-item-template="<ion-item>{{result.fname}} {{result.lname}}</ion-item>"
@@ -39,26 +39,26 @@
         Re-assign Manager
       </button>
 
+      <div ng-show="usersFromManager.length > 0 && record.fromManagerId !== ''">
+              
+        <div class="item item-divider" ng-show="usersFromManager.length > 0">
+          <strong>{{record.fromManager}}'s Users</strong>
+        </div>
+        <ion-list ng-show="usersFromManager.length > 0">
 
 
-      <div class="item item-divider" ng-show="usersFromManager.length > 0">
-        <strong>{{record.fromManager}}'s Users</strong>
+          <ion-checkbox ng-model="usr.selected" ng-repeat="usr in usersFromManager">
+            <h2>
+              {{usr.fname}} {{usr.lname}}
+            </h2>
+            <p>
+              Role: {{ usr.role.toUpperCase() }}
+            </p>
+          </ion-checkbox>
+
+
+        </ion-list>
       </div>
-      <ion-list ng-show="usersFromManager.length > 0">
-
-
-        <ion-checkbox ng-model="usr.selected" ng-repeat="usr in usersFromManager">
-          <h2>
-            {{usr.fname}} {{usr.lname}}
-          </h2>
-          <p>
-            Role: {{ usr.role.toUpperCase() }}
-          </p>
-        </ion-checkbox>
-
-
-      </ion-list>
-
     </form>
   </ion-content>
 </ion-view>

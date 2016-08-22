@@ -61,15 +61,27 @@ angular.module('app.reassignManager', ['ionic-modal-select', 'LiveSearch'])
         $scope.usersFromManager = [];
       };
 
-      $scope.managerSearch = function (param) {
+      $scope.fromManagerSearch = function (param) {
+        $scope.record.fromManagerId = '';
+        return managerSearch.call(null, param);
+      }
+
+      $scope.toManagerSearch = function (param) {
+          $scope.record.toManagerId = '';
+        return managerSearch.call(null, param);
+      }
+
+       function managerSearch(param) {
         var defer = $q.defer();
         var managerResultList = $scope.managerList.filter(function (el) {
 
+          var isSelected = $scope.record.fromManagerId === el._id;
+
           var completeName = el.fname.trim().toLowerCase() + ' ' + el.lname.trim().toLowerCase();
 
-          return el.fname.trim().toLowerCase().indexOf(param.trim().toLowerCase()) >= 0 ||
+          return (el.fname.trim().toLowerCase().indexOf(param.trim().toLowerCase()) >= 0 ||
             el.lname.trim().toLowerCase().indexOf(param.trim().toLowerCase()) >= 0 ||
-            completeName.indexOf(param.trim().toLowerCase()) >= 0;
+            completeName.indexOf(param.trim().toLowerCase()) >= 0) && !isSelected;
         });
 
         defer.resolve(managerResultList);
