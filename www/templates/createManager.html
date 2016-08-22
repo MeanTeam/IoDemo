@@ -54,7 +54,7 @@
        <div class="form-group" ng-class="{ 'has-error' : createMgrForm.email.$invalid && !createMgrForm.email.$pristine }">
         <label class="item item-input item-floating-label">
           <span class="input-label">Email</span>
-          <input type="email" name="email" id="email" ng-model="record.email" placeholder="* Email" required>
+          <input type="email" name="email" id="email" ng-model="record.email" placeholder="* Email" required ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/">
           <p ng-show="createMgrForm.email.$invalid && !createMgrForm.email.$pristine" class="help-block">
             <span class="errcolor">Enter a valid Email</span>
           </p>
