@@ -5,6 +5,7 @@ node_modules/
 platforms/
 plugins/
 
+create-apk.sh
 
 # Created by https://www.gitignore.io/api/intellij,node,android
 

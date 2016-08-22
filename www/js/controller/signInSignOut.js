@@ -27,17 +27,18 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
           return false;
         }
 
-
         $ionicNavBarDelegate.showBackButton(false);
 
         var userData = ProfileFactory.getProfile();
-
-
+          $ionicLoading.show({
+            template: 'Loading Profile ...'
+          });
           SISOSprints.get({
             fname: ProfileFactory.getProfile().fname,
             lname: ProfileFactory.getProfile().lname,
             mname: ProfileFactory.getProfile().mname,
           }, function (recs) {
+
             if (typeof recs !== undefined && recs.length > 0) {
               userData = recs[0];
               ProfileFactory.setSISO(userData);
@@ -49,13 +50,13 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
                   $scope.record[key] = userData[key];
                 }
               });
-            }        
+            }
             else {
                 Object.keys(userData).forEach(function (key) {
                   //console.log("id" + userData._id);
                   if (key == 'time') {
                     $scope.record[key] = $filter('date')(new Date(), 'h:mm a');//.toLocaleTimeString().replace(/:\d+ /, ' ');
-                  } 
+                  }
                   else if(key == 'preferredLocation'){
                      $scope.record.location = userData[key];
                   }
@@ -64,9 +65,13 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
                   }
                 });
                 ProfileFactory.setSISO($scope.record);
-                ProfileFactory.getSISO()._id = '';    
+                ProfileFactory.getSISO()._id = '';
             }
+            $ionicLoading.hide();
 
+          }, function (error) {
+            $ionicLoading.hide();
+            $cordovaDialogs.alert('Fail on Server connection', 'Error', 'OK');
           });
 
       });
@@ -81,6 +86,10 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
       $scope.save = function () {
         delete $scope.record._id;
         SISOSprints.post($scope.record, function (result) {
+          $ionicLoading.show({
+            template: 'Loading Profile ...'
+          });
+
           if (typeof result !== undefined && typeof result._id !== undefined) {
             $scope.record._id = result._id;
             ProfileFactory.getSISO()._id = result._id;
@@ -91,7 +100,9 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
           } else {
             $ionicLoading.show({template: 'Sign In result error.', noBackdrop: true, duration: 2200});
           }
+          $ionicLoading.hide();
         }, function (error) {
+          $ionicLoading.hide();
           alert(error.status + ', ' + error.statusText);
         });
 

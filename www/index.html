@@ -6,6 +6,7 @@
   <title></title>
 
   <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+  <link href="lib/angular-livesearch/liveSearch.min.css" rel="stylesheet">
 
 
   <script src="lib/ionic/js/ionic.bundle.js"></script>
@@ -15,6 +16,7 @@
   <script src="lib/angular-ui-mask/dist/mask.js"></script> <!-- bower install angular-ui-mask --save -->
   <script src="lib/ngstorage/ngStorage.min.js"></script>
   <script src="lib/ionic-modal-select/dist/ionic-modal-select.js"></script>
+  <script src="lib/angular-livesearch/liveSearch.min.js"></script>
   <script src="lib/ngCordova/dist/ng-cordova.min.js"></script>
   <script src="cordova.js"></script>
 
@@ -58,6 +60,14 @@
 
     .errcolor{
       color: #880000;
+    }
+
+    ul.searchresultspopup>li{
+      text-transform: none;
+    }
+
+    ul.searchresultspopup{
+      overflow: visible;
     }
 
   </style>

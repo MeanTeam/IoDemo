@@ -1,101 +1,143 @@
-angular.module('app.reassignManager', ['ionic-modal-select'])
+angular.module('app.reassignManager', ['ionic-modal-select', 'LiveSearch'])
 
   .controller('reassignManagerCtrl', ['$scope', '$state',
-    'SISOSprints', 'ProfileFactory', '$ionicLoading', '$ionicModal', '$ionicPopup', '$cordovaDialogs',
+    'SISOSprints', 'ProfileFactory', '$ionicLoading', '$ionicModal', '$ionicPopup', '$cordovaDialogs', '$q',
     function ($scope, $state,
               SISOSprints, ProfileFactory, $ionicLoading, $ionicModal,
-              $ionicPopup, $cordovaDialogs) {
+              $ionicPopup, $cordovaDialogs, $q) {
 
       $scope.managerList = [];
       $scope.usersFromManager = [];
       $scope.record = {
-        fromManager: {
-          name: '',
-          mfname: '',
-          mlname: '',
-          id: 0
-        },
-        toManager: {
-          name: '',
-          mfname: '',
-          mlname: '',
-          id: 0
-        }
+        fromManager: '',
+        toManager: '',
+        fromManagerId:'',
+        toManagerId: ''
       };
 
       $scope.$on('$ionicView.beforeEnter', function () {
+        $ionicLoading.show({
+          template: 'Loading Managers...'
+        });
+
         SISOSprints.getManagerList({}, function (mgrs) {
           $scope.managerList = mgrs;
+          $ionicLoading.hide();
         }, function (error) {
+          $ionicLoading.hide();
           $cordovaDialogs.alert('Fail on Server connection', 'Error', 'OK');
         });
       });
 
-      $scope.optionManager = function (opt) {
-        return {
-          name: opt.fname + ' ' + opt.lname,
-          mfname: opt.fname,
-          mlname: opt.lname,
-          id: opt._id
-        };
-      };
+      $scope.getUsersFromManager = function (manager){
+        var fromManager = manager.split(' ');
 
-      $scope.onSelect = function (newV, OldV) {
         SISOSprints.getUsersByManager({
-          'mfname': $scope.record.fromManager.mfname,
-          'mlname': $scope.record.fromManager.mlname
+          'mfname': fromManager[0],
+          'mlname': fromManager[1]
         }, function (users) {
+          $ionicLoading.show({
+            template: 'Loading Users...'
+          });
 
           $scope.usersFromManager = users;
           $scope.usersFromManager.forEach(function (e) {
             e.selected = false;
           });
+          $ionicLoading.hide();
         }, function (error) {
+          $ionicLoading.hide();
           $cordovaDialogs.alert('Fail on Server connection', 'Error', 'OK');
         });
       };
 
-      $scope.display = function () {
-        var allSelected = $scope.usersFromManager.filter(function (v) {
-          return v.selected === true;
-        }).map(function (e) {
-          return e._id;
+      $scope.undoForm = function () {
+        $scope.record = {
+          fromManager: '',
+          toManager: '',
+          fromManagerId:'',
+          toManagerId: ''
+        };
+        $scope.usersFromManager = [];
+      };
+
+      $scope.managerSearch = function (param) {
+        var defer = $q.defer();
+        var managerResultList = $scope.managerList.filter(function (el) {
+
+          var completeName = el.fname.trim().toLowerCase() + ' ' + el.lname.trim().toLowerCase();
+
+          return el.fname.trim().toLowerCase().indexOf(param.trim().toLowerCase()) >= 0 ||
+            el.lname.trim().toLowerCase().indexOf(param.trim().toLowerCase()) >= 0 ||
+            completeName.indexOf(param.trim().toLowerCase()) >= 0;
         });
-        console.log('Actual: ', allSelected);
+
+        defer.resolve(managerResultList);
+
+        return defer.promise;
+      };
+
+      $scope.fromManagerSelected = function (result) {
+        $scope.record.fromManagerId = result.item._id;
+        var managerName = result.item.fname + ' ' + result.item.lname;
+        $scope.getUsersFromManager.call(null, managerName);
+        return managerName;
+      };
+
+      $scope.toManagerSelected = function (result) {
+        $scope.record.toManagerId = result.item._id;
+        return result.item.fname + ' ' + result.item.lname;
       };
 
       $scope.reassignManager = function () {
 
+        $ionicLoading.show({
+          template: 'Loading Users...'
+        });
+
         var allSelected = $scope.usersFromManager.filter(function (v) {
           return v.selected === true;
         }).map(function (e) {
           return e._id;
         });
 
+        if(allSelected.length === 0) {
+          $ionicLoading.hide();
+          $cordovaDialogs.alert('Select the Users to Re-assign', 'Error', 'OK');
+          return false;
+        }
+
+
         SISOSprints.postProfile({
           'transaction-type': 'reassign-manager',
           parameters: {
-            'fromManagerId': $scope.record.fromManager.id,
-            'toManagerId': $scope.record.toManager.id,
+            'fromManagerId': $scope.record.fromManagerId,
+            'toManagerId': $scope.record.toManagerId,
             'userIds': allSelected
           }
         }, function (result) {
-          console.log(result.message);
-          SISOSprints.getUsersByManager({
-            'mfname': $scope.record.fromManager.mfname,
-            'mlname': $scope.record.fromManager.mlname
-          }, function (users) {
 
-            $scope.usersFromManager = users;
-            $scope.usersFromManager.forEach(function (e) {
-              e.selected = false;
+          if(result.message === 'success'){
+            var fromManager = $scope.record.fromManager.split(' ');
+            SISOSprints.getUsersByManager({
+              'mfname': fromManager[0],
+              'mlname': fromManager[1]
+            }, function (users) {
+
+              $scope.usersFromManager = users;
+              $scope.usersFromManager.forEach(function (e) {
+                e.selected = false;
+              });
+            }, function (error) {
+              $cordovaDialogs.alert('Fail on Server connection', 'Error', 'OK');
             });
-          }, function (error) {
-            $cordovaDialogs.alert('Fail on Server connection', 'Error', 'OK');
-          });
-          $ionicLoading.show({template: 'Profiles updated.', noBackdrop: true, duration: 2200});
+          }
+
+          $ionicLoading.hide();
+          $ionicLoading.show({template: 'Manager Re-assigned.', noBackdrop: true, duration: 2200});
+
         }, function (error) {
-          console.log(error);
+          $ionicLoading.hide();
           $cordovaDialogs.alert('Fail on Server connection', 'Error', 'OK');
         });
       };

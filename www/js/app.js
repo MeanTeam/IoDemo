@@ -23,6 +23,4 @@ angular.module('app', ['ionic', 'app.listSignins', 'app.signInSignOut', 'app.del
     }
   });
 
-
-
 });
