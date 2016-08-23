@@ -11,7 +11,7 @@ angular.module('app.reassignManager', ['ionic-modal-select', 'LiveSearch'])
       $scope.record = {
         fromManager: '',
         toManager: '',
-        fromManagerId:'',
+        fromManagerId: '',
         toManagerId: ''
       };
 
@@ -29,7 +29,7 @@ angular.module('app.reassignManager', ['ionic-modal-select', 'LiveSearch'])
         });
       });
 
-      $scope.getUsersFromManager = function (manager){
+      $scope.getUsersFromManager = function (manager) {
         var fromManager = manager.split(' ');
 
         SISOSprints.getUsersByManager({
@@ -55,7 +55,7 @@ angular.module('app.reassignManager', ['ionic-modal-select', 'LiveSearch'])
         $scope.record = {
           fromManager: '',
           toManager: '',
-          fromManagerId:'',
+          fromManagerId: '',
           toManagerId: ''
         };
         $scope.usersFromManager = [];
@@ -63,19 +63,19 @@ angular.module('app.reassignManager', ['ionic-modal-select', 'LiveSearch'])
 
       $scope.fromManagerSearch = function (param) {
         $scope.record.fromManagerId = '';
-        return managerSearch.call(null, param);
-      }
+        return managerSearch.call(null, param, $scope.record.toManagerId);
+      };
 
       $scope.toManagerSearch = function (param) {
-          $scope.record.toManagerId = '';
-        return managerSearch.call(null, param);
-      }
+        $scope.record.toManagerId = '';
+        return managerSearch.call(null, param, $scope.record.fromManagerId);
+      };
 
-       function managerSearch(param) {
+      function managerSearch(param, ignoreId) {
         var defer = $q.defer();
         var managerResultList = $scope.managerList.filter(function (el) {
 
-          var isSelected = $scope.record.fromManagerId === el._id;
+          var isSelected = ignoreId === el._id;
 
           var completeName = el.fname.trim().toLowerCase() + ' ' + el.lname.trim().toLowerCase();
 
@@ -101,6 +101,12 @@ angular.module('app.reassignManager', ['ionic-modal-select', 'LiveSearch'])
         return result.item.fname + ' ' + result.item.lname;
       };
 
+      $scope.selectAll = function (status) {
+        $scope.usersFromManager.forEach(function(el){
+          el.selected = status;
+        });
+      };
+
       $scope.reassignManager = function () {
 
         $ionicLoading.show({
@@ -113,7 +119,7 @@ angular.module('app.reassignManager', ['ionic-modal-select', 'LiveSearch'])
           return e._id;
         });
 
-        if(allSelected.length === 0) {
+        if (allSelected.length === 0) {
           $ionicLoading.hide();
           $cordovaDialogs.alert('Select the Users to Re-assign', 'Error', 'OK');
           return false;
@@ -129,7 +135,7 @@ angular.module('app.reassignManager', ['ionic-modal-select', 'LiveSearch'])
           }
         }, function (result) {
 
-          if(result.message === 'success'){
+          if (result.message === 'success') {
             var fromManager = $scope.record.fromManager.split(' ');
             SISOSprints.getUsersByManager({
               'mfname': fromManager[0],

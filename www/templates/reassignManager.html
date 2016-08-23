@@ -33,15 +33,22 @@
       </label>
 
 
-
-      <button class="button button-block button-positive" ng-disabled="!assignManagerForm.$valid || (record.fromManagerId === '' || record.toManagerId === '')"
+      <button class="button button-block button-positive"
+              ng-disabled="!assignManagerForm.$valid || (record.fromManagerId === '' || record.toManagerId === '') "
               ng-click="reassignManager()">
         Re-assign Manager
       </button>
 
       <div ng-show="usersFromManager.length > 0 && record.fromManagerId !== ''">
-              
-        <div class="item item-divider" ng-show="usersFromManager.length > 0">
+
+        <div class="item item-divider">
+          <div class="button-bar">
+            <a class="button button-outline button-stable" ng-click="selectAll(true)">Select All</a>
+            <a class="button button-outline button-stable" ng-click="selectAll(false)">Unselect All</a>
+          </div>
+
+        </div>
+        <div class="item item-divider">
           <strong>{{record.fromManager}}'s Users</strong>
         </div>
         <ion-list ng-show="usersFromManager.length > 0">
