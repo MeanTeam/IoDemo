@@ -1,0 +1,44 @@
+
+<ion-view title="Log In - SISO" id="login">
+<!--   <ion-nav-buttons side="left">
+    <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+  </ion-nav-buttons>
+ -->
+    <ion-content padding="true" class="has-header">
+        <form name="loginForm" class="list">
+          <div class="form-group" ng-class="{ 'has-error' : loginForm.fname.$invalid 
+                && !loginForm.fname.$pristine }">
+            <label class="item item-input item-floating-label">
+            <span class="input-label">First Name</span>
+            <input type="text" name="fname" id="fname" ng-model="user.fname" placeholder="* First Name"
+                   required ng-pattern="/^[a-zA-Z ]*$/" >
+            <p ng-show="loginForm.fname.$error.required && !loginForm.fname.$pristine" class="help-block">
+              <span class="errcolor">First Name is required.</span></p>
+            <p ng-show="loginForm.fname.$error.pattern && !loginForm.fname.$pristine" class="help-block">
+              <span class="errcolor">Enter a valid First Name.</span></p>
+          </label>
+        </div>
+
+          <div class="form-group" ng-class="{ 'has-error' : loginForm.lname.$invalid 
+                && !loginForm.lname.$pristine }">
+            <label class="item item-input item-floating-label">
+            <span class="input-label">Last Name</span>
+            <input type="text" name="lname" id="lname" ng-model="user.lname" placeholder="* Last Name"
+                   required ng-pattern="/^[a-zA-Z ]*$/" >
+            <p ng-show="loginForm.lname.$error.required && !loginForm.lname.$pristine" class="help-block">
+              <span class="errcolor">Last Name is required.</span></p>
+            <p ng-show="loginForm.lname.$error.pattern && !loginForm.lname.$pristine" class="help-block">
+              <span class="errcolor">Enter a valid Last Name.</span></p>
+          </label>
+        </div>        
+            
+        <div class="spacer" style="height: 20px;"></div>
+
+        <button class="button button-block button-positive"
+                ng-disabled="!loginForm.$valid " ng-click="searchUser(user)">
+         Search User
+        </button>
+
+      </form>
+    </ion-content>
+</ion-view>

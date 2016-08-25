@@ -109,16 +109,7 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
       };
 
       $scope.delete = function () {
-
-        var confirmPopup = $ionicPopup.confirm({
-          title: '<b>Confirm Sign Out</b>',
-          template: 'Sign Out will delete the record'
-        });
-
-        confirmPopup.then(function (res) {
-          if (res && typeof $scope.record._id !== undefined && $scope.record._id !== "") {
-            //console.log($scope.record._id);
-
+          if (typeof $scope.record._id !== undefined && $scope.record._id !== "") {
             SISOSprints.delete({id: $scope.record._id}, function (success) {
               var sisoData = ProfileFactory.getSISO();
               // remove $scope.record._id and prepare for next sign-in
@@ -132,8 +123,6 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
               alert(error.status + ', ' + error.statusText);
             });
           }
-        });
-
       };
 
       $scope.myDynamicTimes = function () {
