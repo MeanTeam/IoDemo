@@ -44,11 +44,7 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
               ProfileFactory.setSISO(userData);
               ProfileFactory.getSISO()._id = userData._id;
               Object.keys(userData).forEach(function (key) {
-                if (key == 'time') {
-                  $scope.record[key] = $filter('date')(new Date(), 'h:mm a');//.toLocaleTimeString().replace(/:\d+ /, ' ');
-                } else {
-                  $scope.record[key] = userData[key];
-                }
+                 $scope.record[key] = userData[key];
               });
             }
             else {
@@ -93,7 +89,7 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
           if (typeof result !== undefined && typeof result._id !== undefined) {
             $scope.record._id = result._id;
             ProfileFactory.getSISO()._id = result._id;
-            $scope.record.time = $filter('date')(new Date(), 'h:mm a');
+           // $scope.record.time = $filter('date')(new Date(), 'h:mm a');
             //$ionicLoading.show({template: 'Sign In successful!', noBackdrop: true, duration: 2200});
             alert('Sign In successful!');
 
