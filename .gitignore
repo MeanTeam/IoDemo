@@ -6,6 +6,7 @@ platforms/
 plugins/
 
 create-apk.sh
+create-apk.bat
 
 # Created by https://www.gitignore.io/api/intellij,node,android
 
@@ -142,4 +143,3 @@ captures/
 
 ### Android Patch ###
 gen-external-apklibs
-
