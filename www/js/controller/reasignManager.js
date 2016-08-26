@@ -109,10 +109,6 @@ angular.module('app.reassignManager', ['ionic-modal-select', 'LiveSearch'])
 
       $scope.reassignManager = function () {
 
-        $ionicLoading.show({
-          template: 'Loading Users...'
-        });
-
         var allSelected = $scope.usersFromManager.filter(function (v) {
           return v.selected === true;
         }).map(function (e) {
