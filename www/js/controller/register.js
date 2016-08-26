@@ -10,7 +10,6 @@ angular.module('app.register', ['ionic-modal-select'])
 
       $scope.user = {fname: '', lname: ''};
       $scope.locations = Locations.get();
-      $scope.dialog = {title: 'Login Page', buttonLabel: 'Login'};
 
       $scope.someModel = null;
       $scope.managers = [];
@@ -44,9 +43,9 @@ angular.module('app.register', ['ionic-modal-select'])
 
       $scope.$on('$ionicView.beforeEnter', function () {
 
-        if ($stateParams.mode === 'home' && !ProfileFactory.isProfileEmpty()) {
-          $state.go('tab.signInSignOut');
-          return false;
+        if (ProfileFactory.isProfileEmpty()) {
+           $scope.showCancelBtn = false;
+           $scope.showToggleMenu = false;
         }
         else if ($stateParams.mode === 'edit') {
           $scope.fnameDisbl = true;
@@ -60,18 +59,6 @@ angular.module('app.register', ['ionic-modal-select'])
             });
           $scope.record.managerProfile = $scope.record.mfname + ' ' +  $scope.record.mlname;
         }
-        else if (ProfileFactory.isProfileEmpty()) {
-          $scope.showCancelBtn = false;
-          $scope.showToggleMenu = false;
-          $ionicModal.fromTemplateUrl('templates/userDialog.html', {
-            scope: $scope,
-            animation: 'slide-in-up',
-            focusFirstInput: true
-          }).then(function (modal) {
-            $scope.userDialog = modal;
-            $scope.userDialog.show();
-          });
-        }
 
         SISOSprints.getManagerList({}, function (mgrs) {
             $scope.managers =mgrs;
@@ -82,31 +69,6 @@ angular.module('app.register', ['ionic-modal-select'])
 
       });// End beforeEnter function event
 
-      $scope.searchUser = function (u) {
-        var profileData = {};
-        if (u.fname !== '' && u.lname !== '') {
-          SISOSprints.getUserProfile(u, function (recs) {
-            if (typeof recs !== undefined && recs.length > 0) {
-                $scope.record = recs[0];
-                Object.keys($scope.record).forEach(function (key) {
-                 profileData[key] = $scope.record[key];
-               });
-
-              ProfileFactory.setProfile(profileData);
-              $scope.userDialog.hide();
-              $state.go('tab.signInSignOut');
-            } else {
-              $scope.userDialog.hide();
-            }
-          }, function (error) {
-            console.log(error);
-            $ionicLoading.show({template: error.status + ', ' + error.statusText, noBackdrop: true, duration: 2200});
-            alert(error.status + ', ' + error.statusText);
-          });
-        } else {
-          $ionicLoading.show({template: 'User name must not be empty!', noBackdrop: true, duration: 2200});
-        }
-      };
 
 
 

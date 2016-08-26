@@ -52,11 +52,10 @@ angular.module('app.createManager', ['ionic-modal-select'])
         
         SISOSprints.postProfile($scope.record, function (result) {          
               if (typeof result !== undefined && typeof result._id !== undefined) {
-                  $ionicLoading.show({template: 'Successfully Created Manager!', noBackdrop: true, duration: 2200});
-                  $state.go('tab.signInSignOut');
-
+                 alert('Manager was created.');
+                 $state.go('tab.signInSignOut');
               } else {
-                  $ionicLoading.show({template: 'Create Manager In result error.', noBackdrop: true, duration: 2200});
+                alert('Create Manager In result error');                
                 }
             }, function (error) {
               $ionicLoading.show({template: error.status + ', ' + error.statusText, noBackdrop: true, duration: 2200});

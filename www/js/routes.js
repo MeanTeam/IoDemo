@@ -8,22 +8,18 @@ angular.module('app.routes', [])
     // Each state's controller can be found in controllers.js
     $stateProvider
 
+      .state('login', {
+        url: '/login',
+        cache: false,
+        templateUrl: 'templates/userLogin.html',
+        controller: 'loginCtrl'
+      })
+
       .state('tab', {
         url: '/tab',
         abstract: true,
         templateUrl: 'templates/menu.html',
         controller: 'menuCtrl'
-      })
-
-      .state('login', {
-        url: '/login',
-        cache: false,
-        views: {
-          'menuContent': {
-            templateUrl: 'templates/login.html',
-            controller: 'loginCtrl'
-          }
-        }
       })
 
       .state('tab.register', {
@@ -127,8 +123,8 @@ angular.module('app.routes', [])
      })
      */
 
-    //$urlRouterProvider.otherwise('/login')
-    $urlRouterProvider.otherwise('/tab/register/home')
+    $urlRouterProvider.otherwise('/login');
+    //$urlRouterProvider.otherwise('/tab/register/home')
     //$urlRouterProvider.otherwise('/tab/signInSignOut')
 
   });

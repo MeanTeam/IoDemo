@@ -95,13 +95,13 @@ angular.module('app.deleteManager', ['ionic-modal-select'])
         Object.keys($scope.managers).forEach(function (key) {
           var mgr = $scope.managers[key];
           if(mgr.delete){
-            msg += mgr.lname+','+mgr.fname+'<br/>';
+            msg += mgr.fname+' '+mgr.lname+'<br/>';
             deleteManager.push(mgr);
           }
         });
         if(!msg) {
           if($scope.managers.length > 0) {
-            $ionicLoading.show({template: 'Please select managers to delete.', noBackdrop: true, duration: 2200});
+            $ionicLoading.show({template: 'Please select manager(s) to delete.', noBackdrop: true, duration: 2200});
           }
         } else {
           var confirmPopup = $ionicPopup.confirm({
@@ -114,7 +114,7 @@ angular.module('app.deleteManager', ['ionic-modal-select'])
               $scope.search.lname = "";
               $scope.search.name = "";
               $scope.showSearch = false;
-              $scope.showSearchButton = true;
+              $scope.showMessage = true;
             Object.keys(deleteManager).forEach(function(key) {
               var mgr = deleteManager[key];
               SISOSprints.deleteProfile({id: mgr._id}, function (success) {
@@ -127,7 +127,7 @@ angular.module('app.deleteManager', ['ionic-modal-select'])
                 });
                 $scope.managers = newManagers;
                 $scope.allManagers = newManagers;
-                displaySearchResult();
+//                displaySearchResult();
               }, function(error) {
                 $cordovaDialogs.alert('Fail on Server connection', 'Error', 'OK');
               });

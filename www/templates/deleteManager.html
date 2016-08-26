@@ -12,7 +12,7 @@
     <hr/>
   </div>
   <div  ng-show="showMessage">
-    <h4> {{allManagers.length}} managers are not assigned to any user. </h4><span style="color:red;">{{message()}}</span>
+    <h4> There are {{allManagers.length}} managers not associated with a registered user, available to delete. </h4><span style="color:red;">{{message()}}</span>
     <button class="button button-block button-positive" ng-click="showAllManagers()">Show All Managers</button>
   </div>
   <div ng-show="showSearch">
