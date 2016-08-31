@@ -6,6 +6,7 @@ platforms/
 plugins/
 
 create-apk.sh
+demo.sh
 
 # Created by https://www.gitignore.io/api/intellij,node,android
 
@@ -126,8 +127,6 @@ local.properties
 proguard/
 
 # Log Files
-*.log
-
 # Android Studio Navigation editor temp files
 .navigation/
 
@@ -135,8 +134,6 @@ proguard/
 captures/
 
 # Intellij
-*.iml
-
 # Keystore files
 *.jks
 
