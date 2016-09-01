@@ -18,7 +18,7 @@ angular.module('app.listSignins', ['ionic-modal-select'])
             if (typeof recs !== undefined && recs.length > 0) {
               $scope.records = recs;
             }else{
-              $ionicLoading.show({template: 'Manager Not Found!', noBackdrop: true, duration: 2200});
+              $ionicLoading.show({template: 'No Users Signed In!', noBackdrop: true, duration: 2200});
             }
 
           });
