@@ -89,10 +89,10 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
           if (typeof result !== undefined && typeof result._id !== undefined) {
             $scope.record._id = result._id;
             ProfileFactory.getSISO()._id = result._id;
-           // $scope.record.time = $filter('date')(new Date(), 'h:mm a');
+            //$scope.record.time = $filter('date')(new Date(), 'h:mm a');
             //$ionicLoading.show({template: 'Sign In successful!', noBackdrop: true, duration: 2200});
-            alert('Sign In successful!');
-
+            //alert('Sign In successful!');
+            $ionicPopup.alert({title: '<b>Sing-In</b>', template: 'Sign In Successful!'});
           } else {
             $ionicLoading.show({template: 'Sign In result error.', noBackdrop: true, duration: 2200});
           }
@@ -103,7 +103,7 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
         });
 
       };
-
+                                    
       $scope.delete = function () {
           if (typeof $scope.record._id !== undefined && $scope.record._id !== "") {
             SISOSprints.delete({id: $scope.record._id}, function (success) {
@@ -114,7 +114,8 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
               $scope.record._id = "";
               $scope.record.time = $filter('date')(new Date(), 'h:mm a');
               //$ionicLoading.show({template: 'Sign Out successful!', noBackdrop: true, duration: 2200});
-              alert('Sign Out successful!');
+              //alert('Sign Out successful!');
+              $ionicPopup.alert({title: '<b>Sing-Out</b>', template: 'Sign Out Successful!'});
             }, function (error) {
               alert(error.status + ', ' + error.statusText);
             });
