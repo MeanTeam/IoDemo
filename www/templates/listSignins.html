@@ -14,7 +14,7 @@
     <ul class="list">
       <div class="item item-button-right" ng-repeat="rec in records">
         <h2>
-          {{rec.lname}}, {{rec.fname}}
+          {{rec.lname}}, {{rec.fname}} {{rec.contact | tel}}
         </h2>
         <p>
           {{ rec.time }},
