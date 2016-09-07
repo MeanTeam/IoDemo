@@ -92,7 +92,7 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
             //$scope.record.time = $filter('date')(new Date(), 'h:mm a');
             //$ionicLoading.show({template: 'Sign In successful!', noBackdrop: true, duration: 2200});
             //alert('Sign In successful!');
-            $ionicPopup.alert({title: '<b>Sing-In</b>', template: 'Sign In Successful!'});
+            $ionicPopup.alert({title: '<b>Sign-In</b>', template: 'Sign In Successful!'});
           } else {
             $ionicLoading.show({template: 'Sign In result error.', noBackdrop: true, duration: 2200});
           }
@@ -115,7 +115,7 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
               $scope.record.time = $filter('date')(new Date(), 'h:mm a');
               //$ionicLoading.show({template: 'Sign Out successful!', noBackdrop: true, duration: 2200});
               //alert('Sign Out successful!');
-              $ionicPopup.alert({title: '<b>Sing-Out</b>', template: 'Sign Out Successful!'});
+              $ionicPopup.alert({title: '<b>Sign-Out</b>', template: 'Sign Out Successful!'});
             }, function (error) {
               alert(error.status + ', ' + error.statusText);
             });
