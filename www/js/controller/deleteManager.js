@@ -127,6 +127,8 @@ angular.module('app.deleteManager', ['ionic-modal-select'])
                 });
                 $scope.managers = newManagers;
                 $scope.allManagers = newManagers;
+                $ionicLoading.show({template: 'Manager(s) Deleted Successfully.', noBackdrop: true, duration: 2200});
+
 //                displaySearchResult();
               }, function(error) {
                 $cordovaDialogs.alert('Fail on Server connection', 'Error', 'OK');
