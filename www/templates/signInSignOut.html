@@ -6,7 +6,21 @@
 
     <form name="sisoForm" class="list" novalidate>
 
-      <div class="form-group" ng-class="{ 'has-error' : sisoForm.fname.$invalid && !sisoForm.fname.$pristine }">
+
+
+      <div class="card balanced">
+        <div class="item item-divider text-center">
+          <span class="user-title">{{record.fname}} {{record.mname}} {{record.lname}}</span>
+        </div>
+        <div class="item item-text-wrap">
+          <span class="label-blue">Task Manager:</span> {{record.mfname}} {{record.mlname}}
+        </div>
+        <div class="item item-text-wrap">
+          <span class="label-blue">Contact:</span> {{record.contact | tel}}
+        </div>
+      </div>
+
+      <!--<div class="form-group" ng-class="{ 'has-error' : sisoForm.fname.$invalid && !sisoForm.fname.$pristine }">
         <label class="item item-input item-floating-label">
           <span class="input-label">First Name</span>
           <input type="text" name="fname" id="fname" ng-model="record.fname" placeholder="* First Name"
@@ -70,7 +84,7 @@
           <p ng-show="sisoForm.contact.$error.pattern && !sisoForm.contact.$pristine" class="help-block">Phone number is
             invalid.</p>
         </label>
-      </div>
+      </div>-->
 
       <div class="item item-button-right">
         <span class="input-label" ng-if="record.location !== ''">Location</span>
