@@ -1,7 +1,9 @@
 angular.module('app.signInSignOut', ['ionic-modal-select'])
 
-  .controller('signInSignOutCtrl', ['$scope', '$state', '$interval', 'SISOSprints', 'Locations', 'ProfileFactory', '$ionicLoading', '$ionicModal', '$ionicPopup', '$filter', '$ionicNavBarDelegate',
-    function ($scope, $state, $interval, SISOSprints, Locations, ProfileFactory, $ionicLoading, $ionicModal, $ionicPopup, $filter, $ionicNavBarDelegate) {
+  .controller('signInSignOutCtrl', ['$scope', '$state', '$interval', 'SISOSprints', 'Locations', 'ProfileFactory', 
+      '$ionicLoading', '$ionicModal', '$ionicPopup', '$filter', '$ionicNavBarDelegate',
+    function ($scope, $state, $interval, SISOSprints, Locations, ProfileFactory, $ionicLoading, $ionicModal, 
+      $ionicPopup, $filter, $ionicNavBarDelegate) {
 
       $scope.user = {fname: '', lname: ''};
       $scope.dialog = {title: 'Search User', buttonLabel: 'Find User'};
@@ -67,7 +69,7 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
 
           }, function (error) {
             $ionicLoading.hide();
-            $cordovaDialogs.alert('Fail on Server connection', 'Error', 'OK');
+            $ionicPopup.alert({title: 'Error', template: 'Fail on Server connection' });
           });
 
       });
@@ -89,21 +91,18 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
           if (typeof result !== undefined && typeof result._id !== undefined) {
             $scope.record._id = result._id;
             ProfileFactory.getSISO()._id = result._id;
-           // $scope.record.time = $filter('date')(new Date(), 'h:mm a');
-            //$ionicLoading.show({template: 'Sign In successful!', noBackdrop: true, duration: 2200});
-            alert('Sign In successful!');
-
+            $ionicPopup.alert({title: 'Sign In', template: 'Sign In successful!' });
           } else {
-            $ionicLoading.show({template: 'Sign In result error.', noBackdrop: true, duration: 2200});
+            $ionicPopup.alert({title: 'Sign In', template: 'Sign In result error.' });
           }
           $ionicLoading.hide();
         }, function (error) {
           $ionicLoading.hide();
-          alert(error.status + ', ' + error.statusText);
+          $ionicPopup.alert({title: 'Error', template: error.status + ', ' + error.statusText });
         });
 
       };
-
+                                    
       $scope.delete = function () {
           if (typeof $scope.record._id !== undefined && $scope.record._id !== "") {
             SISOSprints.delete({id: $scope.record._id}, function (success) {
@@ -113,10 +112,9 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
               ProfileFactory.setSISO(sisoData);
               $scope.record._id = "";
               $scope.record.time = $filter('date')(new Date(), 'h:mm a');
-              //$ionicLoading.show({template: 'Sign Out successful!', noBackdrop: true, duration: 2200});
-              alert('Sign Out successful!');
+              $ionicPopup.alert({title: 'Sign Out', template: 'Sign Out Successful!'});
             }, function (error) {
-              alert(error.status + ', ' + error.statusText);
+              $ionicPopup.alert({title: 'Sign Out', template: error.status + ', ' + error.statusText });
             });
           }
       };

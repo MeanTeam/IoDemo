@@ -1,10 +1,10 @@
 angular.module('app.reassignManager', ['ionic-modal-select', 'LiveSearch'])
 
   .controller('reassignManagerCtrl', ['$scope', '$state',
-    'SISOSprints', 'ProfileFactory', '$ionicLoading', '$ionicModal', '$ionicPopup', '$cordovaDialogs', '$q',
+    'SISOSprints', 'ProfileFactory', '$ionicLoading', '$ionicModal', '$ionicPopup',  '$q',
     function ($scope, $state,
               SISOSprints, ProfileFactory, $ionicLoading, $ionicModal,
-              $ionicPopup, $cordovaDialogs, $q) {
+              $ionicPopup, $q) {
 
       $scope.managerList = [];
       $scope.usersFromManager = [];
@@ -25,7 +25,7 @@ angular.module('app.reassignManager', ['ionic-modal-select', 'LiveSearch'])
           $ionicLoading.hide();
         }, function (error) {
           $ionicLoading.hide();
-          $cordovaDialogs.alert('Fail on Server connection', 'Error', 'OK');
+          $ionicPopup.alert({title: 'Error', template: 'Fail on Server connection!' });
         });
       });
 
@@ -47,7 +47,7 @@ angular.module('app.reassignManager', ['ionic-modal-select', 'LiveSearch'])
           $ionicLoading.hide();
         }, function (error) {
           $ionicLoading.hide();
-          $cordovaDialogs.alert('Fail on Server connection', 'Error', 'OK');
+          $ionicPopup.alert({title: 'Error', template: 'Fail on Server connection!' });
         });
       };
 
@@ -117,7 +117,7 @@ angular.module('app.reassignManager', ['ionic-modal-select', 'LiveSearch'])
 
         if (allSelected.length === 0) {
           $ionicLoading.hide();
-          $cordovaDialogs.alert('Select the Users to Re-assign', 'Error', 'OK');
+          $ionicPopup.alert({title: 'Error', template: 'Select the Users to Re-assign' });
           return false;
         }
 
@@ -143,7 +143,7 @@ angular.module('app.reassignManager', ['ionic-modal-select', 'LiveSearch'])
                 e.selected = false;
               });
             }, function (error) {
-              $cordovaDialogs.alert('Fail on Server connection', 'Error', 'OK');
+              $ionicPopup.alert({title: 'Error', template: 'Fail on Server connection' });
             });
           }
 
@@ -152,7 +152,7 @@ angular.module('app.reassignManager', ['ionic-modal-select', 'LiveSearch'])
 
         }, function (error) {
           $ionicLoading.hide();
-          $cordovaDialogs.alert('Fail on Server connection', 'Error', 'OK');
+          $ionicPopup.alert({title: 'Error', template: 'Fail on Server connection' });
         });
       };
 
