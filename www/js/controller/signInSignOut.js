@@ -1,8 +1,8 @@
 angular.module('app.signInSignOut', ['ionic-modal-select'])
 
-  .controller('signInSignOutCtrl', ['$scope', '$state', '$interval', 'SISOSprints', 'Locations', 'ProfileFactory', 
+  .controller('signInSignOutCtrl', ['$scope', '$state', '$interval', 'SISOSprints', 'Locations', 'ProfileFactory',
       '$ionicLoading', '$ionicModal', '$ionicPopup', '$filter', '$ionicNavBarDelegate',
-    function ($scope, $state, $interval, SISOSprints, Locations, ProfileFactory, $ionicLoading, $ionicModal, 
+    function ($scope, $state, $interval, SISOSprints, Locations, ProfileFactory, $ionicLoading, $ionicModal,
       $ionicPopup, $filter, $ionicNavBarDelegate) {
 
       $scope.user = {fname: '', lname: ''};
@@ -104,7 +104,7 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
         });
 
       };
-                                    
+
       $scope.delete = function () {
           if (typeof $scope.record._id !== undefined && $scope.record._id !== "") {
             SISOSprints.delete({id: $scope.record._id}, function (success) {
@@ -157,12 +157,11 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
 
     $scope.callDialog = function (number) {
       var confirmPopup = $ionicPopup.confirm({
-          title:  $filter('tel')(number), 
+          title:  $filter('tel')(number),
           template: '',
           cancelText: 'Cancel',
           okText: 'Call'
-      });
-      confirmPopup.then(function (res) {
+      }).then(function (res) {
         if(res){
           window.open('tel:' + number, '_system');
         }
