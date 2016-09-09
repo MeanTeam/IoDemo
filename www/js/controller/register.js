@@ -1,11 +1,11 @@
 angular.module('app.register', ['ionic-modal-select'])
 
   .controller('registerCtrl', ['$scope', '$interval', '$state',
-    'SISOSprints', 'Locations', 'ProfileFactory', '$ionicLoading', '$ionicModal', '$ionicPopup', '$cordovaDialogs',
+    'SISOSprints', 'Locations', 'ProfileFactory', '$ionicLoading', '$ionicModal', '$ionicPopup', 
     'Managers', '$stateParams', '$ionicSideMenuDelegate',
     function ($scope, $interval, $state,
               SISOSprints, Locations, ProfileFactory, $ionicLoading, $ionicModal,
-              $ionicPopup, $cordovaDialogs, Managers, $stateParams, $ionicSideMenuDelegate) {
+              $ionicPopup, Managers, $stateParams, $ionicSideMenuDelegate) {
 
 
       $scope.user = {fname: '', lname: ''};
@@ -48,6 +48,9 @@ angular.module('app.register', ['ionic-modal-select'])
            $scope.showToggleMenu = false;
         }
         else if ($stateParams.mode === 'edit') {
+          $ionicLoading.show({
+            template: 'Loading Profile ...'
+          });
           $scope.fnameDisbl = true;
           $scope.mnameDisbl = true;
           $scope.lnameDisbl = true;
@@ -58,17 +61,17 @@ angular.module('app.register', ['ionic-modal-select'])
               $scope.record[key] = profileData[key];
             });
           $scope.record.managerProfile = $scope.record.mfname + ' ' +  $scope.record.mlname;
+          $ionicLoading.hide();
         }
 
         SISOSprints.getManagerList({}, function (mgrs) {
             $scope.managers =mgrs;
           }, function(error) {
-            $cordovaDialogs.alert('Fail on Server connection', 'Error', 'OK');
+             $ionicPopup.alert({title: 'Error', template: 'Fail on Server connection' });
           });
 
 
       });// End beforeEnter function event
-
 
 
 
@@ -87,15 +90,15 @@ angular.module('app.register', ['ionic-modal-select'])
                         profileData[key] = result[key];
                     });
                   ProfileFactory.setProfile(profileData);
-                  $ionicLoading.show({template: 'Registered!', noBackdrop: true, duration: 2200});
-                  $state.go('tab.signInSignOut');
-
+                  $ionicPopup.alert({title: 'Register', template: 'Successfully Registered!' })
+                    .then(function(res) {
+                         $state.go('tab.signInSignOut');
+                    });
               } else {
-                  $ionicLoading.show({template: 'Registration In result error.', noBackdrop: true, duration: 2200});
+                  $ionicPopup.alert({title: 'Error', template: 'Registration In result error' });
                 }
             }, function (error) {
-              $ionicLoading.show({template: error.status + ', ' + error.statusText, noBackdrop: true, duration: 2200});
-              alert(error.status + ', ' + error.statusText);
+              $ionicPopup.alert({title: 'Error', template: error.status + ', ' + error.statusText });
             }); //End postProfile service call
         } // End ProfileFactory empty check
         else if ($stateParams.mode === 'edit' && !ProfileFactory.isProfileEmpty()) {
@@ -106,17 +109,18 @@ angular.module('app.register', ['ionic-modal-select'])
                             profileData[key] = result[key];
                         });
                       ProfileFactory.setProfile(profileData);
-                      $ionicLoading.show({template: 'Successfully Updated Profile!', noBackdrop: true, duration: 2200});
-                      $state.go('tab.signInSignOut');
+                      $ionicPopup.alert({title: 'Edit Profile', template: 'Successfully Updated Profile!' })
+                              .then(function(res) {
+                                    $state.go('tab.signInSignOut');
+                                });
 
                   }
                   else
                   {
-                      $ionicLoading.show({template: 'Update Registration In result error.', noBackdrop: true, duration: 2200});
+                      $ionicPopup.alert({title: 'Error', template: 'Update Registration In result error.' });
                   }
                 }, function (error) {
-                  $ionicLoading.show({template: error.status + ', ' + error.statusText, noBackdrop: true, duration: 2200});
-                  alert(error.status + ', ' + error.statusText);
+                  $ionicPopup.alert({title: 'Error', template: error.status + ', ' + error.statusText });
             }); //End updateProfile service call
         }// End ProfileFactory NOT empty check
       }; // End save function

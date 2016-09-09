@@ -41,7 +41,7 @@ angular.module('app.createManager', ['ionic-modal-select'])
       });
 
 	// $scope.getOption = function(option){
- //    	return option.fname + ":" + option.lname;
+    // return option.fname + ":" + option.lname;
 	// };
 
 
@@ -52,10 +52,12 @@ angular.module('app.createManager', ['ionic-modal-select'])
         
         SISOSprints.postProfile($scope.record, function (result) {          
               if (typeof result !== undefined && typeof result._id !== undefined) {
-                 alert('Manager was created.');
+                 //alert('Manager was created.');
+                 $ionicPopup.alert({title: '<b>Create Manager</b>', template: 'Manager was created.'});
                  $state.go('tab.signInSignOut');
               } else {
-                alert('Create Manager In result error');                
+                //alert('Create Manager In result error');
+                $ionicPopup.alert({title: '<b>Create Manager</b>', template: 'Create Manager In result error.'});
                 }
             }, function (error) {
               $ionicLoading.show({template: error.status + ', ' + error.statusText, noBackdrop: true, duration: 2200});

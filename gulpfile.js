@@ -6,6 +6,8 @@ var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
+var replace = require('replace');
+var replaceFiles = ['./www/js/services.js'];
 
 var paths = {
   sass: ['./scss/**/*.scss']
@@ -48,4 +50,24 @@ gulp.task('git-check', function(done) {
     process.exit(1);
   }
   done();
+});
+
+gulp.task('add-proxy', function () {
+  return replace({
+    regex: "url : '/api/:path'",
+    replacement: "url : 'https://lit-basin-60588.herokuapp.com/api/:path'",
+    paths: replaceFiles,
+    recursive: false,
+    silent: true,
+  });
+});
+
+gulp.task('remove-proxy', function () {
+  return replace({
+    regex: "url : 'https://lit-basin-60588.herokuapp.com/api/:path'",
+    replacement: "url : '/api/:path'",
+    paths: replaceFiles,
+    recursive: false,
+    silent: true,
+  });
 });
