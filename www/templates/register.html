@@ -15,16 +15,10 @@
 
     <form name="sprint1Form" class="list" novalidate>
 
-      <div class="item item-divider text-center">
+      <div class="item item-divider text-center" ng-show="fnameDisbl">
           <span class="user-title">{{record.fname}} {{record.mname}} {{record.lname}}</span>
       </div>
 
-      <div class="form-group">
-        <label class="item item-input item-floating-label">
-          <span class="label-blue">Task Manager:</span> {{record.managerProfile}}
-          </label>
-
-      </div>
 
       <div class="form-group" ng-class="{ 'has-error' : sprint1Form.fname.$invalid && !sprint1Form.fname.$pristine }" ng-hide="fnameDisbl">
         <label class="item item-input item-floating-label">

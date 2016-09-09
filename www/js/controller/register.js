@@ -75,7 +75,6 @@ angular.module('app.register', ['ionic-modal-select'])
 
 
 
-
       $scope.save = function () {
         var profileData = ProfileFactory.getProfile();
         var managerName = $scope.record.managerProfile.split(' ');

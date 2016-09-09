@@ -22,6 +22,8 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
         "time": $filter('date')(new Date(), 'h:mm a')
       };
 
+
+
       $scope.$on('$ionicView.beforeEnter', function () {
 
         if (ProfileFactory.isProfileEmpty()) {
@@ -153,7 +155,24 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
       // calculate for first-time
       $scope.myDynamicTimes();
 
+    $scope.callDialog = function (number) {
+      var confirmPopup = $ionicPopup.confirm({
+          title:  $filter('tel')(number), 
+          template: '',
+          cancelText: 'Cancel',
+          okText: 'Call'
+      });
+      confirmPopup.then(function (res) {
+        if(res){
+          window.open('tel:' + number, '_system');
+        }
+
+      });
+    };
+
+
       // recalculate every 5 min ---> [1000 * 60 * 5]
       $interval($scope.myDynamicTimes, 1000 * 60 * 5);
+
 
     }]);
