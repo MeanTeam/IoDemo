@@ -160,7 +160,7 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
           title:  $filter('tel')(number), 
           template: '',
           cancelText: 'Cancel',
-          okText: 'Call'
+          okText: "<a class =\"call-white\" ng-href=\"tel:{{number}}\">Call</a>"
       });
       confirmPopup.then(function (res) {
         if(res){
