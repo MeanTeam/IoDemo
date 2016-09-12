@@ -14,13 +14,13 @@
     <ul class="list">
       <div class="item item-button-right" ng-repeat="rec in records">
         <h2>
-          {{rec.lname}}, {{rec.fname}} {{rec.contact | tel}}
+          {{rec.lname}}, {{rec.fname}}
+          <a ng-href="#" ng-click="callDialog(rec.contact)">{{rec.contact | tel}}</a>
         </h2>
         <p>
           {{ rec.time }},
           {{rec.location }}
         </p>
-        <a class="button icon-left ion-ios7-telephone button-calm button-outline" ng-href="tel:{{rec.contact}}"><i class="icon ion-ios-telephone"></i></a>
       </div>
     </ul>
   </ion-content>

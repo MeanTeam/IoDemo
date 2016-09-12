@@ -155,19 +155,19 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
       // calculate for first-time
       $scope.myDynamicTimes();
 
-    $scope.callDialog = function (number) {
-      var confirmPopup = $ionicPopup.confirm({
-          title:  $filter('tel')(number),
-          template: '',
-          cancelText: 'Cancel',
-          okText: "<a class =\"call-white\" ng-href=\"tel:{{number}}\">Call</a>"
-      });
-      confirmPopup.then(function (res) {
-        if(res){
-          window.open('tel:' + number, '_system');
-        }
-      });
-    };
+      $scope.callDialog = function (number) {
+        var confirmPopup = $ionicPopup.confirm({
+            title:  $filter('tel')(number),
+            template: '',
+            cancelText: 'Cancel',
+            okText: "<a class =\"call-white\" href=\"tel:+1" + number + "\">Call</a>"
+        });
+        confirmPopup.then(function (res) {
+          if(res){
+            window.open('tel:' + number, '_system');
+          }
+        });
+      };
 
 
       // recalculate every 5 min ---> [1000 * 60 * 5]

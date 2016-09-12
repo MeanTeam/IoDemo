@@ -1,8 +1,8 @@
 angular.module('app.listSignins', ['ionic-modal-select'])
 
 
-  .controller('listSigninsCtrl', ['$scope', 'SISOSprints', '$ionicLoading', '$ionicModal', '$ionicPopup', 'ProfileFactory',
-    function($scope, SISOSprints, $ionicLoading, $ionicModal, $ionicPopup,ProfileFactory){
+  .controller('listSigninsCtrl', ['$scope', 'SISOSprints', '$ionicLoading', '$ionicModal', '$ionicPopup', 'ProfileFactory', '$filter',
+    function($scope, SISOSprints, $ionicLoading, $ionicModal, $ionicPopup,ProfileFactory, $filter){
 
       $scope.user = {fname: '', lname: ''};
       $scope.records = [];
@@ -28,48 +28,19 @@ angular.module('app.listSignins', ['ionic-modal-select'])
 
       });
 
+      $scope.callDialog = function (number) {
+        var confirmPopup = $ionicPopup.confirm({
+            title:  $filter('tel')(number),
+            template: '',
+            cancelText: 'Cancel',
+            okText: "<a class =\"call-white\" href=\"tel:+1" + number + "\">Call</a>"
+        });
+        confirmPopup.then(function (res) {
+          if(res){
+            window.open('tel:' + number, '_system');
+          }
+        });
+      };
 
-  }]).filter('tel', function () {
-  return function (tel) {
-    if (!tel) { return ''; }
 
-    var value = tel.toString().trim().replace(/^\+/, '');
-
-    if (value.match(/[^0-9]/)) {
-      return tel;
-    }
-
-    var country, city, number;
-
-    switch (value.length) {
-      case 10: // +1PPP####### -> C (PPP) ###-####
-        country = 1;
-        city = value.slice(0, 3);
-        number = value.slice(3);
-        break;
-
-      case 11: // +CPPP####### -> CCC (PP) ###-####
-        country = value[0];
-        city = value.slice(1, 4);
-        number = value.slice(4);
-        break;
-
-      case 12: // +CCCPP####### -> CCC (PP) ###-####
-        country = value.slice(0, 3);
-        city = value.slice(3, 5);
-        number = value.slice(5);
-        break;
-
-      default:
-        return tel;
-    }
-
-    if (country == 1) {
-      country = "";
-    }
-
-    number = number.slice(0, 3) + '-' + number.slice(3);
-
-    return (country + " (" + city + ") " + number).trim();
-  };
-});
+  }]);
