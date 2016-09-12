@@ -63,6 +63,7 @@ angular.module('app.reassignManager', ['ionic-modal-select', 'LiveSearch'])
 
       $scope.fromManagerSearch = function (param) {
         $scope.record.fromManagerId = '';
+        
         return managerSearch.call(null, param, $scope.record.toManagerId);
       };
 
@@ -72,6 +73,7 @@ angular.module('app.reassignManager', ['ionic-modal-select', 'LiveSearch'])
       };
 
       function managerSearch(param, ignoreId) {
+
         var defer = $q.defer();
         var managerResultList = $scope.managerList.filter(function (el) {
 
