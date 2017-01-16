@@ -13,6 +13,7 @@
     {
       "path" : "/api/profileLocal",
       "proxyUrl" : "http://localhost:10090/profile"
+
     }
   ]
 }

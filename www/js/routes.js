@@ -86,6 +86,62 @@ angular.module('app.routes', [])
             controller: 'listSigninsCtrl'
           }
         }
+      })
+
+      .state("tab.geofences", {
+        url: "/geofences",
+        cache: false,
+        views: {
+          'menuContent': {
+            templateUrl: "templates/geofences.html",
+            controller: "GeofencesCtrl"
+          }
+        }
+      })
+
+      .state("tab.geofence-new", {
+        url: "/geofence/new/:longitude,:latitude",
+
+        cache: false,
+        views: {
+          'menuContent': {
+            templateUrl: "templates/geofence.html",
+            controller: "GeofenceCtrl",
+
+            resolve: {
+              geofence: function ($stateParams, Geofence) {
+                return Geofence.create({
+                  longitude: parseFloat($stateParams.longitude),
+                  latitude: parseFloat($stateParams.latitude)
+                });
+              }
+            }
+          }
+        }
+      })
+
+      .state("tab.geofence-edit", {
+        url: "geofence/:geofenceId",
+
+        cache: false,
+        views: {
+          'menuContent': {
+            templateUrl: "templates/geofence.html",
+            controller: "GeofenceCtrl",
+
+            resolve: {
+              geofence: function ($stateParams, Geofence, $q) {
+                var geofence = Geofence.findById($stateParams.geofenceId);
+
+                if (geofence) {
+                  return $q.when(angular.copy(geofence));
+                }
+
+                return $q.reject("Cannot find geofence with id: " + $stateParams.geofenceId);
+              }
+            }
+          }
+        }
       });
 
     /*

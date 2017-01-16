@@ -11,9 +11,10 @@
   </ion-nav-buttons>
 
   <ion-content padding="true" class="has-header">
- <form name="createMgrForm" class="list" novalidate>
+    <form name="createMgrForm" class="list" novalidate>
 
-      <div class="form-group" ng-class="{ 'has-error' : createMgrForm.fname.$invalid && !createMgrForm.fname.$pristine }">
+      <div class="form-group"
+           ng-class="{ 'has-error' : createMgrForm.fname.$invalid && !createMgrForm.fname.$pristine }">
         <label class="item item-input item-floating-label">
           <span class="input-label">First Name</span>
           <input type="text" name="fname" id="fname" ng-model="record.fname" placeholder="* First Name"
@@ -25,7 +26,8 @@
         </label>
       </div>
 
-      <div class="form-group" ng-class="{ 'has-error' : createMgrForm.lname.$invalid && !createMgrForm.lname.$pristine }">
+      <div class="form-group"
+           ng-class="{ 'has-error' : createMgrForm.lname.$invalid && !createMgrForm.lname.$pristine }">
         <label class="item item-input item-floating-label">
           <span class="input-label">Last Name</span>
           <input type="text" name="lname" id="lname" ng-model="record.lname" placeholder="* Last Name" required
@@ -42,7 +44,8 @@
           <span class="input-label">Contact</span>
           <input type="tel" name="contact" id="contact" ng-model="record.contact" ui-mask="(999) 999-9999"
                  ui-mask-placeholder ui-mask-placeholder-char="_" placeholder="* Contact" required/>
-          <p ng-show="createMgrForm.contact.$error.required && !createMgrForm.contact.$pristine" class="help-block"><span class="errcolor">
+          <p ng-show="createMgrForm.contact.$error.required && !createMgrForm.contact.$pristine"
+             class="help-block"><span class="errcolor">
             Phone number is required.</span>
           </p>
           <p ng-show="createMgrForm.contact.$error.pattern && !createMgrForm.contact.$pristine" class="help-block">
@@ -51,10 +54,12 @@
         </label>
       </div>
 
-       <div class="form-group" ng-class="{ 'has-error' : createMgrForm.email.$invalid && !createMgrForm.email.$pristine }">
+      <div class="form-group"
+           ng-class="{ 'has-error' : createMgrForm.email.$invalid && !createMgrForm.email.$pristine }">
         <label class="item item-input item-floating-label">
           <span class="input-label">Email</span>
-          <input type="email" name="email" id="email" ng-model="record.email" placeholder="* Email" required ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/">
+          <input type="email" name="email" id="email" ng-model="record.email" placeholder="* Email" required
+                 ng-pattern="/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/">
           <p ng-show="createMgrForm.email.$invalid && !createMgrForm.email.$pristine" class="help-block">
             <span class="errcolor">Enter a valid Email</span>
           </p>

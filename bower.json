@@ -13,7 +13,8 @@
     "ionic-modal-select": "^1.3.0",
     "ngstorage": "^0.3.10",
     "ngCordova": "^0.1.27-alpha",
-    "angular-livesearch": "https://github.com/meanteam/angular-livesearch.git"
+    "angular-livesearch": "https://github.com/meanteam/angular-livesearch.git",
+    "leaflet": "~0.7.3"
   },
   "resolutions": {
     "angular": ">= 1.3.6"
