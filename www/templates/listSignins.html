@@ -7,27 +7,21 @@
         ng-click="userDialog.show()">Search Manager</button>
   </ion-nav-buttons> -->
   <ion-content padding="true" class="has-header">
-    <div class="list">
+    <div class="item item-divider" ng-show="records.length > 0">
+      <strong>{{user.lname}}, {{user.fname}}</strong>
+    </div>
 
-      <div class="item item-divider" ng-show="records.length > 0">
-        <strong>{{user.lname}}, {{user.fname}}</strong>
-      </div>
-
-      <a class="item " href="#" ng-repeat="rec in records">
-        <!--i class="icon"
-           ng-class="{'ion-android-done energized':rec.status === 'Signed-In', 'ion-android-done-all positive':rec.status === 'Signed-Out'}"></i -->
-
+    <ul class="list">
+      <div class="item item-button-right" ng-repeat="rec in records">
         <h2>
-          {{rec.lname}}, {{rec.fname}} {{rec.contact}}
-
+          {{rec.lname}}, {{rec.fname}}
+          <a ng-href="#" ng-click="callDialog(rec.contact)">{{rec.contact | tel}}</a>
         </h2>
         <p>
           {{ rec.time }},
           {{rec.location }}
         </p>
-
-      </a>
-
-    </div>
-  <ion-content>
-</in-view>
+      </div>
+    </ul>
+  </ion-content>
+</ion-view>

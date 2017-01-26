@@ -1,8 +1,8 @@
 angular.module('app.listSignins', ['ionic-modal-select'])
 
 
-  .controller('listSigninsCtrl', ['$scope', 'SISOSprints', '$ionicLoading', '$ionicModal', '$ionicPopup', 'ProfileFactory',
-    function($scope, SISOSprints, $ionicLoading, $ionicModal, $ionicPopup,ProfileFactory){
+  .controller('listSigninsCtrl', ['$scope', 'SISOSprints', '$ionicLoading', '$ionicModal', '$ionicPopup', 'ProfileFactory', '$filter',
+    function($scope, SISOSprints, $ionicLoading, $ionicModal, $ionicPopup,ProfileFactory, $filter){
 
       $scope.user = {fname: '', lname: ''};
       $scope.records = [];
@@ -18,7 +18,7 @@ angular.module('app.listSignins', ['ionic-modal-select'])
             if (typeof recs !== undefined && recs.length > 0) {
               $scope.records = recs;
             }else{
-              $ionicLoading.show({template: 'Manager Not Found!', noBackdrop: true, duration: 2200});
+              $ionicLoading.show({template: 'No Users Signed In!', noBackdrop: true, duration: 2200});
             }
 
           });
@@ -27,6 +27,20 @@ angular.module('app.listSignins', ['ionic-modal-select'])
         }
 
       });
+
+      $scope.callDialog = function (number) {
+        var confirmPopup = $ionicPopup.confirm({
+            title:  $filter('tel')(number),
+            template: '',
+            cancelText: 'Cancel',
+            okText: "<a class =\"call-white\" href=\"tel:+1" + number + "\">Call</a>"
+        });
+        confirmPopup.then(function (res) {
+          if(res){
+            window.open('tel:' + number, '_system');
+          }
+        });
+      };
 
 
   }]);
