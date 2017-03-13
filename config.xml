@@ -19,6 +19,7 @@
   <preference name="BackupWebStorage" value="none"/>
   <preference name="SplashScreen" value="screen"/>
   <preference name="SplashScreenDelay" value="3000"/>
+  <preference name="UseLegacySwiftLanguageVersion" value="true"/>
   <feature name="StatusBar">
     <param name="ios-package" onload="true" value="CDVStatusBar"/>
   </feature>
@@ -84,5 +85,5 @@
           spec="http://git-wip-us.apache.org/repos/asf/cordova-plugin-geolocation#:/tests"/>
   <plugin name="cordova-plugin-whitelist" spec="^1.0.0"/>
   <plugin name="cordova-plugin-geolocation" spec="~2.1.0"/>
-
+  <plugin name="cordova-plugin-add-swift-support" spec="~1.6.2"/>
 </widget>

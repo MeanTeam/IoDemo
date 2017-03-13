@@ -144,43 +144,6 @@ angular.module('app.routes', [])
         }
       });
 
-    /*
-     .state('tab.checkInCheckOut', {
-     url: '/entries',
-     views:{
-     'tab-checkInCheckOut':
-     {
-     templateUrl: 'templates/checkInCheckOut.html',
-     controller: 'checkInCheckOutCtrl'
-     }
-     }
-     })
-
-     .state('tab.userInfo', {
-     url: '/userInfo',
-     views:{
-     'tab-checkInCheckOut':
-     {
-     templateUrl: 'templates/userInfo.html',
-     controller: 'userInfoCtrl'
-     }
-     }
-     })
-
-     .state('tab.log', {
-     url: '/log',
-     views:{
-     'tab-checkInCheckOut':
-     {
-     templateUrl: 'templates/log.html',
-     controller: 'logCtrl'
-     }
-     }
-     })
-     */
-
     $urlRouterProvider.otherwise('/login');
-    //$urlRouterProvider.otherwise('/tab/register/home')
-    //$urlRouterProvider.otherwise('/tab/signInSignOut')
 
   });
