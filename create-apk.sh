@@ -5,6 +5,8 @@ timestamp() {
   printf "$DD"
 }
 
+
+
 cd ~/data/projects/ionic/IoDemo
 
 PATH=$PATH:/usr/local/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools

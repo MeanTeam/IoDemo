@@ -1,9 +1,5 @@
 angular.module('app.directives', [])
 
-  .directive('blankDirective', [function () {
-
-  }])
-
   .directive("hideKeyboardOnEnter", function ($window) {
     return {
       restrict: "A",
