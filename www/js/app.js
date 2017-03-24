@@ -11,8 +11,8 @@ angular.module('app', ['ionic', 'app.listSignins', 'app.signInSignOut', 'app.del
   'app.leaflet-directive', 'app.geofences', 'app.geofence'
 ])
 
-  .run(function ($ionicPlatform, $log, $rootScope, $window, $state,
-                 GeofencePluginMock) {
+  .run(function ($ionicPlatform, $log, $rootScope, $window, $state, $ionicLoading, $ionicPopup,
+                 GeofencePluginMock, GeoLocations, Geofence, ProfileFactory, SISOSprints) {
 
     $ionicPlatform.ready(function () {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -34,7 +34,7 @@ angular.module('app', ['ionic', 'app.listSignins', 'app.signInSignOut', 'app.del
       }
 
       if (navigator.splashscreen) {
-          navigator.splashscreen.hide();
+        navigator.splashscreen.hide();
       }
 
       $window.geofence.onTransitionReceived = function (geofences) {
@@ -42,15 +42,56 @@ angular.module('app', ['ionic', 'app.listSignins', 'app.signInSignOut', 'app.del
         if (geofences) {
           $rootScope.$apply(function () {
             geofences.forEach(function (geo) {
-              geo.notification = geo.notification || {
-                  title: "Geofence transition",
-                  text: "Without notification"
-                };
-              $ionicLoading.show({
-                template: geo.notification.title + ": " + geo.notification.text,
-                noBackdrop: true,
-                duration: 2000
-              });
+              let profileData = ProfileFactory.getSISO();
+
+              if(geo.transitionType === 1){
+                delete profileData._id;
+                SISOSprints.post(profileData, function (result) {
+
+                  if (typeof result !== undefined && typeof result._id !== undefined) {
+
+                    ProfileFactory.getSISO()._id = result._id;
+
+                    geo.notification = geo.notification || {
+                        title: "Geofence transition",
+                        text: "Without notification"
+                      };
+                    $ionicLoading.show({
+                      template: geo.notification.title + ": " + geo.notification.text,
+                      noBackdrop: true,
+                      duration: 2000
+                    });
+
+                  } else {
+                    $ionicPopup.alert({title: 'Sign In', template: 'Sign In result error.'});
+                  }
+
+                }, function (error) {
+                  $ionicPopup.alert({title: 'Error', template: error.status + ', ' + error.statusText});
+                });
+
+              }else if(geo.transitionType === 2){
+                SISOSprints.delete({id: profileData._id}, function (success) {
+                  let sisoData = ProfileFactory.getSISO();
+
+                  sisoData['_id'] = "";
+                  ProfileFactory.setSISO(sisoData);
+
+                  geo.notification = geo.notification || {
+                      title: "Geofence transition",
+                      text: "Without notification"
+                    };
+                  $ionicLoading.show({
+                    template: geo.notification.title + ": " + geo.notification.text,
+                    noBackdrop: true,
+                    duration: 2000
+                  });
+
+                }, function (error) {
+                  $ionicPopup.alert({title: 'Sign Out', template: error.status + ', ' + error.statusText});
+                });
+              }
+
             });
           });
         }
@@ -76,6 +117,21 @@ angular.module('app', ['ionic', 'app.listSignins', 'app.signInSignOut', 'app.del
 
       $window.geofence.initialize(function () {
         $log.log("Geofence plugin initialized");
+
+        Geofence.getAll().then(function (geofences) {
+
+          console.log(geofences);
+
+          if (geofences.length === 0) {
+            GeoLocations.get().forEach(function (geofence) {
+              Geofence.addOrUpdate(geofence);
+            });
+          }
+        }, function (reason) {
+          $log.error("An Error has occured", reason);
+        });
+
+
       });
     });
 

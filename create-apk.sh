@@ -1,5 +1,7 @@
 #!/bin/bash
 
+
+
 timestamp() {
   DD=`date "+DATE: %m/%d/%y%tTIME: %H:%M:%S%n%n"`
   printf "$DD"

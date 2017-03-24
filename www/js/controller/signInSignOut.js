@@ -1,9 +1,9 @@
 angular.module('app.signInSignOut', ['ionic-modal-select'])
 
   .controller('signInSignOutCtrl', ['$scope', '$state', '$interval', 'SISOSprints', 'Locations', 'ProfileFactory',
-      '$ionicLoading', '$ionicModal', '$ionicPopup', '$filter', '$ionicNavBarDelegate',
+    '$ionicLoading', '$ionicModal', '$ionicPopup', '$filter', '$ionicNavBarDelegate',
     function ($scope, $state, $interval, SISOSprints, Locations, ProfileFactory, $ionicLoading, $ionicModal,
-      $ionicPopup, $filter, $ionicNavBarDelegate) {
+              $ionicPopup, $filter, $ionicNavBarDelegate) {
 
       $scope.user = {fname: '', lname: ''};
       $scope.dialog = {title: 'Search User', buttonLabel: 'Find User'};
@@ -23,7 +23,6 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
       };
 
 
-
       $scope.$on('$ionicView.beforeEnter', function () {
 
         if (ProfileFactory.isProfileEmpty()) {
@@ -34,45 +33,44 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
         $ionicNavBarDelegate.showBackButton(false);
 
         var userData = ProfileFactory.getProfile();
-          $ionicLoading.show({
-            template: 'Loading Profile ...'
-          });
-          SISOSprints.get({
-            fname: ProfileFactory.getProfile().fname,
-            lname: ProfileFactory.getProfile().lname,
-            mname: ProfileFactory.getProfile().mname,
-          }, function (recs) {
+        $ionicLoading.show({
+          template: 'Loading Profile ...'
+        });
+        SISOSprints.get({
+          fname: ProfileFactory.getProfile().fname,
+          lname: ProfileFactory.getProfile().lname,
+          mname: ProfileFactory.getProfile().mname,
+        }, function (recs) {
 
-            if (typeof recs !== undefined && recs.length > 0) {
-              userData = recs[0];
-              ProfileFactory.setSISO(userData);
-              ProfileFactory.getSISO()._id = userData._id;
-              Object.keys(userData).forEach(function (key) {
-                 $scope.record[key] = userData[key];
-              });
-            }
-            else {
-                Object.keys(userData).forEach(function (key) {
-                  //console.log("id" + userData._id);
-                  if (key == 'time') {
-                    $scope.record[key] = $filter('date')(new Date(), 'h:mm a');//.toLocaleTimeString().replace(/:\d+ /, ' ');
-                  }
-                  else if(key == 'preferredLocation'){
-                     $scope.record.location = userData[key];
-                  }
-                  else {
-                    $scope.record[key] = userData[key];
-                  }
-                });
-                ProfileFactory.setSISO($scope.record);
-                ProfileFactory.getSISO()._id = '';
-            }
-            $ionicLoading.hide();
+          if (typeof recs !== undefined && recs.length > 0) {
+            userData = recs[0];
+            ProfileFactory.setSISO(userData);
+            ProfileFactory.getSISO()._id = userData._id;
+            Object.keys(userData).forEach(function (key) {
+              $scope.record[key] = userData[key];
+            });
+          } else {
+            Object.keys(userData).forEach(function (key) {
+              //console.log("id" + userData._id);
+              if (key == 'time') {
+                $scope.record[key] = $filter('date')(new Date(), 'h:mm a');//.toLocaleTimeString().replace(/:\d+ /, ' ');
+              }
+              else if (key == 'preferredLocation') {
+                $scope.record.location = userData[key];
+              }
+              else {
+                $scope.record[key] = userData[key];
+              }
+            });
+            ProfileFactory.setSISO($scope.record);
+            ProfileFactory.getSISO()._id = '';
+          }
+          $ionicLoading.hide();
 
-          }, function (error) {
-            $ionicLoading.hide();
-            $ionicPopup.alert({title: 'Error', template: 'Fail on Server connection' });
-          });
+        }, function (error) {
+          $ionicLoading.hide();
+          $ionicPopup.alert({title: 'Error', template: 'Fail on Server connection'});
+        });
 
       });
 
@@ -93,32 +91,32 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
           if (typeof result !== undefined && typeof result._id !== undefined) {
             $scope.record._id = result._id;
             ProfileFactory.getSISO()._id = result._id;
-            $ionicPopup.alert({title: 'Sign In', template: 'Sign In successful!' });
+            $ionicPopup.alert({title: 'Sign In', template: 'Sign In successful!'});
           } else {
-            $ionicPopup.alert({title: 'Sign In', template: 'Sign In result error.' });
+            $ionicPopup.alert({title: 'Sign In', template: 'Sign In result error.'});
           }
           $ionicLoading.hide();
         }, function (error) {
           $ionicLoading.hide();
-          $ionicPopup.alert({title: 'Error', template: error.status + ', ' + error.statusText });
+          $ionicPopup.alert({title: 'Error', template: error.status + ', ' + error.statusText});
         });
 
       };
 
       $scope.delete = function () {
-          if (typeof $scope.record._id !== undefined && $scope.record._id !== "") {
-            SISOSprints.delete({id: $scope.record._id}, function (success) {
-              var sisoData = ProfileFactory.getSISO();
-              // remove $scope.record._id and prepare for next sign-in
-              sisoData['_id'] = "";
-              ProfileFactory.setSISO(sisoData);
-              $scope.record._id = "";
-              $scope.record.time = $filter('date')(new Date(), 'h:mm a');
-              $ionicPopup.alert({title: 'Sign Out', template: 'Sign Out Successful!'});
-            }, function (error) {
-              $ionicPopup.alert({title: 'Sign Out', template: error.status + ', ' + error.statusText });
-            });
-          }
+        if (typeof $scope.record._id !== undefined && $scope.record._id !== "") {
+          SISOSprints.delete({id: $scope.record._id}, function (success) {
+            var sisoData = ProfileFactory.getSISO();
+            // remove $scope.record._id and prepare for next sign-in
+            sisoData['_id'] = "";
+            ProfileFactory.setSISO(sisoData);
+            $scope.record._id = "";
+            $scope.record.time = $filter('date')(new Date(), 'h:mm a');
+            $ionicPopup.alert({title: 'Sign Out', template: 'Sign Out Successful!'});
+          }, function (error) {
+            $ionicPopup.alert({title: 'Sign Out', template: error.status + ', ' + error.statusText});
+          });
+        }
       };
 
       $scope.myDynamicTimes = function () {
@@ -157,13 +155,13 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
 
       $scope.callDialog = function (number) {
         var confirmPopup = $ionicPopup.confirm({
-            title:  $filter('tel')(number),
-            template: '',
-            cancelText: 'Cancel',
-            okText: "<a class =\"call-white\" href=\"tel:+1" + number + "\">Call</a>"
+          title: $filter('tel')(number),
+          template: '',
+          cancelText: 'Cancel',
+          okText: "<a class =\"call-white\" href=\"tel:+1" + number + "\">Call</a>"
         });
         confirmPopup.then(function (res) {
-          if(res){
+          if (res) {
             window.open('tel:' + number, '_system');
           }
         });

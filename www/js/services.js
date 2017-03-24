@@ -403,4 +403,132 @@ angular.module('app.services', ['ngResource', 'ngStorage']).constant('ApiEndpoin
         BOTH: 3
       }
     };
-  });
+  }).factory("GeoLocations", function ($q, $log) {
+    var getLocations = function () {
+      return [{
+          "id": "7152SignIn",
+          "latitude": 39.33376633431887,
+          "longitude": -76.75177574157715,
+          "radius": 50,
+          "transitionType": 1,
+          "notification": {
+            "id": 1,
+            "title": "SISO",
+            "text": "7152 SignIn",
+            "icon": "res://ic_menu_mylocation",
+            "openAppOnClick": true,
+            "data": {
+              "id": "7152SignIn",
+              "latitude": 39.33376633431887,
+              "longitude": -76.75177574157715,
+              "radius": 50,
+              "transitionType": 1
+            }
+          }
+        },{
+          "id": "7152SignOut",
+          "latitude": 39.33376633431887,
+          "longitude": -76.75177574157715,
+          "radius": 50,
+          "transitionType": 2,
+          "notification": {
+            "id": 2,
+            "title": "SISO",
+            "text": "7152 SignOut",
+            "icon": "res://ic_menu_mylocation",
+            "openAppOnClick": true,
+            "data": {
+              "id": "7152SignOut",
+              "latitude": 39.33376633431887,
+              "longitude": -76.75177574157715,
+              "radius": 50,
+              "transitionType": 2
+            }
+          }
+        },{
+          "id": "SSAHQIn",
+          "latitude": 39.309658,
+          "longitude": -76.730639,
+          "radius": 50,
+          "transitionType": 1,
+          "notification": {
+            "id": 3,
+            "title": "SISO",
+            "text": "SSA-HQ In",
+            "icon": "res://ic_menu_mylocation",
+            "openAppOnClick": true,
+            "data": {
+              "id": "SSAHQIn",
+              "latitude": 39.309658,
+              "longitude": -76.730639,
+              "radius": 50,
+              "transitionType": 1
+            }
+          }
+        },{
+          "id": "SSAHQOut",
+          "latitude": 39.309658,
+          "longitude": -76.730639,
+          "radius": 50,
+          "transitionType": 2,
+          "notification": {
+            "id": 4,
+            "title": "SISO",
+            "text": "SSA-HQ Out",
+            "icon": "res://ic_menu_mylocation",
+            "openAppOnClick": true,
+            "data": {
+              "id": "SSAHQOut",
+              "latitude": 39.309658,
+              "longitude": -76.730639,
+              "radius": 50,
+              "transitionType": 2
+            }
+          }
+        },{
+          "id": "WOCIn",
+          "latitude": 39.314819,
+          "longitude": -76.737292,
+          "radius": 50,
+          "transitionType": 1,
+          "notification": {
+            "id": 5,
+            "title": "SISO",
+            "text": "WOC In",
+            "icon": "res://ic_menu_mylocation",
+            "openAppOnClick": true,
+            "data": {
+              "id": "WOCIn",
+              "latitude": 39.314819,
+              "longitude": -76.737292,
+              "radius": 50,
+              "transitionType": 1
+            }
+          }
+        },{
+          "id": "WOCOut",
+          "latitude": 39.314819,
+          "longitude": -76.737292,
+          "radius": 50,
+          "transitionType": 2,
+          "notification": {
+            "id": 6,
+            "title": "SISO",
+            "text": "WOC Out",
+            "icon": "res://ic_menu_mylocation",
+            "openAppOnClick": true,
+            "data": {
+              "id": "WOCOut",
+              "latitude": 39.314819,
+              "longitude": -76.737292,
+              "radius": 50,
+              "transitionType": 2
+            }
+          }
+        }];
+    };
+
+    return {
+      get: getLocations
+    };
+});
