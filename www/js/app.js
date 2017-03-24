@@ -33,6 +33,10 @@ angular.module('app', ['ionic', 'app.listSignins', 'app.signInSignOut', 'app.del
         $window.TransitionType = GeofencePluginMock.TransitionType;
       }
 
+      if (navigator.splashscreen) {
+          navigator.splashscreen.hide();
+      }
+
       $window.geofence.onTransitionReceived = function (geofences) {
         $log.log(geofences);
         if (geofences) {
