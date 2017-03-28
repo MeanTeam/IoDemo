@@ -12,7 +12,7 @@ angular.module('app', ['ionic', 'app.listSignins', 'app.signInSignOut', 'app.del
 ])
 
   .run(function ($ionicPlatform, $log, $rootScope, $window, $state, $ionicLoading, $ionicPopup,
-                 GeofencePluginMock, GeoLocations, Geofence, ProfileFactory, SISOSprints) {
+                 GeofencePluginMock, GeoLocations, Geofence, ProfileFactory, SISOSprints, $filter) {
 
     $ionicPlatform.ready(function () {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -41,12 +41,24 @@ angular.module('app', ['ionic', 'app.listSignins', 'app.signInSignOut', 'app.del
         $log.log(geofences);
         if (geofences) {
           $rootScope.$apply(function () {
+
             geofences.forEach(function (geo) {
               let profileData = ProfileFactory.getSISO();
 
-              if(geo.transitionType === 1){
-                delete profileData._id;
-                SISOSprints.post(profileData, function (result) {
+              if(geo.transitionType === 1 && profileData._id === ""){
+
+                var record = {
+                  "fname": profileData.fname,
+                  "mname": profileData.lname,
+                  "lname": profileData.lname,
+                  "mfname": profileData.mfname,
+                  "mlname": profileData.mlname,
+                  "contact": profileData.contact,
+                  "location": geo.notification.text,
+                  "time": $filter('date')(new Date(), 'h:mm a')
+                };
+
+                SISOSprints.post(record, function (result) {
 
                   if (typeof result !== undefined && typeof result._id !== undefined) {
 
@@ -70,12 +82,14 @@ angular.module('app', ['ionic', 'app.listSignins', 'app.signInSignOut', 'app.del
                   $ionicPopup.alert({title: 'Error', template: error.status + ', ' + error.statusText});
                 });
 
-              }else if(geo.transitionType === 2){
+              }else if(geo.transitionType === 2 && profileData._id !== ""){
+
                 SISOSprints.delete({id: profileData._id}, function (success) {
+
                   let sisoData = ProfileFactory.getSISO();
 
-                  sisoData['_id'] = "";
-                  ProfileFactory.setSISO(sisoData);
+                  ProfileFactory.getSISO()._id = "";
+                  //ProfileFactory.setSISO(sisoData);
 
                   geo.notification = geo.notification || {
                       title: "Geofence transition",
