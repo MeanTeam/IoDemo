@@ -53,7 +53,7 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
             Object.keys(userData).forEach(function (key) {
               //console.log("id" + userData._id);
               if (key == 'time') {
-                $scope.record[key] = $filter('date')(new Date(), 'h:mm a');//.toLocaleTimeString().replace(/:\d+ /, ' ');
+                $scope.record[key] = $filter('date')(new Date(), 'h:mm a');
               }
               else if (key == 'preferredLocation') {
                 $scope.record.location = userData[key];

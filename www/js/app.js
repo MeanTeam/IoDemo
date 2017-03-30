@@ -39,75 +39,128 @@ angular.module('app', ['ionic', 'app.listSignins', 'app.signInSignOut', 'app.del
 
       $window.geofence.onTransitionReceived = function (geofences) {
         $log.log(geofences);
-        if (geofences) {
+
+
+        if (geofences && ProfileFactory.getSISO() !== undefined) {
+
           $rootScope.$apply(function () {
-
             geofences.forEach(function (geo) {
-              let profileData = ProfileFactory.getSISO();
 
-              if(geo.transitionType === 1 && profileData._id === ""){
+              SISOSprints.get({
+                fname: ProfileFactory.getProfile().fname,
+                lname: ProfileFactory.getProfile().lname,
+                mname: ProfileFactory.getProfile().mname,
+              }, function (recs) {
 
-                var record = {
-                  "fname": profileData.fname,
-                  "mname": profileData.lname,
-                  "lname": profileData.lname,
-                  "mfname": profileData.mfname,
-                  "mlname": profileData.mlname,
-                  "contact": profileData.contact,
-                  "location": geo.notification.text,
-                  "time": $filter('date')(new Date(), 'h:mm a')
+                let record = {
+                  "fname": ProfileFactory.getProfile().fname,
+                  "mname": ProfileFactory.getProfile().lname,
+                  "lname": ProfileFactory.getProfile().lname,
+                  "mfname": ProfileFactory.getProfile().mfname,
+                  "mlname": ProfileFactory.getProfile().mlname,
+                  "contact": ProfileFactory.getProfile().contact,
+                  "location": "",
+                  "time": ""
                 };
 
-                SISOSprints.post(record, function (result) {
+                if (geo.transitionType === 1) {
 
-                  if (typeof result !== undefined && typeof result._id !== undefined) {
+                  record.location = geo.notification.text;
+                  record.time = $filter('date')(new Date(), 'h:mm a');
 
-                    ProfileFactory.getSISO()._id = result._id;
+                  if (recs !== undefined && recs.length > 0) {
+                    SISOSprints.delete({id: recs[0]._id}, function (success) {
 
-                    geo.notification = geo.notification || {
-                        title: "Geofence transition",
-                        text: "Without notification"
-                      };
-                    $ionicLoading.show({
-                      template: geo.notification.title + ": " + geo.notification.text,
-                      noBackdrop: true,
-                      duration: 2000
+                      SISOSprints.post(record, function (result) {
+                        ProfileFactory.getSISO()._id = result._id;
+
+                        geo.notification = geo.notification || {
+                            title: "Geofence transition",
+                            text: "Without notification"
+                          };
+                        $ionicLoading.show({
+                          template: geo.notification.title + ": " + geo.notification.text,
+                          noBackdrop: true,
+                          duration: 2000
+                        });
+
+                      });
+                    }, function (error) {
+                      geo.notification = geo.notification || {
+                          title: error.status,
+                          text: error.statusText
+                        };
+                      $ionicLoading.show({
+                        template: error.status + ": " + error.statusText,
+                        noBackdrop: true,
+                        duration: 2000
+                      });
+                      $log.log({
+                        title: 'Deleting record on DB when geo entering is detecting',
+                        template: error.status + ', ' + error.statusText
+                      });
                     });
-
                   } else {
-                    $ionicPopup.alert({title: 'Sign In', template: 'Sign In result error.'});
+                    SISOSprints.post(record, function (result) {
+                      ProfileFactory.getSISO()._id = result._id;
+
+                      geo.notification = geo.notification || {
+                          title: "Geofence transition",
+                          text: "Without notification"
+                        };
+                      $ionicLoading.show({
+                        template: geo.notification.title + ": " + geo.notification.text,
+                        noBackdrop: true,
+                        duration: 2000
+                      });
+
+                    });
                   }
 
-                }, function (error) {
-                  $ionicPopup.alert({title: 'Error', template: error.status + ', ' + error.statusText});
-                });
+                } else if (geo.transitionType === 2) {
 
-              }else if(geo.transitionType === 2 && profileData._id !== ""){
+                  if (recs !== undefined && recs.length > 0) {
 
-                SISOSprints.delete({id: profileData._id}, function (success) {
+                    SISOSprints.delete({id: recs[0]._id}, function (success) {
 
-                  let sisoData = ProfileFactory.getSISO();
+                      ProfileFactory.getSISO()._id = "";
 
-                  ProfileFactory.getSISO()._id = "";
-                  //ProfileFactory.setSISO(sisoData);
+                      geo.notification = geo.notification || {
+                          title: "Geofence transition",
+                          text: "Without notification"
+                        };
+                      $ionicLoading.show({
+                        template: geo.notification.title + ": " + geo.notification.text,
+                        noBackdrop: true,
+                        duration: 2000
+                      });
 
-                  geo.notification = geo.notification || {
-                      title: "Geofence transition",
-                      text: "Without notification"
-                    };
-                  $ionicLoading.show({
-                    template: geo.notification.title + ": " + geo.notification.text,
-                    noBackdrop: true,
-                    duration: 2000
-                  });
+                    }, function (error) {
+                      geo.notification = geo.notification || {
+                          title: error.status,
+                          text: error.statusText
+                        };
+                      $ionicLoading.show({
+                        template: error.status + ": " + error.statusText,
+                        noBackdrop: true,
+                        duration: 2000
+                      });
+                      $log.log({
+                        title: 'Deleting record on DB when geo entering is detecting',
+                        template: error.status + ', ' + error.statusText
+                      });
+                    });
 
-                }, function (error) {
-                  $ionicPopup.alert({title: 'Sign Out', template: error.status + ', ' + error.statusText});
-                });
-              }
+                  }
+                }
+
+
+              });
 
             });
           });
+
+
         }
       };
 
