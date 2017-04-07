@@ -9,7 +9,7 @@ timestamp() {
 
 
 
-cd ~/data/projects/ionic/IoDemo
+cd ~/data/project/ionic/IoDemo
 
 PATH=$PATH:/usr/local/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
 #GMAIL_ACCT=$GMAIL_ACCOUNT
@@ -18,11 +18,11 @@ PATH=$PATH:/usr/local/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
 DIR=$(pwd)
 FILE="IoDemo.apk"
 APK_PATH="platforms/android/build/outputs/apk"
-KEYSTORE_FILE="$DIR/$APK_PATH/sisodemoapp.keystore"
+KEYSTORE_FILE="$HOME/sisodemoapp.keystore"
 ORIG_FILE="android-release-unsigned.apk"
 DEST_APK_FILE="$DIR/$APK_PATH/$FILE"
 ORIG_APK_FILE="$DIR/$APK_PATH/$ORIG_FILE"
-SEND_EMAIL_PATH="$MY_HOME/data/projects/node/sendAPKmail"
+SEND_EMAIL_PATH="~/data/projects/node/sendAPKmail"
 GIT="N"
 EMAIL="N"
 
