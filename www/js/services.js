@@ -13,7 +13,7 @@ angular.module('app.services', ['ngResource', 'ngStorage']).constant('ApiEndpoin
   }])
   .factory('Locations', [function () {
     var getLocations = function () {
-      return ['Location 1', 'Location 2', 'Location 3', 'Location 4', 'Location 5', 'Location 6'];
+      return ['7152 Leidos', 'SSA HQ', 'WOC'];
     };
 
     return {
