@@ -13,7 +13,7 @@ angular.module('app.services', ['ngResource', 'ngStorage']).constant('ApiEndpoin
   }])
   .factory('Locations', [function () {
     var getLocations = function () {
-      return ['7152 Leidos', 'SSA HQ', 'WOC'];
+      return ['7152 Leidos', 'SSA-HQ', 'WOC'];
     };
 
     return {
@@ -409,12 +409,12 @@ angular.module('app.services', ['ngResource', 'ngStorage']).constant('ApiEndpoin
           "id": "7152SignIn",
           "latitude": 39.33376633431887,
           "longitude": -76.75177574157715,
-          "radius": 50,
+          "radius": 70,
           "transitionType": 1,
           "notification": {
             "id": 1,
             "title": "SISO",
-            "text": "7152 SignIn",
+            "text": "7152 Leidos",
             "icon": "res://ic_menu_mylocation",
             "openAppOnClick": true,
             "data": {
@@ -429,12 +429,12 @@ angular.module('app.services', ['ngResource', 'ngStorage']).constant('ApiEndpoin
           "id": "7152SignOut",
           "latitude": 39.33376633431887,
           "longitude": -76.75177574157715,
-          "radius": 50,
+          "radius": 70,
           "transitionType": 2,
           "notification": {
             "id": 2,
             "title": "SISO",
-            "text": "7152 SignOut",
+            "text": "7152 Leidos",
             "icon": "res://ic_menu_mylocation",
             "openAppOnClick": true,
             "data": {
@@ -449,12 +449,12 @@ angular.module('app.services', ['ngResource', 'ngStorage']).constant('ApiEndpoin
           "id": "SSAHQIn",
           "latitude": 39.309658,
           "longitude": -76.730639,
-          "radius": 50,
+          "radius": 180,
           "transitionType": 1,
           "notification": {
             "id": 3,
             "title": "SISO",
-            "text": "SSA-HQ In",
+            "text": "SSA-HQ",
             "icon": "res://ic_menu_mylocation",
             "openAppOnClick": true,
             "data": {
@@ -469,12 +469,12 @@ angular.module('app.services', ['ngResource', 'ngStorage']).constant('ApiEndpoin
           "id": "SSAHQOut",
           "latitude": 39.309658,
           "longitude": -76.730639,
-          "radius": 50,
+          "radius": 180,
           "transitionType": 2,
           "notification": {
             "id": 4,
             "title": "SISO",
-            "text": "SSA-HQ Out",
+            "text": "SSA-HQ",
             "icon": "res://ic_menu_mylocation",
             "openAppOnClick": true,
             "data": {
@@ -494,7 +494,7 @@ angular.module('app.services', ['ngResource', 'ngStorage']).constant('ApiEndpoin
           "notification": {
             "id": 5,
             "title": "SISO",
-            "text": "WOC In",
+            "text": "WOC",
             "icon": "res://ic_menu_mylocation",
             "openAppOnClick": true,
             "data": {
@@ -514,7 +514,7 @@ angular.module('app.services', ['ngResource', 'ngStorage']).constant('ApiEndpoin
           "notification": {
             "id": 6,
             "title": "SISO",
-            "text": "WOC Out",
+            "text": "WOC",
             "icon": "res://ic_menu_mylocation",
             "openAppOnClick": true,
             "data": {
