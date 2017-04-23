@@ -1,9 +1,11 @@
 angular.module('app.signInSignOut', ['ionic-modal-select'])
 
-  .controller('signInSignOutCtrl', ['$scope', '$state', '$interval', 'SISOSprints', 'Locations', 'ProfileFactory',
-    '$ionicLoading', '$ionicModal', '$ionicPopup', '$filter', '$ionicNavBarDelegate',
-    function ($scope, $state, $interval, SISOSprints, Locations, ProfileFactory, $ionicLoading, $ionicModal,
-              $ionicPopup, $filter, $ionicNavBarDelegate) {
+  .controller('signInSignOutCtrl', [
+    '$scope', '$state', '$interval', 'SISOSprints', 'Locations', 'ProfileFactory',
+    '$ionicLoading', '$ionicModal', '$ionicPopup', '$filter', '$ionicNavBarDelegate', '$window',
+    function (
+      $scope, $state, $interval, SISOSprints, Locations, ProfileFactory,
+      $ionicLoading, $ionicModal, $ionicPopup, $filter, $ionicNavBarDelegate, $window) {
 
       $scope.user = {fname: '', lname: ''};
       $scope.dialog = {title: 'Search User', buttonLabel: 'Find User'};
@@ -12,6 +14,7 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
       $scope.myTimes = [];
 
       $scope.record = {
+        "_id": "",
         "fname": "",
         "mname": "",
         "lname": "",
@@ -19,11 +22,11 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
         "mlname": "",
         "contact": "",
         "location": "",
-        "time": $filter('date')(new Date(), 'h:mm a')
+        "time": $filter('date')(new Date(), 'hh:mm a')
       };
 
 
-      $scope.$on('$ionicView.beforeEnter', function () {
+      $scope.$on('$ionicView.afterEnter', function () {
 
         if (ProfileFactory.isProfileEmpty()) {
           $state.go('/tab/register');
@@ -43,28 +46,66 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
         }, function (recs) {
 
           if (typeof recs !== undefined && recs.length > 0) {
-            userData = recs[0];
-            ProfileFactory.setSISO(userData);
-            ProfileFactory.getSISO()._id = userData._id;
-            Object.keys(userData).forEach(function (key) {
-              $scope.record[key] = userData[key];
+
+            var recData = recs[0];
+            ProfileFactory.setSISO(recData);
+            //ProfileFactory.getSISO()._id = recData._id;
+            Object.keys(recData).forEach(function (key) {
+              $scope.record[key] = recData[key];
             });
+
           } else {
+
+            delete userData['_id'];
             Object.keys(userData).forEach(function (key) {
-              //console.log("id" + userData._id);
-              if (key == 'time') {
-                $scope.record[key] = $filter('date')(new Date(), 'h:mm a');
-              }
-              else if (key == 'preferredLocation') {
+              if (key === 'time') {
+                $scope.record[key] = $filter('date')(new Date(), 'hh:mm a');
+              } else if (key === 'preferredLocation') {
                 $scope.record.location = userData[key];
-              }
-              else {
+              } else {
                 $scope.record[key] = userData[key];
               }
             });
+
             ProfileFactory.setSISO($scope.record);
-            ProfileFactory.getSISO()._id = '';
+
           }
+
+          $window.db.transaction(function (tx) {
+            var query = "SELECT _id, value FROM profiles WHERE _id = ? ";
+
+            tx.executeSql(query, ["1"], function (tx, resultSet) {
+
+                userData._id = $scope.record._id;
+                if (resultSet.rows.length > 0) {
+                  // Update
+                  query = "UPDATE profiles SET value = ? WHERE _id = ?";
+
+                  tx.executeSql(query, [JSON.stringify(userData), "1"], function (tx, res) {},
+                    function (tx, error) {
+                      console.log('UPDATE error: ' + error.message);
+                    });
+
+                } else {
+                  // Insert
+                  $window.db.transaction(function (tx) {
+                    tx.executeSql('CREATE TABLE IF NOT EXISTS profiles (_id, value)');
+                    tx.executeSql('INSERT INTO profiles VALUES (?,?)', ['1', JSON.stringify(userData)]);
+                  }, function (error) {
+                    console.log('Transaction ERROR: ' + error.message);
+                    $ionicPopup.alert({title: 'Transaction ERROR:', template: error.message});
+                  }, function () {
+                    console.log('Populated database OK');
+                  });
+                }
+
+              },
+              function (tx, error) {
+                console.log('SELECT error: ' + error.message);
+              });
+
+          });
+
           $ionicLoading.hide();
 
         }, function (error) {
@@ -75,7 +116,9 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
       });
 
       $scope.showCheckoutBtn = function () {
+        console.log('*** ID: ' + $scope.record._id);
         return ($scope.record._id !== undefined) && ($scope.record._id !== '');
+
       };
 
       $scope.ph_numbr = /^(\+?(\d{1}|\d{2}|\d{3})[- ]?)?\d{3}[- ]?\d{3}[- ]?\d{4}$/;

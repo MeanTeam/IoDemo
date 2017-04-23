@@ -31,7 +31,7 @@ angular.module('app.createManager', ['ionic-modal-select'])
 
 
 
-      $scope.$on('$ionicView.beforeEnter', function () {   
+      $scope.$on('$ionicView.afterEnter', function () {
         SISOSprints.getManagerList({}, function (mgrs) {
             $scope.managers =mgrs;
           }, function(error) {
@@ -49,8 +49,8 @@ angular.module('app.createManager', ['ionic-modal-select'])
         $scope.record.role='manager';
         $scope.record.mfname = $scope.record.managerProfile.fname;
         $scope.record.mlname = $scope.record.managerProfile.lname;
-        
-        SISOSprints.postProfile($scope.record, function (result) {          
+
+        SISOSprints.postProfile($scope.record, function (result) {
               if (typeof result !== undefined && typeof result._id !== undefined) {
                  //alert('Manager was created.');
                  $ionicPopup.alert({title: '<b>Create Manager</b>', template: 'Manager was created.'});

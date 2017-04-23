@@ -274,6 +274,25 @@ angular.module('app.services', ['ngResource', 'ngStorage']).constant('ApiEndpoin
         });
       },
 
+      addProfile: function (profile) {
+
+        $window.geofence.addProfile(profile);
+        $ionicLoading.show({
+          template: "Profile Added",
+          duration: 1500
+        });
+
+      },
+
+      removeProfile: function () {
+
+        $window.geofence.removeProfile();
+        $ionicLoading.show({
+          template: "Profile Removed",
+          duration: 1500
+        });
+      },
+
       findById: function (id) {
         var geoFences = this._geofences.filter(function (g) {
           return g.id === id;

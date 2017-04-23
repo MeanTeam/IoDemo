@@ -12,8 +12,8 @@ timestamp() {
 cd ~/data/project/ionic/IoDemo
 
 PATH=$PATH:/usr/local/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
-#GMAIL_ACCT=$GMAIL_ACCOUNT
-#GMAIL_PASS=$GMAIL_PASS
+#GMAIL_ACCT
+#GMAIL_PASS
 
 DIR=$(pwd)
 FILE="IoDemo.apk"
@@ -22,7 +22,7 @@ KEYSTORE_FILE="$HOME/sisodemoapp.keystore"
 ORIG_FILE="android-release-unsigned.apk"
 DEST_APK_FILE="$DIR/$APK_PATH/$FILE"
 ORIG_APK_FILE="$DIR/$APK_PATH/$ORIG_FILE"
-SEND_EMAIL_PATH="~/data/projects/node/sendAPKmail"
+SEND_EMAIL_PATH="$HOME/data/project/node/sendAPKmail"
 GIT="N"
 EMAIL="N"
 
@@ -73,6 +73,7 @@ if [ -e "$ORIG_APK_FILE" ]; then
   if [ "Y" = "$EMAIL" ]; then
     printf timestamp
     printf "Sending email\n"
+    printf "Changing to directory $SEND_EMAIL_PATH\n\n"
     cd $SEND_EMAIL_PATH
     GMAIL=$GMAIL_ACCT GMAIL_PASS=$GMAIL_PASS DEST_APK_FILE=$DEST_APK_FILE node index.js
   else

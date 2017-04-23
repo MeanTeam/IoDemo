@@ -14,6 +14,13 @@ angular.module('app', ['ionic', 'app.listSignins', 'app.signInSignOut', 'app.del
   .run(function ($ionicPlatform, $log, $rootScope, $window, $state, $ionicLoading, $ionicPopup,
                  GeofencePluginMock, GeoLocations, Geofence, ProfileFactory, SISOSprints, $filter) {
 
+
+    $ionicPlatform.on('resume', function(){
+      $state.go('login',{cache: false});
+      return false;
+
+    });
+
     $ionicPlatform.ready(function () {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)
@@ -31,6 +38,10 @@ angular.module('app', ['ionic', 'app.listSignins', 'app.signInSignOut', 'app.del
         $log.warn("Geofence Plugin not found. Using mock instead.");
         $window.geofence = GeofencePluginMock;
         $window.TransitionType = GeofencePluginMock.TransitionType;
+      }
+
+      if ($window.db === undefined) {
+        $window.db = $window.sqlitePlugin.openDatabase({name: 'geonotifications.db', location: 'default'});
       }
 
       if (navigator.splashscreen) {
@@ -181,6 +192,7 @@ angular.module('app', ['ionic', 'app.listSignins', 'app.signInSignOut', 'app.del
 
 
       });
+
     });
 
     $rootScope.$on("$stateChangeError", function (event, toState, toParams, fromState, fromParams, error) {

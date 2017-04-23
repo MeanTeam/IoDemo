@@ -5,35 +5,14 @@ angular.module('app.login', ['ionic-modal-select'])
     function ($scope, $interval, $state,
               SISOSprints, ProfileFactory, $ionicLoading, $cordovaDialogs) {
 
-      // $scope.user = {username: "", password: ""};
-
-      // $scope.goNext = function (path) {
-
-      //   SISOService.getUserByUsername({username: $scope.user.username, password: $scope.user.password},
-      //     function (userRec) {
-      //       //console.log(userRec);
-      //       if (userRec.success) {
-      //         SISOFactory.set(userRec.record);
-      //         $location.path(path);
-      //       }else{
-      //         //console.log(userRec);
-      //         //
-      //       }
-      //     });
-      // };
-
-      // $scope.goToRegisterPage = function(){
-      //     $location.path('/tab/register');
-      // }
-
-
       $scope.user = {fname: '', lname: ''};
       $scope.title = "Login - SISO";
 
 
-      $scope.$on('$ionicView.beforeEnter', function () {
+      $scope.$on('$ionicView.afterEnter', function () {
         if (!ProfileFactory.isProfileEmpty()) {
-          $state.go('tab.signInSignOut');
+
+          $state.go('tab.signInSignOut',{cache: false});
           return false;
         }
       });// End beforeEnter function event
@@ -44,12 +23,19 @@ angular.module('app.login', ['ionic-modal-select'])
         if (u.fname !== '' && u.lname !== '') {
           SISOSprints.getUserProfile(u, function (recs) {
             if (typeof recs !== undefined && recs.length > 0) {
+
               $scope.record = recs[0];
+
+              delete $scope.record["$promise"];
+              delete $scope.record["$resolved"];
+              delete $scope.record["__v"];
+
               Object.keys($scope.record).forEach(function (key) {
                 profileData[key] = $scope.record[key];
               });
 
               ProfileFactory.setProfile(profileData);
+
               $state.go('tab.signInSignOut');
             } else {
               $state.go('tab.register');
