@@ -1,9 +1,9 @@
 angular.module('app.login', ['ionic-modal-select'])
 
   .controller('loginCtrl', ['$scope', '$interval', '$state', 'SISOSprints',
-    'ProfileFactory', '$ionicLoading', '$cordovaDialogs',
+    'ProfileFactory', '$ionicLoading', '$timeout',
     function ($scope, $interval, $state,
-              SISOSprints, ProfileFactory, $ionicLoading, $cordovaDialogs) {
+              SISOSprints, ProfileFactory, $ionicLoading, $timeout) {
 
       $scope.user = {fname: '', lname: ''};
       $scope.title = "Login - SISO";
@@ -11,11 +11,38 @@ angular.module('app.login', ['ionic-modal-select'])
 
       $scope.$on('$ionicView.afterEnter', function () {
         if (!ProfileFactory.isProfileEmpty()) {
-
-          $state.go('tab.signInSignOut',{cache: false});
-          return false;
+          $scope.searchProfile(ProfileFactory.getProfile().fname, ProfileFactory.getProfile().lname);
         }
-      });// End beforeEnter function event
+      });
+
+      $scope.searchProfile = function (fname, lname) {
+
+        var profileData = {};
+        SISOSprints.getUserProfile({fname: fname, lname: lname}, function (recs) {
+
+          if (typeof recs !== undefined && recs.length > 0) {
+
+            $scope.record = recs[0];
+
+            delete $scope.record["$promise"];
+            delete $scope.record["$resolved"];
+            delete $scope.record["__v"];
+
+            Object.keys($scope.record).forEach(function (key) {
+              profileData[key] = $scope.record[key];
+            });
+
+            ProfileFactory.setProfile(profileData);
+            $state.go('tab.signInSignOut',{cache: false});
+            return false;
+
+          }
+        }, function (error) {
+          $ionicLoading.show({template: error.status + ', ' + error.statusText, noBackdrop: true, duration: 2200});
+          alert(error.status + ', ' + error.statusText);
+        });
+
+      };
 
 
       $scope.searchUser = function (u) {
@@ -51,4 +78,4 @@ angular.module('app.login', ['ionic-modal-select'])
       };
 
 
-    }])
+    }]);

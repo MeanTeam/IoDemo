@@ -36,6 +36,7 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
         $ionicNavBarDelegate.showBackButton(false);
 
         var userData = ProfileFactory.getProfile();
+        console.log(JSON.stringify(userData));
         $ionicLoading.show({
           template: 'Loading Profile ...'
         });
@@ -56,7 +57,6 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
 
           } else {
 
-            delete userData['_id'];
             Object.keys(userData).forEach(function (key) {
               if (key === 'time') {
                 $scope.record[key] = $filter('date')(new Date(), 'hh:mm a');
@@ -75,13 +75,20 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
             var query = "SELECT _id, value FROM profiles WHERE _id = ? ";
 
             tx.executeSql(query, ["1"], function (tx, resultSet) {
+                var toSQLite = {};
+                Object.keys(userData).forEach(function (key) {
+                  if (key === '_id') {
+                    toSQLite[key] = $scope.record._id;
+                  } else {
+                    toSQLite[key] = userData[key];
+                  }
+                });
 
-                userData._id = $scope.record._id;
                 if (resultSet.rows.length > 0) {
                   // Update
                   query = "UPDATE profiles SET value = ? WHERE _id = ?";
 
-                  tx.executeSql(query, [JSON.stringify(userData), "1"], function (tx, res) {},
+                  tx.executeSql(query, [JSON.stringify(toSQLite), "1"], function (tx, res) {},
                     function (tx, error) {
                       console.log('UPDATE error: ' + error.message);
                     });
@@ -90,7 +97,7 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
                   // Insert
                   $window.db.transaction(function (tx) {
                     tx.executeSql('CREATE TABLE IF NOT EXISTS profiles (_id, value)');
-                    tx.executeSql('INSERT INTO profiles VALUES (?,?)', ['1', JSON.stringify(userData)]);
+                    tx.executeSql('INSERT INTO profiles VALUES (?,?)', ['1', JSON.stringify(toSQLite)]);
                   }, function (error) {
                     console.log('Transaction ERROR: ' + error.message);
                     $ionicPopup.alert({title: 'Transaction ERROR:', template: error.message});
