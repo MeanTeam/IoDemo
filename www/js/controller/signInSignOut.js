@@ -2,10 +2,10 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
 
   .controller('signInSignOutCtrl', [
     '$scope', '$state', '$interval', 'SISOSprints', 'Locations', 'ProfileFactory',
-    '$ionicLoading', '$ionicModal', '$ionicPopup', '$filter', '$ionicNavBarDelegate', '$window',
+    '$ionicLoading', '$ionicModal', '$ionicPopup', '$filter', '$ionicNavBarDelegate', '$window', '$ionicPlatform',
     function (
       $scope, $state, $interval, SISOSprints, Locations, ProfileFactory,
-      $ionicLoading, $ionicModal, $ionicPopup, $filter, $ionicNavBarDelegate, $window) {
+      $ionicLoading, $ionicModal, $ionicPopup, $filter, $ionicNavBarDelegate, $window, $ionicPlatform) {
 
       $scope.user = {fname: '', lname: ''};
       $scope.dialog = {title: 'Search User', buttonLabel: 'Find User'};
@@ -36,7 +36,6 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
         $ionicNavBarDelegate.showBackButton(false);
 
         var userData = ProfileFactory.getProfile();
-        console.log(JSON.stringify(userData));
         $ionicLoading.show({
           template: 'Loading Profile ...'
         });
@@ -50,7 +49,6 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
 
             var recData = recs[0];
             ProfileFactory.setSISO(recData);
-            //ProfileFactory.getSISO()._id = recData._id;
             Object.keys(recData).forEach(function (key) {
               $scope.record[key] = recData[key];
             });
@@ -71,47 +69,50 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
 
           }
 
-          $window.db.transaction(function (tx) {
-            var query = "SELECT _id, value FROM profiles WHERE _id = ? ";
+          if($ionicPlatform.android){
+            $window.db.transaction(function (tx) {
+              var query = "SELECT _id, value FROM profiles WHERE _id = ? ";
 
-            tx.executeSql(query, ["1"], function (tx, resultSet) {
-                var toSQLite = {};
-                Object.keys(userData).forEach(function (key) {
-                  if (key === '_id') {
-                    toSQLite[key] = $scope.record._id;
+              tx.executeSql(query, ["1"], function (tx, resultSet) {
+                  var toSQLite = {};
+                  Object.keys(userData).forEach(function (key) {
+                    if (key === '_id') {
+                      toSQLite[key] = $scope.record._id;
+                    } else {
+                      toSQLite[key] = userData[key];
+                    }
+                  });
+
+                  if (resultSet.rows.length > 0) {
+                    // Update
+                    query = "UPDATE profiles SET value = ? WHERE _id = ?";
+
+                    tx.executeSql(query, [JSON.stringify(toSQLite), "1"], function (tx, res) {},
+                      function (tx, error) {
+                        console.log('UPDATE error: ' + error.message);
+                      });
+
                   } else {
-                    toSQLite[key] = userData[key];
+                    // Insert
+                    $window.db.transaction(function (tx) {
+                      tx.executeSql('CREATE TABLE IF NOT EXISTS profiles (_id, value)');
+                      tx.executeSql('INSERT INTO profiles VALUES (?,?)', ['1', JSON.stringify(toSQLite)]);
+                    }, function (error) {
+                      console.log('Transaction ERROR: ' + error.message);
+                      $ionicPopup.alert({title: 'Transaction ERROR:', template: error.message});
+                    }, function () {
+                      console.log('Populated database OK');
+                    });
                   }
+
+                },
+                function (tx, error) {
+                  console.log('SELECT error: ' + error.message);
                 });
 
-                if (resultSet.rows.length > 0) {
-                  // Update
-                  query = "UPDATE profiles SET value = ? WHERE _id = ?";
+            });
+          }
 
-                  tx.executeSql(query, [JSON.stringify(toSQLite), "1"], function (tx, res) {},
-                    function (tx, error) {
-                      console.log('UPDATE error: ' + error.message);
-                    });
-
-                } else {
-                  // Insert
-                  $window.db.transaction(function (tx) {
-                    tx.executeSql('CREATE TABLE IF NOT EXISTS profiles (_id, value)');
-                    tx.executeSql('INSERT INTO profiles VALUES (?,?)', ['1', JSON.stringify(toSQLite)]);
-                  }, function (error) {
-                    console.log('Transaction ERROR: ' + error.message);
-                    $ionicPopup.alert({title: 'Transaction ERROR:', template: error.message});
-                  }, function () {
-                    console.log('Populated database OK');
-                  });
-                }
-
-              },
-              function (tx, error) {
-                console.log('SELECT error: ' + error.message);
-              });
-
-          });
 
           $ionicLoading.hide();
 
@@ -123,9 +124,7 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
       });
 
       $scope.showCheckoutBtn = function () {
-        console.log('*** ID: ' + $scope.record._id);
         return ($scope.record._id !== undefined) && ($scope.record._id !== '');
-
       };
 
       $scope.ph_numbr = /^(\+?(\d{1}|\d{2}|\d{3})[- ]?)?\d{3}[- ]?\d{3}[- ]?\d{4}$/;
