@@ -1,5 +1,5 @@
 angular.module('app.services', ['ngResource', 'ngStorage']).constant('ApiEndpoint', {
-  url : 'https://lit-basin-60588.herokuapp.com/api/:path'
+  url : '/api/:path'
 })
 
   .factory('Managers', [function () {
@@ -13,7 +13,7 @@ angular.module('app.services', ['ngResource', 'ngStorage']).constant('ApiEndpoin
   }])
   .factory('Locations', [function () {
     var getLocations = function () {
-      return ['Location 1', 'Location 2', 'Location 3', 'Location 4', 'Location 5', 'Location 6'];
+      return ['7152 Leidos', 'SSA-HQ', 'WOC'];
     };
 
     return {
@@ -274,6 +274,25 @@ angular.module('app.services', ['ngResource', 'ngStorage']).constant('ApiEndpoin
         });
       },
 
+      addProfile: function (profile) {
+
+        $window.geofence.addProfile(profile);
+        $ionicLoading.show({
+          template: "Profile Added",
+          duration: 1500
+        });
+
+      },
+
+      removeProfile: function () {
+
+        $window.geofence.removeProfile();
+        $ionicLoading.show({
+          template: "Profile Removed",
+          duration: 1500
+        });
+      },
+
       findById: function (id) {
         var geoFences = this._geofences.filter(function (g) {
           return g.id === id;
@@ -403,4 +422,132 @@ angular.module('app.services', ['ngResource', 'ngStorage']).constant('ApiEndpoin
         BOTH: 3
       }
     };
-  });
+  }).factory("GeoLocations", function ($q, $log) {
+    var getLocations = function () {
+      return [{
+          "id": "7152SignIn",
+          "latitude": 39.33376633431887,
+          "longitude": -76.75177574157715,
+          "radius": 70,
+          "transitionType": 1,
+          "notification": {
+            "id": 1,
+            "title": "SISO",
+            "text": "7152 Leidos",
+            "icon": "res://ic_menu_mylocation",
+            "openAppOnClick": true,
+            "data": {
+              "id": "7152SignIn",
+              "latitude": 39.33376633431887,
+              "longitude": -76.75177574157715,
+              "radius": 50,
+              "transitionType": 1
+            }
+          }
+        },{
+          "id": "7152SignOut",
+          "latitude": 39.33376633431887,
+          "longitude": -76.75177574157715,
+          "radius": 70,
+          "transitionType": 2,
+          "notification": {
+            "id": 2,
+            "title": "SISO",
+            "text": "7152 Leidos",
+            "icon": "res://ic_menu_mylocation",
+            "openAppOnClick": true,
+            "data": {
+              "id": "7152SignOut",
+              "latitude": 39.33376633431887,
+              "longitude": -76.75177574157715,
+              "radius": 50,
+              "transitionType": 2
+            }
+          }
+        },{
+          "id": "SSAHQIn",
+          "latitude": 39.309658,
+          "longitude": -76.730639,
+          "radius": 180,
+          "transitionType": 1,
+          "notification": {
+            "id": 3,
+            "title": "SISO",
+            "text": "SSA-HQ",
+            "icon": "res://ic_menu_mylocation",
+            "openAppOnClick": true,
+            "data": {
+              "id": "SSAHQIn",
+              "latitude": 39.309658,
+              "longitude": -76.730639,
+              "radius": 50,
+              "transitionType": 1
+            }
+          }
+        },{
+          "id": "SSAHQOut",
+          "latitude": 39.309658,
+          "longitude": -76.730639,
+          "radius": 180,
+          "transitionType": 2,
+          "notification": {
+            "id": 4,
+            "title": "SISO",
+            "text": "SSA-HQ",
+            "icon": "res://ic_menu_mylocation",
+            "openAppOnClick": true,
+            "data": {
+              "id": "SSAHQOut",
+              "latitude": 39.309658,
+              "longitude": -76.730639,
+              "radius": 50,
+              "transitionType": 2
+            }
+          }
+        },{
+          "id": "WOCIn",
+          "latitude": 39.314819,
+          "longitude": -76.737292,
+          "radius": 50,
+          "transitionType": 1,
+          "notification": {
+            "id": 5,
+            "title": "SISO",
+            "text": "WOC",
+            "icon": "res://ic_menu_mylocation",
+            "openAppOnClick": true,
+            "data": {
+              "id": "WOCIn",
+              "latitude": 39.314819,
+              "longitude": -76.737292,
+              "radius": 50,
+              "transitionType": 1
+            }
+          }
+        },{
+          "id": "WOCOut",
+          "latitude": 39.314819,
+          "longitude": -76.737292,
+          "radius": 50,
+          "transitionType": 2,
+          "notification": {
+            "id": 6,
+            "title": "SISO",
+            "text": "WOC",
+            "icon": "res://ic_menu_mylocation",
+            "openAppOnClick": true,
+            "data": {
+              "id": "WOCOut",
+              "latitude": 39.314819,
+              "longitude": -76.737292,
+              "radius": 50,
+              "transitionType": 2
+            }
+          }
+        }];
+    };
+
+    return {
+      get: getLocations
+    };
+});

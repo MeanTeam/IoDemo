@@ -5,7 +5,7 @@ node_modules/
 platforms/
 plugins/
 
-create-apk.sh
+#create-apk.sh
 create-apk.bat
 demo.sh
 

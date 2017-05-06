@@ -11,8 +11,15 @@ angular.module('app', ['ionic', 'app.listSignins', 'app.signInSignOut', 'app.del
   'app.leaflet-directive', 'app.geofences', 'app.geofence'
 ])
 
-  .run(function ($ionicPlatform, $log, $rootScope, $window, $state,
-                 GeofencePluginMock) {
+  .run(function ($ionicPlatform, $log, $rootScope, $window, $state, $ionicLoading, $ionicPopup,
+                 GeofencePluginMock, GeoLocations, Geofence, ProfileFactory, SISOSprints, $filter) {
+
+
+    $ionicPlatform.on('resume', function(){
+      $state.go('login',{cache: false});
+      return false;
+
+    });
 
     $ionicPlatform.ready(function () {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -33,20 +40,114 @@ angular.module('app', ['ionic', 'app.listSignins', 'app.signInSignOut', 'app.del
         $window.TransitionType = GeofencePluginMock.TransitionType;
       }
 
+      if ($ionicPlatform.android && $window.db === undefined) {
+        $window.db = $window.sqlitePlugin.openDatabase({name: 'geonotifications.db', location: 'default'});
+      }
+
+      if (navigator.splashscreen) {
+        navigator.splashscreen.hide();
+      }
+
       $window.geofence.onTransitionReceived = function (geofences) {
         $log.log(geofences);
         if (geofences) {
+
+          var userInfo = {
+            "fname": ProfileFactory.getProfile().fname,
+            "mname": ProfileFactory.getProfile().mname,
+            "lname": ProfileFactory.getProfile().lname,
+            "mfname": ProfileFactory.getProfile().mfname,
+            "mlname": ProfileFactory.getProfile().mlname,
+            "contact": ProfileFactory.getProfile().contact,
+            "location": "",
+            "time": ""
+          };
+
           $rootScope.$apply(function () {
             geofences.forEach(function (geo) {
-              geo.notification = geo.notification || {
-                  title: "Geofence transition",
-                  text: "Without notification"
-                };
-              $ionicLoading.show({
-                template: geo.notification.title + ": " + geo.notification.text,
-                noBackdrop: true,
-                duration: 2000
+
+
+              $log.log('Geofence fenceId - app.js');
+
+              $log.log('GEO - Before enter to profile data');
+              SISOSprints.get({
+                fname: ProfileFactory.getProfile().fname,
+                lname: ProfileFactory.getProfile().lname,
+                mname: ProfileFactory.getProfile().mname,
+              }, function (recs) {
+
+                $log.log('GEO - Profile data');
+                $log.log('GEO - fname: ' + ProfileFactory.getProfile().fname);
+
+                if(recs.length === 0 && geo.transitionType === 1){
+
+                  userInfo.location = geo.notification.text;
+                  userInfo.time = $filter('date')(new Date(), 'h:mm a');
+
+                  SISOSprints.post(userInfo).
+                  $promise.then(function (result) {
+
+                    if (result) {
+                      $log.log('GEO - SignIn, ID: ' + result._id);
+
+                      ProfileFactory.getSISO()._id = result._id;
+                    }
+
+                  });
+
+                }else if(recs.length > 0 ){
+
+                  if(geo.transitionType === 1){
+
+                    SISOSprints.delete({id: ProfileFactory.getSISO()._id})
+                      .$promise.then(function(success){
+                        if(success){
+                          $log.log('GEO - Deleted, ID: ' + success._id);
+
+                          userInfo.location = geo.notification.text;
+                          userInfo.time = $filter('date')(new Date(), 'h:mm a');
+                          SISOSprints.post(userInfo).
+                          $promise.then(function (result) {
+                            if(result){
+                              $log.log('GEO - SignIn, ID: ' + result._id);
+
+                              ProfileFactory.getSISO()._id = result._id;
+                            }
+                          });
+                        }
+                    });
+
+                  }else{
+                    SISOSprints.delete({id: ProfileFactory.getSISO()._id})
+                      .$promise.then(function(success){
+                      if(success){
+
+                        if (success) {
+                          $log.log('GEO - Deleted, ID: ' + success._id);
+                        }
+
+                      }
+
+                    });
+                  }
+
+                }
+
+                /*geo.notification.text = geo.notification.text + ' Profile: ' + ProfileFactory.getProfile().fname;
+                geo.notification = geo.notification || {
+                    title: "Geofence transition",
+                    text: "Without notification"
+                  };
+                $ionicLoading.show({
+                  template: geo.notification.title + ": " + geo.notification.text,
+                  noBackdrop: true,
+                  duration: 2000
+                });*/
+
+
               });
+
+
             });
           });
         }
@@ -71,8 +172,27 @@ angular.module('app', ['ionic', 'app.listSignins', 'app.signInSignOut', 'app.del
       };
 
       $window.geofence.initialize(function () {
-        $log.log("Geofence plugin initialized");
+        $log.log("GEO", "Geofence plugin initialized");
+
+        Geofence.getAll().then(function (geofences) {
+
+          $log.log('GEO', 'initialize - Length:', geofences.length);
+
+          if (geofences.length === 0) {
+            $log.log('GEO', 'Appending Geofences');
+            GeoLocations.get().forEach(function (geofence) {
+
+              $log.log(geofence);
+              Geofence.addOrUpdate(geofence);
+            });
+          }
+        }, function (reason) {
+          $log.error("GEO", "An Error has occured", reason);
+        });
+
+
       });
+
     });
 
     $rootScope.$on("$stateChangeError", function (event, toState, toParams, fromState, fromParams, error) {

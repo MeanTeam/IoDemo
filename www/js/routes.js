@@ -68,7 +68,7 @@ angular.module('app.routes', [])
 
       .state('tab.signInSignOut', {
         url: '/signInSignOut',
-        cache: false,
+        params: { cache: null },
         views: {
           'menuContent': {
             templateUrl: 'templates/signInSignOut.html',

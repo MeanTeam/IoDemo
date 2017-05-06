@@ -15,7 +15,7 @@ angular.module('app.reassignManager', ['ionic-modal-select', 'LiveSearch'])
         toManagerId: ''
       };
 
-      $scope.$on('$ionicView.beforeEnter', function () {
+      $scope.$on('$ionicView.afterEnter', function () {
         $ionicLoading.show({
           template: 'Loading Managers...'
         });
@@ -63,7 +63,7 @@ angular.module('app.reassignManager', ['ionic-modal-select', 'LiveSearch'])
 
       $scope.fromManagerSearch = function (param) {
         $scope.record.fromManagerId = '';
-        
+
         return managerSearch.call(null, param, $scope.record.toManagerId);
       };
 
