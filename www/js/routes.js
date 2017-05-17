@@ -88,6 +88,17 @@ angular.module('app.routes', [])
         }
       })
 
+      .state('tab.listMyTeam', {
+        url: '/listMyTeam',
+        cache: false,
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/listMyTeam.html',
+            controller: 'listMyTeamCtrl'
+          }
+        }
+      })
+  
       .state("tab.geofences", {
         url: "/geofences",
         cache: false,
