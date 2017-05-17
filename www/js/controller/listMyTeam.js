@@ -6,7 +6,7 @@ angular.module('app.listMyTeam', ['ionic-modal-select'])
 
       $scope.user = {fname: '', lname: ''};
       $scope.records = [];
-      $scope.noReporters = false;
+      $scope.reporters = false;
 
       $scope.$on('$ionicView.beforeEnter', function () {
          $scope.user.fname = ProfileFactory.getProfile().fname;
@@ -18,8 +18,7 @@ angular.module('app.listMyTeam', ['ionic-modal-select'])
             if (typeof recs !== undefined && recs.length > 0) {
               $scope.records = recs;
             }else{
-              $scope.noReporters = true;
-              //$ionicLoading.show({template: 'No Users Signed In!', noBackdrop: true, duration: 2200});
+              $scope.reporters = true;              
             }
 
           });
