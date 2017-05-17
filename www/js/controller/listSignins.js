@@ -6,6 +6,7 @@ angular.module('app.listSignins', ['ionic-modal-select'])
 
       $scope.user = {fname: '', lname: ''};
       $scope.records = [];
+      $scope.reporters = false;
 
 
       $scope.$on('$ionicView.beforeEnter', function () {
@@ -18,7 +19,8 @@ angular.module('app.listSignins', ['ionic-modal-select'])
             if (typeof recs !== undefined && recs.length > 0) {
               $scope.records = recs;
             }else{
-              $ionicLoading.show({template: 'No Users Signed In!', noBackdrop: true, duration: 2200});
+              //$ionicLoading.show({template: 'No Users Signed In!', noBackdrop: true, duration: 2200});
+              $scope.reporters = true;
             }
 
           });
