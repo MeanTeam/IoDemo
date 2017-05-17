@@ -4,11 +4,13 @@ angular.module('app.menu', ['ionic-modal-select'])
   function ($scope, ProfileFactory, $location, $ionicPopup, $ionicSideMenuDelegate, SISOSprints, $cordovaDialogs, $window) {
 
    $scope.displayListSignins = false;
+    $scope.displayMyTeam = false;
     $scope.isAdmin = false;
 
 
    $scope.$on('$ionicView.beforeEnter', function () {
         $scope.displayListSignins = false;
+        $scope.displayMyTeam = false;
          $scope.isAdmin = false;
         if(!ProfileFactory.isProfileEmpty()) {
           SISOSprints.getUserProfile({
@@ -22,6 +24,7 @@ angular.module('app.menu', ['ionic-modal-select'])
               };
               if(userProfile.role === 'manager') {
                 $scope.displayListSignins = true;
+                $scope.displayMyTeam = true;
               };
             });
 
