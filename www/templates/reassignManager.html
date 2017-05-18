@@ -1,4 +1,4 @@
-<ion-view view-title="Re-assign Manager" id="managerList">
+<ion-view view-title="Reassign Manager" id="managerList">
   <ion-nav-buttons side="left">
     <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
   </ion-nav-buttons>
@@ -36,7 +36,7 @@
       <button class="button button-block button-positive"
               ng-disabled="!assignManagerForm.$valid || (record.fromManagerId === '' || record.toManagerId === '') "
               ng-click="reassignManager()">
-        Re-assign Manager
+        Reassign Manager
       </button>
 
       <div ng-show="usersFromManager.length > 0 && record.fromManagerId !== ''">
