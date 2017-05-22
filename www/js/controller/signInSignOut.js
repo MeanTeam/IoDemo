@@ -69,11 +69,24 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
 
           }
 
-          if($ionicPlatform.android){
+          /*console.log('DEBUG SISO - Before enter to Android platform');
+          console.log("DEBUG SISO - " + JSON.stringify($scope.record));
+          console.log($ionicPlatform.is("android"));*/
+
+
+          if($ionicPlatform.is("android")){
+            /*console.log('DEBUG SISO - Enter Android platform');*/
             $window.db.transaction(function (tx) {
               var query = "SELECT _id, value FROM profiles WHERE _id = ? ";
 
+              /*console.log('DEBUG SISO - After query');
+              console.log('DEBUG SISO - $scope.record._id : ' + $scope.record._id);
+              console.log('DEBUG SISO ' + JSON.stringify(userData));*/
+
               tx.executeSql(query, ["1"], function (tx, resultSet) {
+
+                  console.log("DEBUG SISO - resultSet: " + resultSet);
+
                   var toSQLite = {};
                   Object.keys(userData).forEach(function (key) {
                     if (key === '_id') {
@@ -84,6 +97,7 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
                   });
 
                   if (resultSet.rows.length > 0) {
+                    /*console.log('DEBUG SISO - resultSet.rows.length > 0 - Preparing Update');*/
                     // Update
                     query = "UPDATE profiles SET value = ? WHERE _id = ?";
 
@@ -93,12 +107,14 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
                       });
 
                   } else {
+                    /*console.log('DEBUG SISO - profiles table does not exists - creating it');*/
                     // Insert
                     $window.db.transaction(function (tx) {
                       tx.executeSql('CREATE TABLE IF NOT EXISTS profiles (_id, value)');
                       tx.executeSql('INSERT INTO profiles VALUES (?,?)', ['1', JSON.stringify(toSQLite)]);
+                      /*console.log('DEBUG SISO - profiles table created');*/
                     }, function (error) {
-                      console.log('Transaction ERROR: ' + error.message);
+                      /*console.log('Transaction ERROR: ' + error.message);*/
                       $ionicPopup.alert({title: 'Transaction ERROR:', template: error.message});
                     }, function () {
                       console.log('Populated database OK');

@@ -40,7 +40,7 @@ angular.module('app', ['ionic', 'app.listSignins', 'app.signInSignOut', 'app.del
         $window.TransitionType = GeofencePluginMock.TransitionType;
       }
 
-      if ($ionicPlatform.android && $window.db === undefined) {
+      if ($ionicPlatform.is("android") && $window.db === undefined) {
         $window.db = $window.sqlitePlugin.openDatabase({name: 'geonotifications.db', location: 'default'});
       }
 
