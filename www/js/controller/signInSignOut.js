@@ -69,7 +69,7 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
 
           }
 
-          if($ionicPlatform.android){
+          if ($ionicPlatform.is("android")) {
             $window.db.transaction(function (tx) {
               var query = "SELECT _id, value FROM profiles WHERE _id = ? ";
 
