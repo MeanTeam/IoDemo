@@ -4,16 +4,52 @@ in ionic's _variables.scss file.
 
 For example, you might change some of the default colors:
 
-$light:                           #fff !default;
+$light:                           #D7D4D4;
 $stable:                          #f8f8f8 !default;
-$positive:                        #387ef5 !default;
+$positive:                        #D7CBF4 ;
 $calm:                            #11c1f3 !default;
 $balanced:                        #33cd5f !default;
 $energized:                       #ffc900 !default;
 $assertive:                       #ef473a !default;
 $royal:                           #886aea !default;
-$dark:                            #444 !default;
+$dark:                            #151641;
 */
+
+$dark:                            #512DA8;
+$positive:                        #AF9AE2;
+$input-color:                     #89188B;
+$button-positive-text:            #FFFFFF;
+
+$item-divider-bg:                 #AF9AE2;
+$item-divider-color:              #290C71;
+
+$button-stable-bg: #151641;
+$button-stable-text: #FFFFFF;
+$button-stable-border: #512DA8;
+
+$button-light-text: #AF9AE2;
+
+/*
+$bar-stable-bg:                   rgba($button-stable-bg, $bar-transparency) !default;
+$bar-stable-text:                 $button-stable-text !default;
+$bar-stable-border:               $button-stable-border !default;
+$bar-stable-active-bg:            $button-stable-active-bg !default;
+$bar-stable-active-border:        $button-stable-active-border !default;
+*/
+
+/*
+$button-positive-bg:              $positive !default;
+$button-positive-text:            #fff !default;
+$button-positive-border:          darken($positive, 10%) !default;
+$button-positive-active-bg:       darken($positive, 10%) !default;
+$button-positive-active-border:   darken($positive, 10%) !default;
+*/
+
+/*.user-title{
+  color: #D7D4D4;
+  font-weight: bold;
+}*/
+
 
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
@@ -21,3 +57,6 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
 
+.errcolor{
+  color: $input-color;
+}

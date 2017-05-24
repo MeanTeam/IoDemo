@@ -1,19 +1,27 @@
 {
   "name": "IoDemo",
   "app_id": "",
-  "proxies" : [
+  "proxies": [
     {
-      "path" : "/api/sisoweb",
-      "proxyUrl" : "https://lit-basin-60588.herokuapp.com/api/sisoweb"
+      "path": "/api/sisoweb",
+      "proxyUrl": "https://lit-basin-60588.herokuapp.com/api/sisoweb"
     },
     {
       "path": "/api/profiles",
-      "proxyUrl" : "https://lit-basin-60588.herokuapp.com/api/profiles"
+      "proxyUrl": "https://lit-basin-60588.herokuapp.com/api/profiles"
     },
     {
-      "path" : "/api/profileLocal",
-      "proxyUrl" : "http://localhost:10090/profile"
-
+      "path": "/api/profileLocal",
+      "proxyUrl": "http://localhost:10090/profile"
     }
+  ],
+  "gulpStartupTasks": [
+    "sass",
+    "watch"
+  ],
+  "watchPatterns": [
+    "www/**/*",
+    "!www/lib/**/*",
+    "!www/**/*.map"
   ]
 }
