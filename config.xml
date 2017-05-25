@@ -79,15 +79,15 @@
     <cdv:plugin name="ionic-plugin-keyboard" spec="~2.2.1" />
     <cdv:plugin name="cordova-plugin-network-information" spec="~1.2.1" />
     <cdv:plugin name="cordova-plugin-inappbrowser" spec="~1.4.0" />
-    <cdv:plugin name="cordova-plugin-geofence" spec="https://github.com/wvillegasm/cordova-plugin-geofence.git" />
+    <cdv:plugin name="cordova-plugin-geofence" spec="https://github.com/MeanTeam/cordova-plugin-geofence.git" />
     <cdv:plugin name="cordova-plugin-geofence-test" spec="https://github.com/cowbell/cordova-plugin-geofence.git#:/tests" />
     <cdv:plugin name="cordova-plugin-geolocation-tests" spec="http://git-wip-us.apache.org/repos/asf/cordova-plugin-geolocation#:/tests" />
     <cdv:plugin name="cordova-plugin-whitelist" spec="^1.0.0" />
     <cdv:plugin name="cordova-plugin-geolocation" spec="~2.1.0" />
     <cdv:plugin name="cordova-plugin-add-swift-support" spec="~1.6.2" />
+    <cdv:plugin name="cordova-sqlite-storage" spec="https://github.com/litehelpers/Cordova-sqlite-storage.git" />
     <icon src="resources/android/icon/drawable-xhdpi-icon.png" />
     <allow-navigation href="http://10.236.38.103:8100" />
     <allow-navigation href="http://192.168.0.47:8100" />
-    <engine name="android" spec="^6.2.3" />
-    <plugin name="cordova-sqlite-storage" spec="https://github.com/litehelpers/Cordova-sqlite-storage.git" />
+    <!--    <engine name="android" spec="^6.2.3" />-->
 </widget>

@@ -27,13 +27,5 @@
   "cordovaPlatforms": [
     "android",
     "ios"
-  ],
-  "cordova": {
-    "plugins": {
-      "cordova-sqlite-storage": {}
-    },
-    "platforms": [
-      "android"
-    ]
-  }
+  ]
 }

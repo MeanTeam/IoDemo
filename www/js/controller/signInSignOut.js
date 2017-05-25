@@ -47,6 +47,9 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
 
           if (typeof recs !== undefined && recs.length > 0) {
 
+            /*console.log('Record found:');
+            console.log(recs[0]);*/
+
             var recData = recs[0];
             ProfileFactory.setSISO(recData);
             Object.keys(recData).forEach(function (key) {
@@ -59,7 +62,9 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
               if (key === 'time') {
                 $scope.record[key] = $filter('date')(new Date(), 'hh:mm a');
               } else if (key === 'preferredLocation') {
-                $scope.record.location = userData[key];
+                $scope.record.location = userData[ key ];
+              }else if(key === '_id'){
+                delete $scope.record.id;
               } else {
                 $scope.record[key] = userData[key];
               }
@@ -80,7 +85,7 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
 
               tx.executeSql(query, ["1"], function (tx, resultSet) {
 
-                  console.log("DEBUG SISO - resultSet: " + resultSet);
+                  /*console.log("DEBUG SISO - resultSet: " + resultSet);*/
 
                   var toSQLite = {};
                   Object.keys(userData).forEach(function (key) {
@@ -143,6 +148,7 @@ angular.module('app.signInSignOut', ['ionic-modal-select'])
 
       $scope.save = function () {
         delete $scope.record._id;
+        $scope.record.time = $filter('date')(new Date(), 'h:mm a');
         SISOSprints.post($scope.record, function (result) {
           $ionicLoading.show({
             template: 'Loading Profile ...'
