@@ -15,9 +15,100 @@ $royal:                           #886aea !default;
 $dark:                            #444 !default;
 */
 
+// .menuheader{
+//   color: white;
+//   background-color: blue;
+// }
+
+
+
+$positive:                          #C5CAE9 !global;
+
+// Menu Header and button
+// .menuitem, .button-positive, .bar-header{
+//   color: white;
+// //  background: linear-gradient(to bottom, #cb60b3 0%,#c146a1 50%,#a80077 51%,#db36a4 100%);
+//   background: linear-gradient(to bottom, #D500F9 0%,#AA00FF 50%,#AA00FF 51%,#AA00FF 100%);
+// }
+//
+//
+// .button-positive, .button.button-positive{
+//   color: black;
+//   font-weight: bold;
+//   border-color: purple;
+//   font-size: 30;
+// //  background: linear-gradient(to bottom, #cb60b3 0%,#c146a1 50%,#a80077 51%,#db36a4 100%);
+//   background: linear-gradient(to bottom, #CE93D8 0%,#E1BEE7 50%,#E1BEE7 51%,#E1BEE7 100%);
+// }
+
+
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
 
+
+
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
+.button.button-positive, .button-block{
+  //background-color: #C5CAE9;
+  border-color: purple;
+  //font-weight: ;
+  font-size: 20px;
+  color: purple;
 
+
+}
+
+.bar-stable .button{
+color: white;
+border-color: transparent;
+  
+}
+.bar.bar-stable{
+  border-color: white;
+  background-color: 	#92278F;
+  color: white;
+}
+.bar.bar-stable .title{
+  color: white;
+}
+.overflow-scroll{
+  background-color: #E6E6FA;
+}
+.item-text-wrap, .item-divider, .user-title, .item{
+  border-color: purple;
+}
+
+.card-balanced, .card{
+  border-color: purple;
+}
+
+// // .barmenu{
+// //   color: yellow;
+// //   background: orange;
+// //   //background: linear-gradient(to bottom, #ff5db1 0%,#ef017c 100%);
+// // }
+//
+// // Page header like Sign-In/Sign-Out
+// .header-item, .nav-bar-block{
+//   color: white;
+//
+// //  background: linear-gradient(to bottom, #cb60b3 0%,#c146a1 50%,#a80077 51%,#db36a4 100%);
+//   background: linear-gradient(to bottom, #D500F9 0%,#AA00FF 50%,#AA00FF 51%,#AA00FF 100%);
+// }
+//
+// Side menu items with reset user
+.item-complex .item-content, .ureset{
+    position: relative;
+    z-index: 2;
+    padding: 16px 49px 16px 16px;
+//    border: black;
+//    background-color: linear-gradient(to bottom, #e570e7 0%,#a849a3 50%);
+//    background: linear-gradient(to bottom, #b3dced 0%,#29b8e5 50%,#bce0ee 100%);
+   background: linear-gradient(to bottom, #0F034F 0%,#0F034F 50%,#0F034F 100%);
+}
+
+a.item-content, .ureset{
+  color: white;
+
+}
