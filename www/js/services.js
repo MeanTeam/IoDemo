@@ -1,5 +1,5 @@
 angular.module('app.services', ['ngResource', 'ngStorage']).constant('ApiEndpoint', {
-  url : 'https://lit-basin-60588.herokuapp.com/api/:path'
+  url : '/api/:path'
 })
 
   .factory('Managers', [function () {

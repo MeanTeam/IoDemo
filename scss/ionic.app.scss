@@ -58,12 +58,11 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 
 }
-
-.bar-stable .button{
-color: white;
-border-color: transparent;
-  
+.bar-stable .button.button-icon {
+    border-color: transparent;
+    background: white;
 }
+
 .bar.bar-stable{
   border-color: white;
   background-color: 	#92278F;
