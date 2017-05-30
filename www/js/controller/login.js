@@ -1,9 +1,9 @@
 angular.module('app.login', ['ionic-modal-select'])
 
   .controller('loginCtrl', ['$scope', '$interval', '$state', 'SISOSprints',
-    'ProfileFactory', '$ionicLoading', '$timeout',
+    'ProfileFactory', '$ionicLoading', 'Geofence',
     function ($scope, $interval, $state,
-              SISOSprints, ProfileFactory, $ionicLoading, $timeout) {
+              SISOSprints, ProfileFactory, $ionicLoading, Geofence) {
 
       $scope.user = {fname: '', lname: ''};
       $scope.title = "Login - SISO";
@@ -13,6 +13,9 @@ angular.module('app.login', ['ionic-modal-select'])
         if (!ProfileFactory.isProfileEmpty()) {
           $scope.searchProfile(ProfileFactory.getProfile().fname, ProfileFactory.getProfile().lname);
         }
+
+
+
       });
 
       $scope.searchProfile = function (fname, lname) {

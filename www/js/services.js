@@ -428,7 +428,7 @@ angular.module('app.services', ['ngResource', 'ngStorage']).constant('ApiEndpoin
           "id": "7152SignIn",
           "latitude": 39.33376633431887,
           "longitude": -76.75177574157715,
-          "radius": 70,
+          "radius": 120,
           "transitionType": 1,
           "notification": {
             "id": 1,
@@ -440,7 +440,7 @@ angular.module('app.services', ['ngResource', 'ngStorage']).constant('ApiEndpoin
               "id": "7152SignIn",
               "latitude": 39.33376633431887,
               "longitude": -76.75177574157715,
-              "radius": 50,
+              "radius": 120,
               "transitionType": 1
             }
           }
@@ -448,7 +448,7 @@ angular.module('app.services', ['ngResource', 'ngStorage']).constant('ApiEndpoin
           "id": "7152SignOut",
           "latitude": 39.33376633431887,
           "longitude": -76.75177574157715,
-          "radius": 70,
+          "radius": 120,
           "transitionType": 2,
           "notification": {
             "id": 2,
@@ -460,7 +460,7 @@ angular.module('app.services', ['ngResource', 'ngStorage']).constant('ApiEndpoin
               "id": "7152SignOut",
               "latitude": 39.33376633431887,
               "longitude": -76.75177574157715,
-              "radius": 50,
+              "radius": 120,
               "transitionType": 2
             }
           }
@@ -480,7 +480,7 @@ angular.module('app.services', ['ngResource', 'ngStorage']).constant('ApiEndpoin
               "id": "SSAHQIn",
               "latitude": 39.309658,
               "longitude": -76.730639,
-              "radius": 50,
+              "radius": 180,
               "transitionType": 1
             }
           }
@@ -500,7 +500,7 @@ angular.module('app.services', ['ngResource', 'ngStorage']).constant('ApiEndpoin
               "id": "SSAHQOut",
               "latitude": 39.309658,
               "longitude": -76.730639,
-              "radius": 50,
+              "radius": 180,
               "transitionType": 2
             }
           }
@@ -508,7 +508,7 @@ angular.module('app.services', ['ngResource', 'ngStorage']).constant('ApiEndpoin
           "id": "WOCIn",
           "latitude": 39.314819,
           "longitude": -76.737292,
-          "radius": 50,
+          "radius": 120,
           "transitionType": 1,
           "notification": {
             "id": 5,
@@ -520,7 +520,7 @@ angular.module('app.services', ['ngResource', 'ngStorage']).constant('ApiEndpoin
               "id": "WOCIn",
               "latitude": 39.314819,
               "longitude": -76.737292,
-              "radius": 50,
+              "radius": 120,
               "transitionType": 1
             }
           }
@@ -528,7 +528,7 @@ angular.module('app.services', ['ngResource', 'ngStorage']).constant('ApiEndpoin
           "id": "WOCOut",
           "latitude": 39.314819,
           "longitude": -76.737292,
-          "radius": 50,
+          "radius": 120,
           "transitionType": 2,
           "notification": {
             "id": 6,
@@ -540,7 +540,7 @@ angular.module('app.services', ['ngResource', 'ngStorage']).constant('ApiEndpoin
               "id": "WOCOut",
               "latitude": 39.314819,
               "longitude": -76.737292,
-              "radius": 50,
+              "radius": 120,
               "transitionType": 2
             }
           }

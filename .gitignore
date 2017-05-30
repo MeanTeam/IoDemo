@@ -140,3 +140,4 @@ captures/
 
 ### Android Patch ###
 gen-external-apklibs
+www/css/*

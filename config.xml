@@ -80,7 +80,7 @@
     <cdv:plugin name="ionic-plugin-keyboard" spec="~2.2.1" />
     <cdv:plugin name="cordova-plugin-network-information" spec="~1.2.1" />
     <cdv:plugin name="cordova-plugin-inappbrowser" spec="~1.4.0" />
-    <cdv:plugin name="cordova-plugin-geofence" spec="https://github.com/meanteam/cordova-plugin-geofence.git" />
+    <cdv:plugin name="cordova-plugin-geofence" spec="https://github.com/MeanTeam/cordova-plugin-geofence.git" />
     <cdv:plugin name="cordova-plugin-geofence-test" spec="https://github.com/cowbell/cordova-plugin-geofence.git#:/tests" />
     <cdv:plugin name="cordova-plugin-geolocation-tests" spec="http://git-wip-us.apache.org/repos/asf/cordova-plugin-geolocation#:/tests" />
     <cdv:plugin name="cordova-plugin-geolocation" spec="~2.1.0" />
