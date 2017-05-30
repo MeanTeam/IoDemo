@@ -14,7 +14,7 @@ angular.module('app.listMyTeam', ['ionic-modal-select'])
 
         if($scope.user.fname !== '' &&  $scope.user.lname !== '') {
 
-          SISOSprints.get({mfname: ProfileFactory.getProfile().fname, mlname: ProfileFactory.getProfile().lname}, function (recs) {
+          SISOSprints.getUsersByManager({mfname: ProfileFactory.getProfile().fname, mlname: ProfileFactory.getProfile().lname}, function (recs) {
             if (typeof recs !== undefined && recs.length > 0) {
               $scope.records = recs;
             }else{

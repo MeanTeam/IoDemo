@@ -1,6 +1,6 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.ionicframework.iodemo968238" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>IoDemo</name>
+    <name>SISO</name>
     <description>
     An Ionic Framework and Cordova project.
   </description>
@@ -89,5 +89,6 @@
     <icon src="resources/android/icon/drawable-xhdpi-icon.png" />
     <allow-navigation href="http://10.236.38.103:8100" />
     <allow-navigation href="http://192.168.0.47:8100" />
-    <!--    <engine name="android" spec="^6.2.3" />-->
+    <engine name="android" spec="^6.2.3" />
+    <engine name="ios" spec="~4.4.0" />
 </widget>
