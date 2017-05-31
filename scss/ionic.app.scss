@@ -45,6 +45,9 @@ $positive:                          #C5CAE9 !global;
 // The path for our ionicons font files, relative to the built CSS in www/css
 $ionicons-font-path: "../lib/ionic/fonts" !default;
 
+a.ng-binding{
+  color: blue;
+}
 
 
 // Include all of Ionic
