@@ -7,6 +7,11 @@
         ng-click="userDialog.show()">Search Manager</button>
   </ion-nav-buttons> -->
   <ion-content padding="true" class="has-header">
+    <ion-refresher
+      pulling-text="Updating..."
+      disable-pulling-rotation="true"
+      on-refresh="getMyTeamList()">
+    </ion-refresher>
     <div class="item item-divider" ng-show="records.length > 0">
       <strong>{{user.lname}}, {{user.fname}}</strong>
     </div>

@@ -24,14 +24,14 @@ angular.module('app.listSignins', [ 'ionic-modal-select' ])
           }, function (recs) {
             if (typeof recs !== undefined && recs.length > 0) {
               $scope.records = recs;
-              $scope.$broadcast('scroll.refreshComplete');
             } else {
               //$ionicLoading.show({template: 'No Users Signed In!', noBackdrop: true, duration: 2200});
               $scope.reporters = true;
             }
-
+            $scope.$broadcast('scroll.refreshComplete');
           });
         } else {
+          $scope.$broadcast('scroll.refreshComplete');
           $ionicLoading.show({template: 'User name must not be empty!', noBackdrop: true, duration: 2200});
         }
       };
