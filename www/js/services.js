@@ -433,7 +433,7 @@ angular.module('app.services', ['ngResource', 'ngStorage']).constant('ApiEndpoin
           "notification": {
             "id": 1,
             "title": "SISO",
-            "text": "7152 Leidos",
+            "text": "7152 Leidos SignIn",
             "icon": "res://ic_menu_mylocation",
             "openAppOnClick": true,
             "data": {
@@ -453,7 +453,7 @@ angular.module('app.services', ['ngResource', 'ngStorage']).constant('ApiEndpoin
           "notification": {
             "id": 2,
             "title": "SISO",
-            "text": "7152 Leidos",
+            "text": "7152 Leidos SignOut",
             "icon": "res://ic_menu_mylocation",
             "openAppOnClick": true,
             "data": {
@@ -473,7 +473,7 @@ angular.module('app.services', ['ngResource', 'ngStorage']).constant('ApiEndpoin
           "notification": {
             "id": 3,
             "title": "SISO",
-            "text": "SSA-HQ",
+            "text": "SSA-HQ SignIn",
             "icon": "res://ic_menu_mylocation",
             "openAppOnClick": true,
             "data": {
@@ -493,7 +493,7 @@ angular.module('app.services', ['ngResource', 'ngStorage']).constant('ApiEndpoin
           "notification": {
             "id": 4,
             "title": "SISO",
-            "text": "SSA-HQ",
+            "text": "SSA-HQ SignOut",
             "icon": "res://ic_menu_mylocation",
             "openAppOnClick": true,
             "data": {
@@ -513,7 +513,7 @@ angular.module('app.services', ['ngResource', 'ngStorage']).constant('ApiEndpoin
           "notification": {
             "id": 5,
             "title": "SISO",
-            "text": "WOC",
+            "text": "WOC SignIn",
             "icon": "res://ic_menu_mylocation",
             "openAppOnClick": true,
             "data": {
@@ -533,7 +533,7 @@ angular.module('app.services', ['ngResource', 'ngStorage']).constant('ApiEndpoin
           "notification": {
             "id": 6,
             "title": "SISO",
-            "text": "WOC",
+            "text": "WOC SignOut",
             "icon": "res://ic_menu_mylocation",
             "openAppOnClick": true,
             "data": {

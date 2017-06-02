@@ -80,8 +80,11 @@ angular.module('app', ['ionic', 'app.listSignins', 'app.signInSignOut', 'app.del
                 $log.log('GEO - fname: ' + ProfileFactory.getProfile().fname);
 
                 if(recs.length === 0 && geo.transitionType === 1){
-
-                  userInfo.location = geo.notification.text;
+                  var str = geo.notification.text;
+                  var ind = str.indexOf("Sign");
+                  var loc = str.substr(0,ind-1);
+                  userInfo.location = loc;
+//                  userInfo.location = geo.notification.text;
                   userInfo.time = $filter('date')(new Date(), 'h:mm a');
 
                   SISOSprints.post(userInfo).
@@ -103,8 +106,11 @@ angular.module('app', ['ionic', 'app.listSignins', 'app.signInSignOut', 'app.del
                       .$promise.then(function(success){
                         if(success){
                           $log.log('GEO - Deleted, ID: ' + success._id);
-
-                          userInfo.location = geo.notification.text;
+                          var str = geo.notification.text;
+                          var ind = str.indexOf("Sign");
+                          var loc = str.substr(0,ind-1);
+                          userInfo.location = loc;
+        //                  userInfo.location = geo.notification.text;                          
                           userInfo.time = $filter('date')(new Date(), 'h:mm a');
                           SISOSprints.post(userInfo).
                           $promise.then(function (result) {
