@@ -8,7 +8,7 @@
 
 angular.module('app', ['ionic', 'app.listSignins', 'app.signInSignOut', 'app.deleteManager', 'app.createManager','app.listMyTeam',
   'app.menu', 'app.login', 'app.register', 'app.routes', 'app.services', 'app.directives', 'app.reassignManager', 'ui.mask', 'ngCordova',
-  'app.leaflet-directive', 'app.geofences', 'app.geofence'
+  'app.leaflet-directive', 'app.geofences', 'app.geofence', 'app.usersByLoc'
 ])
 
   .run(function ($ionicPlatform, $log, $rootScope, $window, $state, $ionicLoading, $ionicPopup,
@@ -110,7 +110,7 @@ angular.module('app', ['ionic', 'app.listSignins', 'app.signInSignOut', 'app.del
                           var ind = str.indexOf("Sign");
                           var loc = str.substr(0,ind-1);
                           userInfo.location = loc;
-        //                  userInfo.location = geo.notification.text;                          
+        //                  userInfo.location = geo.notification.text;
                           userInfo.time = $filter('date')(new Date(), 'h:mm a');
                           SISOSprints.post(userInfo).
                           $promise.then(function (result) {

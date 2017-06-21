@@ -174,6 +174,13 @@ angular.module('app.services', ['ngResource', 'ngStorage']).constant('ApiEndpoin
         params: {path: 'profiles', id: '@_id'},
         cache: false,
         responseType: 'json'
+      },
+      usersByLoc: {
+        method: 'GET',
+        url: ApiEndpoint.url + '/:location',
+        params: {path: 'loc', location: '@location'},
+        cache: false,
+        responseType: 'json'
       }
     });
   }])

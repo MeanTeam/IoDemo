@@ -98,7 +98,18 @@ angular.module('app.routes', [])
           }
         }
       })
-  
+
+      .state('tab.usersByLoc', {
+        url: '/usersByLoc',
+        cache: false,
+        views: {
+          'menuContent': {
+            templateUrl: 'templates/usersByLoc.html',
+            controller: 'usersByLocCtrl'
+          }
+        }
+      })
+
       .state("tab.geofences", {
         url: "/geofences",
         cache: false,

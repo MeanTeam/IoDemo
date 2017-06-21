@@ -11,6 +11,10 @@
       "proxyUrl": "https://lit-basin-60588.herokuapp.com/api/profiles"
     },
     {
+      "path": "/api/loc",
+      "proxyUrl": "https://lit-basin-60588.herokuapp.com/api/loc"
+    },
+    {
       "path": "/api/profileLocal",
       "proxyUrl": "http://localhost:10090/profile"
     }
