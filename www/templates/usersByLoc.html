@@ -9,9 +9,10 @@
       on-refresh="getUsersByLoc()">
     </ion-refresher>
     <div class="item item-divider">
-      <strong>{{location}} - {{count}}</strong>
+      <strong ng-if="location !== ''">{{location}} - {{count}}</strong>
+      <strong ng-if="location == ''">Sign-In to view information!</strong>
     </div>
-    
+
     <ul class="list">
       <div class="item item-button-right" ng-repeat="rec in records">
         <h2>

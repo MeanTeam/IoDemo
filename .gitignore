@@ -137,6 +137,8 @@ captures/
 # Intellij
 # Keystore files
 *.jks
+siso.keystore
+resources/ios/splash/Thumbs.db
 
 ### Android Patch ###
 gen-external-apklibs
@@ -144,3 +146,4 @@ www/css/*
 
 #
 .DS_Store
+
