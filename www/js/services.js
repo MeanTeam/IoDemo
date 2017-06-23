@@ -1,5 +1,5 @@
 angular.module('app.services', ['ngResource', 'ngStorage']).constant('ApiEndpoint', {
-  url : 'https://lit-basin-60588.herokuapp.com/api/:path'
+  url : '/api/:path'
 })
 
   .factory('Managers', [function () {
@@ -13,7 +13,7 @@ angular.module('app.services', ['ngResource', 'ngStorage']).constant('ApiEndpoin
   }])
   .factory('Locations', [function () {
     var getLocations = function () {
-      return ['7152 Leidos', 'SSA-HQ', 'WOC'];
+      return ['1506 Leidos', '3114 Leidos', '7152 Leidos', 'SSA-HQ', 'WOC'];
     };
 
     return {
@@ -551,6 +551,87 @@ angular.module('app.services', ['ngResource', 'ngStorage']).constant('ApiEndpoin
               "transitionType": 2
             }
           }
+          },{
+            "id": "1506SignIn",
+            "latitude": 39.307993,
+            "longitude": -76.735397,
+            "radius": 120,
+            "transitionType": 1,
+            "notification": {
+              "id": 7,
+              "title": "SISO",
+              "text": "1506 Leidos SignIn",
+              "icon": "res://ic_menu_mylocation",
+              "openAppOnClick": true,
+              "data": {
+                "id": "1506SignIn",
+                "latitude": 39.307993,
+                "longitude": -76.735397,
+                "radius": 120,
+                "transitionType": 1
+              }
+            }
+            },{
+              "id": "1506SignOut",
+              "latitude": 39.307993,
+              "longitude": -76.735397,
+              "radius": 120,
+              "transitionType": 2,
+              "notification": {
+                "id": 8,
+                "title": "SISO",
+                "text": "1506 Leidos SignOut",
+                "icon": "res://ic_menu_mylocation",
+                "openAppOnClick": true,
+                "data": {
+                  "id": "1506SignIn",
+                  "latitude": 39.307993,
+                  "longitude": -76.735397,
+                  "radius": 120,
+                  "transitionType": 2
+                }
+              }
+              },{
+                "id": "3114SignIn",
+                "latitude": 39.340743,
+                "longitude": -76.752672,
+                "radius": 120,
+                "transitionType": 1,
+                "notification": {
+                  "id": 9,
+                  "title": "SISO",
+                  "text": "3114 Leidos SignIn",
+                  "icon": "res://ic_menu_mylocation",
+                  "openAppOnClick": true,
+                  "data": {
+                    "id": "3114SignIn",
+                    "latitude": 39.307993,
+                    "longitude": -76.735397,
+                    "radius": 120,
+                    "transitionType": 1
+                  }
+                }
+                },{
+                  "id": "3114SignOut",
+                  "latitude": 39.340743,
+                  "longitude": -76.752672,
+                  "radius": 120,
+                  "transitionType": 2,
+                  "notification": {
+                    "id": 10,
+                    "title": "SISO",
+                    "text": "3114 Leidos SignOut",
+                    "icon": "res://ic_menu_mylocation",
+                    "openAppOnClick": true,
+                    "data": {
+                      "id": "31146SignIn",
+                      "latitude": 39.307993,
+                      "longitude": -76.735397,
+                      "radius": 120,
+                      "transitionType": 2
+                    }
+                  
+                  }
         }];
     };
 
